@@ -1,14 +1,16 @@
 <?php
-    require "DB.php";
-
-    $db = new dbOperation();
-    $db->getTransactionType();
-
+    require "sql.php";
 ?>
 <html>
+    <header>
+        <Title>Assya-Treading</Title>
+    </header>
 <body>
+        <?php
+            include "nav.php";
+        ?>
     <h1>
-        hellow
+        Home Page
     </h1>
 </body>
 
