@@ -2,18 +2,18 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Dashboard from "../views/DashboardView.vue"
-import AddPurchase from "@/components/AddPurchase";
-import ViewPurchase from "@/components/ViewPurchase";
-import Shipment from "@/components/Shipment.vue";
-import MakeOrder from "@/components/MakeOrder.vue";
-import AddSales from "@/components/AddSales.vue";
-import ViewSales from "@/components/ViewSales.vue";
+import AddPurchase from "../components/AddPurchase";
+import ViewPurchase from "../components/ViewPurchase";
+import Shipment from "../components/Shipment.vue";
+import MakeOrder from "../components/MakeOrder.vue";
+import AddSales from "../components/AddSales.vue";
+import ViewSales from "../components/ViewSales.vue";
 import Login from "../views/Login.vue";
 import AdminDashboard from "../views/AdminDashboard.vue";
-import AddEmployees from "@/components/AddEmployees.vue";
-import AddOrder from "@/components/AddOrder.vue";
-import ViewOrder from "@/components/ViewOrder.vue";
-import ViewOrderId from "@/components/ViewOrderId.vue";
+import AddEmployees from "../components/AddEmployees.vue";
+import AddOrder from "../components/AddOrder.vue";
+import ViewOrder from "../components/ViewOrder.vue";
+import ViewOrderId from "../components/ViewOrderId.vue";
 Vue.use(VueRouter)
 const routes = [
   {
