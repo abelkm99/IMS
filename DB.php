@@ -30,15 +30,29 @@ class dbOperation
         }
         if (sqlsrv_execute($stmt)) {
             while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-                echo $row['EmployeeID'] . " " . $row['EmployeeName'] . " " . $row['EmployeePassword'] . "<br />";
+                echo $row['EmployeeID'] . " " . $row['EmployeeName'] . " " . $row['EmployeePassword'] ."<br />";
             }
         } else {
             die(print_r(sqlsrv_errors(), true));
         }
         sqlsrv_close($conn);
     }
-    function AddCategory()
-    {
+    function listAllCategory(){
+        $conn = get_connection();
+        if($conn){
+            echo "Connection established.<br />";
+        }else{
+            echo "Connection could not be established.<br />";
+            die(print_r(sqlsrv_errors(), true));
+        }
+        $sql = "exec spGetAllCategories";
+
+        $stmt = sqlsrv_query($conn, $sql);
+        while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC )) {
+            print_r($row);
+        }
+    }
+    function addNewSupplier(){
         $conn = get_connection();
         if ($conn) {
             echo "Connection established.<br />";
@@ -46,39 +60,316 @@ class dbOperation
             echo "Connection could not be established.<br />";
             die(print_r(sqlsrv_errors(), true));
         }
-        $sql = "exec spAddCategory @CategoryName = 'tolosa' ";
-
-        $res = 100;
-        $params = array($res);
-
-        $stmt = sqlsrv_query($conn, $sql);
-        if ($stmt === false) {
-            (print_r(sqlsrv_errors(), true));
+    }
+    function makeOrder(){
+        $conn = get_connection();
+        if ($conn) {
+            echo "Connection established.<br />";
+        } else {
+            echo "Connection could not be established.<br />";
+            die(print_r(sqlsrv_errors(), true));
         }
-        $rows_affected = -1;
-        print_r(sqlsrv_fetch_array($stmt));
-        // if($rows_affected=sqlsrv_execute($stmt)){
+        $sqlcommand = "EXEC	[dbo].[spOrderItems]
+                                @CustomerId = ?,
+                                @OrderDate = ?,
+                                @OrderInformation = ?,
+                                @result = ?,
+                                @message = ?";
+        $customerId = 8;
+        $OrderDate = "04-15-69";
+        $OrderInformation = "7,2,2;10,500,5;11,100,98;12,10,30;13,13,23;";
+        $result = 0; 
+        $message = '';
+        $params = array(   
+            array(&$customerId, SQLSRV_PARAM_IN),
+            array(&$OrderDate, SQLSRV_PARAM_IN),
+            array(&$OrderInformation, SQLSRV_PARAM_IN),
+            array(&$result, SQLSRV_PARAM_OUT) ,
+            array(&$message, SQLSRV_PARAM_OUT)  
+            );
 
-        //     // if( sqlsrv_fetch( $stmt ) === false) {
-        //     //     die( print_r( sqlsrv_errors(), true));
-        //     // }
+        $stmt = sqlsrv_query($conn,$sqlcommand,$params);
+        if($stmt === false){
+            die(print_r(sqlsrv_errors(),true));
+        }
+        echo "the result is  ". $result. ". the message is ".$message."</br>"; 
+                        
+    }
+    function makeSales(){
+        
+        $conn = get_connection();
+        if ($conn) {
+            echo "Connection established.<br />";
+        } else {
+            echo "Connection could not be established.<br />";
+            die(print_r(sqlsrv_errors(), true));
+        }
 
-        //     // $name = sqlsrv_get_field( $stmt, 0);
-        //     $rows = sqlsrv_has_rows( $stmt );  
-        //     if ($rows === true)  
-        //         echo "\nthere are rows\n";  
-        //     else   
-        //         echo "\nno rows\n"; 
+        /**
+            sales information
+            ItemId,PPP,Quantity,Total; 
+         */
+        $sqlcommand = "EXEC	[dbo].[spMakeSales]
+                            @Date = ?,
+                            @CutomerID = ?,
+                            @TransactionID = ?,
+                            @EmployeeId = ?,
+                            @DriverId = ?,
+                            @SalesInformation = ?,
+                            @result = ?,
+                            @message = ?";
+        $Date = "04-15-69";
+        $CutomerID = 8;
+        $TransactionID = 1;
+        $EmployeeId = 6;
+        $DriverId = null;
+        $SalesInformation = "7,2,2;10,500,5;11,100,98;12,10,30;13,13,23;";
+        $result = 0;
+        $message = '';
 
-        //     echo "affected rows ".$rows_affected;
+        $params = array(   
+            array(&$Date, SQLSRV_PARAM_IN),
+            array(&$CutomerID, SQLSRV_PARAM_IN),
+            array(&$TransactionID, SQLSRV_PARAM_IN),
+            array(&$EmployeeId, SQLSRV_PARAM_IN),
+            array(&$DriverId, SQLSRV_PARAM_IN),
+            array(&$SalesInformation, SQLSRV_PARAM_IN),
+            array(&$result, SQLSRV_PARAM_OUT) ,
+            array(&$message, SQLSRV_PARAM_OUT)  
+            );
 
-        //     // while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
-        //     //     print_r($row);
-        //     // }
-        // }else{
-        //     die( print_r( sqlsrv_errors(), true));
-        // }
-        sqlsrv_close($conn);
+        $stmt = sqlsrv_query($conn,$sqlcommand,$params);
+        if($stmt === false){
+            die(print_r(sqlsrv_errors(),true));
+        }
+        echo "the result is  ". $result. ". the message is ".$message."</br>"; 
+
+    }
+    function addCustomer(){
+        $conn = get_connection();
+        if ($conn) {
+            echo "Connection established.<br />";
+        } else {
+            echo "Connection could not be established.<br />";
+            die(print_r(sqlsrv_errors(), true));
+        }
+        $sqlcommand = "EXEC	[dbo].[spAddCustomer]
+                            @CustomerName = ?,
+                            @CustomerAddress = ?,
+                            @CustomerTinNumber = ?,
+                            @CustomerPhoneNumber = ?,
+                            @BankAccount = ?,
+                            @result = ?,
+                            @message = ?";
+        $CustomerName = "bella";
+        $CustomerAddress = null;
+        $CustomerTinNumber = null;
+        $CustomerPhoneNumber = null;
+        $BankAccount = '123453245';
+        $result = 0;
+        $message = '';
+
+        $params = array(   
+            array(&$CustomerName, SQLSRV_PARAM_IN),
+            array(&$CustomerAddress, SQLSRV_PARAM_IN),
+            array(&$CustomerTinNumber, SQLSRV_PARAM_IN),
+            array(&$CustomerPhoneNumber, SQLSRV_PARAM_IN),
+            array(&$BankAccount, SQLSRV_PARAM_IN),
+            array(&$result, SQLSRV_PARAM_OUT) ,
+            array(&$message, SQLSRV_PARAM_OUT)  
+            );
+
+        $stmt = sqlsrv_query($conn,$sqlcommand,$params);
+        if($stmt === false){
+            die(print_r(sqlsrv_errors(),true));
+        }
+        echo "the result is  ". $result. ". the message is ".$message."</br>"; 
+
+    }
+    function addEmployee(){
+        $conn = get_connection();
+        if ($conn) {
+            echo "Connection established.<br />";
+        } else {
+            echo "Connection could not be established.<br />";
+            die(print_r(sqlsrv_errors(), true));
+        }
+        $sqlcommand = "EXEC	[dbo].[addEmployee]
+                            @EmployeeName = ?,
+                            @EmployeeUsername = ?,
+                            @EmployeePassword = ?,
+                            @EmplooyeePhoneNumber = ?,
+                            @EmployeeAddress = ?,
+                            @result = ?,
+                            @message = ?";
+        $EmployeeName = 'abel';
+        $EmployeeUsername = 'bel';
+        $EmployeePassword = 321;
+        $EmplooyeePhoneNumber = null;
+        $EmployeeAddress = null;
+        $result = 0;
+        $message = '';
+
+        $params = array(   
+            array(&$EmployeeName, SQLSRV_PARAM_IN),
+            array(&$EmployeeUsername, SQLSRV_PARAM_IN),
+            array(&$EmployeePassword, SQLSRV_PARAM_IN),
+            array(&$EmplooyeePhoneNumber, SQLSRV_PARAM_IN),
+            array(&$EmployeeAddress, SQLSRV_PARAM_IN),
+            array(&$result, SQLSRV_PARAM_OUT) ,
+            array(&$message, SQLSRV_PARAM_OUT)  
+            );
+
+        $stmt = sqlsrv_query($conn,$sqlcommand,$params);
+        if($stmt === false){
+            die(print_r(sqlsrv_errors(),true));
+        }
+        echo "the result is  ". $result. ". the message is ".$message."</br>"; 
+
+    }
+    function transferItems(){
+        $conn = get_connection();
+        if ($conn) {
+            echo "Connection established.<br />";
+        } else {
+            echo "Connection could not be established.<br />";
+            die(print_r(sqlsrv_errors(), true));
+        }
+        $sqlcommand = "EXEC	[dbo].[spMoveWarehouseToStore]
+                            @ItemId = ?,
+                            @Quantity = ?,
+                            @Date = ?,
+                            @result = ?,
+                            @message = ?";
+        $ItemId = 10;
+        $Quantity = 8;
+        $Date = '04-15-69';
+        $result = 0;
+        $message = '';
+        $params = array(   
+            array(&$ItemId, SQLSRV_PARAM_IN),
+            array(&$Quantity, SQLSRV_PARAM_IN),
+            array(&$Date, SQLSRV_PARAM_IN),
+            array(&$result, SQLSRV_PARAM_OUT) ,
+            array(&$message, SQLSRV_PARAM_OUT)  
+            );
+
+        $stmt = sqlsrv_query($conn,$sqlcommand,$params);
+        if($stmt === false){
+            die(print_r(sqlsrv_errors(),true));
+        }
+        echo "the result is  ". $result. ". the message is ".$message."</br>";  
+    }
+    function MakeShipment(){
+        $conn = get_connection();
+        if ($conn) {
+            echo "Connection established.<br />";
+        } else {
+            echo "Connection could not be established.<br />";
+            die(print_r(sqlsrv_errors(), true));
+        }
+        $sqlcommand = "EXEC	[dbo].[spShipPurchases]
+                                @DeliverdDate = ?,
+                                @GRNNO = ?,
+                                @ShipmentInfo = ?,
+                                @result = ?,
+                                @message = ?";
+        // purchaseId,ItemId,Remainder,Extra
+        $DeliverdDate = "12-23-99";
+        $GRNNO = 7;
+        $ShipmentInfo = "35,05,0,0;36,10,0;37,45,0;38,50,0;";
+        $result = 0;
+        $message = '';
+        $params = array(   
+            array(&$DeliverdDate, SQLSRV_PARAM_IN),
+            array(&$GRNNO, SQLSRV_PARAM_IN),
+            array(&$ShipmentInfo, SQLSRV_PARAM_IN),
+            array(&$result, SQLSRV_PARAM_OUT) ,
+            array(&$message, SQLSRV_PARAM_OUT)  
+            );
+
+        $stmt = sqlsrv_query($conn,$sqlcommand,$params);
+        if($stmt === false){
+            die(print_r(sqlsrv_errors(),true));
+        }
+        echo "the result is  ". $result. ". the message is ".$message."</br>";  
+    }
+    function MakePurchase(){
+        $conn = get_connection();
+        if ($conn) {
+            echo "Connection established.<br />";
+        } else {
+            echo "Connection could not be established.<br />";
+            die(print_r(sqlsrv_errors(), true));
+        }
+        $sqlcommand = "exec spMakePurchase
+                        @PurchsedDate = ?,
+                        @DeliverdDate = ?,
+                        @SupplierName = ?,
+                        @TransactionID = ?,
+                        @DriverID = ?,
+                        @PurchaseString = ?,
+                        @result = ?,
+                        @message = ?";
+        $purchaseDate = '10-04-1999';
+        $DeliverdDate = null;
+        $SupplierName = 'abel';
+        $TransactionID = 1;
+        $DriverID = null;
+        $PurchaseString = '10,2,3,4;12,345,567,23;13,444,234,6;13,7,22,33;';
+        $result = 0;
+        $message = '';  
+        $params = array(   
+            array(&$purchaseDate, SQLSRV_PARAM_IN),
+            array(&$DeliverdDate, SQLSRV_PARAM_IN),
+            array(&$SupplierName, SQLSRV_PARAM_IN),
+            array(&$TransactionID, SQLSRV_PARAM_IN),
+            array(&$DriverID, SQLSRV_PARAM_IN),
+            array(&$PurchaseString, SQLSRV_PARAM_IN),
+            array(&$result, SQLSRV_PARAM_OUT) ,
+            array(&$message, SQLSRV_PARAM_OUT)  
+            );
+        $stmt = sqlsrv_query($conn,$sqlcommand,$params);
+        if($stmt === false){
+            die(print_r(sqlsrv_errors(),true));
+        }
+        echo "the result is  ". $result. ". the message is ".$message."</br>";  
+    }
+    function addNewCategory(){
+        $conn = get_connection();
+        if ($conn) {
+            echo "Connection established.<br />";
+        } else {
+            echo "Connection could not be established.<br />";
+            die(print_r(sqlsrv_errors(), true));
+        }
+        $tsql_callSP = "exec spAddCategory @CategoryName=?, @result=?, @message=? ";
+        $CategoryName = "bella";  
+        $result = 0;
+        $message = '';  
+        $params = array(   
+        array(&$CategoryName, SQLSRV_PARAM_IN),  
+        array(&$result, SQLSRV_PARAM_OUT) ,
+        array(&$message, SQLSRV_PARAM_OUT)  
+        );  
+
+        /* Execute the query. */  
+        $stmt3 = sqlsrv_query( $conn, $tsql_callSP, $params);  
+        if( $stmt3 === false )  
+        {  
+        echo "Error in executing statement 3.\n";  
+        die( print_r( sqlsrv_errors(), true));  
+        }  
+        
+        /* Display the value of the output parameter $salesYTD. */ 
+         
+        echo "the result is  ". $result. ". the message is ".$message."</br>";  
+        
+        while( $row = sqlsrv_fetch_array( $stmt3, SQLSRV_FETCH_ASSOC )) {
+            print_r($row);
+        }
+        sqlsrv_free_stmt( $stmt3);  
+        sqlsrv_close( $conn);   
     }
     function testProcedre()
     {
@@ -120,15 +411,15 @@ class dbOperation
         $stmt2 = sqlsrv_query( $conn, $tsql_createSP);  
         if( $stmt2 === false )  
         {  
-        echo "Error in executing statement 2.\n";  
-        die( print_r( sqlsrv_errors(), true));  
+            echo "Error in executing statement 2.\n";  
+            die( print_r( sqlsrv_errors(), true));  
         }  
 
         /*--------- The next few steps call the stored procedure. ---------*/  
 
         /* Define the Transact-SQL query. Use question marks (?) in place of  
         the parameters to be passed to the stored procedure */  
-        $tsql_callSP = "{call GetEmployeeSalesYTD( ?, ? )}";  
+            $tsql_callSP = "{call GetEmployeeSalesYTD( ?, ? )}";  
 
         /* Define the parameter array. By default, the first parameter is an  
         INPUT parameter. The second parameter is specified as an OUTPUT  
