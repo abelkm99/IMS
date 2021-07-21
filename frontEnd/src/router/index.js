@@ -18,7 +18,7 @@ import AddExpenses from "@/components/AddExpenses.vue";
 import AddSupplier from "@/components/AddSupplier.vue";
 import AddDeriver from "@/components/AddDeriver.vue";
 import AddExpenseType from "@/components/AddExpenseType.vue";
- Vue.use(VueRouter)
+ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',

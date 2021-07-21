@@ -1,0 +1,28 @@
+.view-items th{
+    padding:15px;
+    }
+    .view-items td{
+        padding:15px;
+    }
+    .view-items-header{
+        background: rgb(11, 170, 96);
+        color:white;
+    }
+    .view-items-container{
+    display: grid;
+    place-items: center;
+    }
+    .error{
+        background:red;
+    }
+    .btn-del{
+        width:30px;
+        height:30px;
+        font-weight:bolder;
+        color:white;
+        border:none;
+        background:red;
+        cursor:pointer;
+        border-radius: 50%;
+    
+    }

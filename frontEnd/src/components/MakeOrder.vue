@@ -15,7 +15,7 @@
                         <tr>
                             <td>
                             </td>
-                            <td><button class="btn-submit" @click="addItem">Add Item</button> <button class="btn-submit">Done</button> <button class="btn-submit error" @click="reload">Cancel</button></td>
+                            <td><button class="btn-submit" @click="addItem">Add Item</button> <button @click="printOrder" class="btn-submit">Done</button> <button class="btn-submit error" @click="reload">Cancel</button></td>
 
                         </tr>
                         <tr>
@@ -89,9 +89,12 @@
                      
            
                   </fieldset>
-                <fieldset class="view-items-container">
+                <fieldset class="view-items-container" id="print">
+                 
+
+                  
                     <legend> <h3> Items Added </h3></legend>
-                    <table class="view-items">
+                    <table class="view-items" >
                         <tr class="view-items-header">
                             <th>
                                 Supplier
@@ -181,6 +184,25 @@ export default {
         reload(){
             window.location.reload();
         },
+        printOrder(){
+            const options = {
+  name: '_blank',
+  specs: [
+    'fullscreen=yes',
+    'titlebar=yes',
+    'scrollbars=yes'
+  ],
+  styles: [
+
+    'public/print.css'
+  ]
+}
+         if(this.items.length == 0){
+             alert("Order can not be empty")
+         }else{
+            this.$htmlToPaper("print",options);
+         }   
+        }
     },
 
     data(){
