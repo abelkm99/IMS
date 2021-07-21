@@ -1,7 +1,7 @@
 <template>
     <div>
             <div class="router-view-container">
-                <SalesHeader/>
+                <SubHeaderControl :links="links"/>
             <div class="router-view">
                 <div class="add-purchase">
                   <fieldset class="form-contain">
@@ -80,11 +80,26 @@
     </div>
 </template>
 <script>
-import SalesHeader from "@/components/SalesHeader.vue";
+import SubHeaderControl from "@/components/SubHeaderControl.vue";
 export default {
     name:"ViewSales",
     components:{
-        SalesHeader
+        SubHeaderControl
+    },data(){
+        return {
+            links:[
+                {
+                    id:0,
+                    address:"addSales",
+                    displayText:"Add Sales",
+
+                },{
+                    id:1,
+                    address:"viewSales",
+                    displayText:"Sales"
+                }
+            ]
+        }
     }
 }
 </script>

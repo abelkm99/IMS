@@ -7,7 +7,7 @@
                   <fieldset class="form-contain">
                       <legend>
                           <h3>
-                              Add Purchase
+                              Add Order
                         </h3>
                     </legend>
                     <table>
@@ -28,9 +28,9 @@
                         </tr>
                         <tr>
                          <td>
-                            <label for="PurchaseDate"> <h3> Purchase Date </h3></label>
-                            <input v-model="PurchaseDate" type="date" class="txt-input" name="PurchaseDate" placeholder="GRN NO"  ></td>
-                         <td>  <label for="PurchaseDate"> <h3> Delivery Date </h3></label>
+                            <label for="OrderDate"> <h3> Order Date </h3></label>
+                            <input v-model="OrderDate" type="date" class="txt-input" name="OrderDate" placeholder="GRN NO"  ></td>
+                         <td>  <label for="OrderDate"> <h3> Delivery Date </h3></label>
                             <input type="date" class="txt-input" name="deliveryDate"></td>
                         </tr>
                         <tr>
@@ -154,7 +154,7 @@ export default {
        "PricePerQuantity":'',
        "PurchaseType":'',
        "Driver":'',
-       "PurchaseDate":'',
+       "OrderDate":'',
        "DeliveryDate":'',
        "IndexForDelete":0,
        links:

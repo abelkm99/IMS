@@ -5,29 +5,30 @@
              <div class="dashboard-interactives">
         <div class="dashboard-side-nav">
             <ul>
-                <router-link to="purchase">
+                <router-link to="employees">
                   <a href="">
                     <li>Employees</li>
                 </a>
                 </router-link>
-              <router-link to="orders">
+              <router-link to="expenses">
                   <a href="">
                     <li>Expenses</li>
                 </a>
             
               </router-link>
-                 <router-link to="orders">
+                 <router-link to="supplier">
                   <a href="">
                     <li>Supplier</li>
                 </a>
             
-              </router-link>   <router-link to="orders">
+              </router-link>   
+              <router-link to="deriver">
                   <a href="">
                     <li>Driver</li>
                 </a>
             
               </router-link>
-            <router-link to="sales">
+            <router-link to="status">
                 <a href="">
                     <li>Status</li>
                 </a>

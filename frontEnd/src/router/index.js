@@ -14,7 +14,11 @@ import AddEmployees from "@/components/AddEmployees.vue";
 import AddOrder from "@/components/AddOrder.vue";
 import ViewOrder from "@/components/ViewOrder.vue";
 import ViewOrderId from "@/components/ViewOrderId.vue";
-Vue.use(VueRouter)
+import AddExpenses from "@/components/AddExpenses.vue";
+import AddSupplier from "@/components/AddSupplier.vue";
+import AddDeriver from "@/components/AddDeriver.vue";
+import AddExpenseType from "@/components/AddExpenseType.vue";
+ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
@@ -84,9 +88,26 @@ const routes = [
     component:AdminDashboard,
     children:[
       {
-        path:"addEmployees",
+        path:"employees",
         name:"AddEmployee",
         component:AddEmployees
+      },{
+        path:"expenses",
+        name:"Expenses",
+        component:AddExpenses
+      },{
+        path:"supplier",
+        name:"Supplier",
+        component:AddSupplier
+      },
+      {
+        path:"deriver",
+        name:"Deriver",
+        component:AddDeriver
+      },{
+        path:"addType",
+        name:"AddType",
+        component:AddExpenseType
       }
     ]
   }

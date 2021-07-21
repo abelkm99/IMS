@@ -146,6 +146,43 @@ export default {
     components:{
         SubHeaderControl,
     },
+    methods:{
+             addItem(){
+   
+            this.items.push(
+                {
+                    "Supplier":this.Supplier,
+                    "ItemCode":this.ItemCode,
+                    "ItemType":this.ItemType,
+                    "ItemQuantity":this.ItemQuantity,
+                    "PricePerQuantity":this.PricePerQuantity,
+                    "PurchaseType":this.PurchaseType,
+                    "Driver":this.Driver,
+                    "Index":this.IndexForDelete
+                }
+            )
+            this.IndexForDelete++;
+ 
+        },
+        removeItem(e){
+        const target =   e.target.parentNode.parentNode;
+        const index = target.getAttribute("name");
+        this.items =  this.items.filter(item=>{
+             return item.Index !=  index ; 
+        });
+         console.log(this.items);
+         if(this.items.length == 0){
+             this.IndexForDelete=0;
+         }
+        
+    
+ 
+        },
+        reload(){
+            window.location.reload();
+        },
+    },
+
     data(){
         return {
             "OrderDate":'',
@@ -172,7 +209,9 @@ export default {
                        displayText:"Orders"
                    }
                
-            ]
+            ],
+            IndexForDelete:0,
+            items:[]
         }
     }
 }

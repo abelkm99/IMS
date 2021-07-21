@@ -58,7 +58,7 @@
                     <table class="view-items">
                         <tr class="view-items-header">
                             <th>
-                                GRN Number
+                                Supplier
                             </th>
                             <th>
                                 Item Code
@@ -80,7 +80,7 @@
                             </th>
                         </tr>
                   
-                          <tr @click="viewWithId">
+                          <tr @click="viewWithId" class="clickable">
                          <td>1</td>
                          <td>2</td>
                          <td>3</td>
@@ -89,7 +89,52 @@
                          <td>5</td>
                          <td>5</td>
                        </tr>  
-            <vue-window-modal  :active="visibleFormCrud"  title="Loaded data"  v-on:clickClose="visibleFormCrudUpdate(false)">  
+            <vue-window-modal  :active="visibleFormCrud"  title="Loaded data"  v-on:clickClose="visibleFormCrudUpdate(false)" style="width:auto;">  
+               <table>
+    <tr class="view-items-header">
+                            <th>
+                                Supplier
+                            </th>
+                            <th>
+                                Item Code
+                            </th>
+                            <th>
+                                Item Type
+                            </th>
+                            <th>
+                                Item Quantity
+                            </th>
+                            <th>
+                                Price Per Quantity
+                            </th>
+                            <th>
+                                Purchase Type
+                            </th>
+                            <th>
+                                X
+                            </th>
+                       
+                        </tr>
+                        <tr @click="viewItemWithId" class="clickable">
+                         <td>1</td>
+                         <td>2</td>
+                         <td>3</td>
+                         <td>4</td>
+                         <td>4</td>
+                         <td>5</td>
+                         <td>5</td>
+                       </tr> 
+                    <tr>
+                        <td>
+                            <button class="btn-submit">
+                                Confirm
+                            </button>
+                        </td>
+                    </tr>
+               </table>
+                    
+            </vue-window-modal>
+            <vue-window-modal  :active="visibleFormCrudTwo"  title="Loaded data"  v-on:clickClose="visibleFormCrudTwoUpdate(false)">  
                 details for crudgo here
             </vue-window-modal>
                     </table>
@@ -113,6 +158,12 @@ export default {
         },
         visibleFormCrudUpdate(status){
             this.visibleFormCrud=status;
+        },
+        visibleFormCrudTwoUpdate(status){
+            this.visibleFormCrudTwo = status;
+        },
+        viewItemWithId(){
+          this.visibleFormCrudTwo =  true;  
         }
     }
     ,
@@ -136,7 +187,8 @@ export default {
                    }
                ]
 ,
-visibleFormCrud:false
+visibleFormCrud:false,
+visibleFormCrudTwo:false
         }
     }
 }
@@ -210,5 +262,10 @@ place-items: center;
 }
 .error{
     background:red;
+}
+.clickable{
+    cursor:pointer;
+    background:white;
+    font-weight:bolder;
 }
 </style>
