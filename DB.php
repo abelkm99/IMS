@@ -38,19 +38,31 @@ class dbOperation
         sqlsrv_close($conn);
     }
     function listAllCategory(){
+        $data = [ 'name' => 'God', 'age' => -1 ];
         $conn = get_connection();
+        $jsonMessage = "";
         if($conn){
-            echo "Connection established.<br />";
+            $jsonMessage =  "Connection established";
         }else{
-            echo "Connection could not be established.<br />";
             die(print_r(sqlsrv_errors(), true));
+            $jsonMessage =  "Connection could not be established";
         }
-        $sql = "exec spGetAllCategories";
-
+        $sqlcommand = "select *  from Item 
+        FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER";
+        $sql = "select *  from Item inner join ItemCategory
+                on Item.CategoryID = ItemCategory.CategoryId
+                FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER";
         $stmt = sqlsrv_query($conn, $sql);
+        $res = null;
         while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC )) {
-            print_r($row);
+            // $res.array_push($res,json_encode($row));
+            $res = $row;
         }
+
+        foreach ($res as $key => $value) {
+            $res = $value;
+        }
+        return $res;
     }
     function addNewSupplier(){
         $conn = get_connection();
