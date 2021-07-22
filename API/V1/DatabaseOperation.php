@@ -2,10 +2,15 @@
 
 function get_connection()
 {
-    $database = "Assya-Treading";
-    $username = "assya";
-    $password = "123";
-    $serverName = "LAPTOP-LIUFT80F";
+    $database = "assya-treading";
+    $username = "abel";
+    $password = "ABC123!@#";
+    $serverName = "assya.database.windows.net";
+
+    // $database = "Assya-Treading";
+    // $username = "assya";
+    // $password = "123";
+    // $serverName = "LAPTOP-LIUFT80F";
     $connectionInfo = array("Database" => $database, "UID" => $username, "PWD" => $password);
     $conn = sqlsrv_connect($serverName, $connectionInfo);
     return $conn;
@@ -13,6 +18,40 @@ function get_connection()
 
 class dbOperation
 {
+    function checkConnection(){
+        $conn = get_connection();
+        if ($conn) {
+
+        } else {
+            echo "Connection could not be established";
+            die(print_r(sqlsrv_errors(), true));
+        }
+    }
+    function ListAllSuppliers(){
+        $conn = get_connection();
+        if ($conn) {
+        } else {
+            echo "Connection could not be established.<br />";
+            die(print_r(sqlsrv_errors(), true));
+        }
+        $sqlcommand = "select * from Supplier as s
+                        inner join SupplierBankAccounts as sb
+                        on s.SupplierID = sb.SupplierID
+                        for json auto, WITHOUT_ARRAY_WRAPPER
+                        ";
+        
+        $stmt = sqlsrv_query($conn, $sqlcommand);
+        $res = null;
+        while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC )) {
+            // $res.array_push($res,json_encode($row));
+            $res = $row;
+        }
+
+        foreach ($res as $key => $value) {
+            $res = $value;
+        }
+        return $res;
+    }
 
     function getTransactionType($params)
     {
