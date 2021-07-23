@@ -1,17 +1,14 @@
     <?php
     
     require "../vendor/autoload.php";
-    require "DatabaseOperation.php";
+    require "Models/Items.php";
     
     $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
 
-        $r->addGroup('/ims/api/v1', function (FastRoute\RouteCollector $r) {
-            $r->get('/listSuppliers', function() {
-                header('Content-type: application/json');
-                $db = new dbOperation();
-                $res = $db->ListAllSuppliers();
-                print_r($res);
-            });
+        $r->addGroup('/ims/api/v1/supplier', function (FastRoute\RouteCollector $r) {
+            $r->get('/listSuppliers', 'Supplier/ListAllSuppliers');
+            $r->get('/listSupplier/{Suppliername}','supplier/getSupplierInformation');
+            $r->post('/addSupplier','supplier/addSupplier');
         });
 
         

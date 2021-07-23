@@ -2,15 +2,14 @@
 
 function get_connection()
 {
-    $database = "assya-treading";
-    $username = "abel";
-    $password = "ABC123!@#";
-    $serverName = "assya.database.windows.net";
-
-    // $database = "Assya-Treading";
-    // $username = "assya";
-    // $password = "123";
-    // $serverName = "LAPTOP-LIUFT80F";
+    // $database = "assya-treading";
+    // $username = "abel";
+    // $password = "ABC123!@#";
+    // $serverName = "assya.database.windows.net";
+    $database = "Assya-Treading";
+    $username = "assya";
+    $password = "123";
+    $serverName = "LAPTOP-LIUFT80F";
     $connectionInfo = array("Database" => $database, "UID" => $username, "PWD" => $password);
     $conn = sqlsrv_connect($serverName, $connectionInfo);
     return $conn;
