@@ -1,15 +1,14 @@
 <?php
-    require "DatabaseOperation.php";
-    require "utils.php";
 
     class Supplier{
         function ListAllSuppliers(){
-            
+            header('Content-type: application/json');
             $conn = get_connection();
             if ($conn) {
             } else {
-                echo "Connection could not be established";
-                die(print_r(sqlsrv_errors(), true));
+                $resMessage = array("message"=>" database Connection could not be established");
+                http_response_code(500);
+                echo json_encode($resMessage);
             }
             $sqlcommand = "select * from Supplier as s
                             left join SupplierBankAccounts as sb
@@ -24,11 +23,18 @@
                 $res = $row;
             }
     
-            foreach ($res as $key => $value) {
-                $res = $value;
+            if($res!=null){
+                foreach ($res as $key => $value) {
+                    $res = $value;
+                }
+                http_response_code(200);
+                print_r($res);
             }
-            header('Content-type: application/json');
-            print_r($res);
+            else{
+                $resMessage = array("message"=>"no supplier found" );
+                http_response_code(404);
+                echo json_encode($resMessage);
+            }
         }
         /* 
             validate if all information is given 
@@ -41,7 +47,7 @@
             $conn = get_connection();
             if ($conn) {
             } else {
-                $resMessage = array("message"=>" databse Connection could not be established");
+                $resMessage = array("message"=>" database Connection could not be established");
                 http_response_code(500);
                 echo json_encode($resMessage);
             }
@@ -57,7 +63,9 @@
                 "BankAccountNumber"=>0
             );
             if($json === null) {
-                echo "problem decoding the json";
+                $resMessage = array("message"=>"invalid input");
+                http_response_code(400);
+                echo json_encode($resMessage);
             }else{
                 if(key_value_Validator($array,$json)){
 
@@ -99,7 +107,8 @@
                         http_response_code(200);
                         echo json_encode($resMessage);
                     }
-                }else{
+                }
+                else{
                     $resMessage = array("message"=>"invalid input");
                     http_response_code(400);
                     echo json_encode($resMessage);
@@ -109,6 +118,9 @@
         }
         // function get only one supplier
         function getSupplierInformation($SupplierName){
+            
+            header('Content-type: application/json');
+            
             $conn = get_connection();
             if ($conn) {
             } else {
@@ -132,12 +144,19 @@
                 // $res.array_push($res,json_encode($row));
                 $res = $row;
             }
-    
-            foreach ($res as $key => $value) {
-                $res = $value;
+
+            if($res!=null){
+                foreach ($res as $key => $value) {
+                    $res = $value;
+                }
+                http_response_code(200);
+                print_r($res);
+            }else{
+                $resMessage = array("message"=>"no result for ".$SupplierName." found" );
+                http_response_code(404);
+                echo json_encode($resMessage);
             }
-            header('Content-type: application/json');
-            print_r($res);
+            
         }
         // update supplier
 
