@@ -2,10 +2,6 @@
 
 function get_connection()
 {
-    // $database = "assya-treading";
-    // $username = "abel";
-    // $password = "ABC123!@#";
-    // $serverName = "assya.database.windows.net";
     $database = "Assya-Treading";
     $username = "assya";
     $password = "123";
