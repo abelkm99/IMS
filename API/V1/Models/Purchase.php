@@ -1,6 +1,81 @@
 <?php
 
     class Purchase{
+        function makeSales(){
+            header('Content-type: application/json');
+            $conn = get_connection();
+            if ($conn) {
+            } else {
+                $resMessage = array("message"=>" database Connection could not be established");
+                http_response_code(500);
+                echo json_encode($resMessage);
+            }
+
+            $str_json = file_get_contents('php://input');
+            $json = json_decode($str_json);
+
+            $array = array(
+                "Date"=>1,
+                "CutomerID"=>1,
+                "TransactionID"=>1,
+                "EmployeeId"=>1,
+                "DriverId"=>0,
+                "SalesInformation"=>1,
+            );
+            if($json === null) {
+                $resMessage = array("message"=>"invalid input");
+                http_response_code(400);
+                echo json_encode($resMessage);
+            }else{
+                if(key_value_Validator($array,$json)){
+
+                    $sqlcommand = "EXEC	[dbo].[spMakeSales]
+                            @Date = ?,
+                            @CutomerID = ?,
+                            @TransactionID = ?,
+                            @EmployeeId = ?,
+                            @DriverId = ?,
+                            @SalesInformation = ?,
+                            @result = ?,
+                            @message = ?";
+                    
+                    $Date = $json->Date;
+                    $CutomerID = $json->CutomerID;
+                    $TransactionID = $json->TransactionID;
+                    $EmployeeId = $json->EmployeeId;
+                    $DriverId = $json->DriverId == null?null: $json->DriverId;
+                    $SalesInformation = $json->SalesInformation;
+                    $result = 0;
+                    $message = '';
+                    $params = array(   
+                        array(&$Date, SQLSRV_PARAM_IN),
+                        array(&$CutomerID, SQLSRV_PARAM_IN),
+                        array(&$TransactionID, SQLSRV_PARAM_IN),
+                        array(&$EmployeeId, SQLSRV_PARAM_IN),
+                        array(&$DriverId, SQLSRV_PARAM_IN),
+                        array(&$SalesInformation, SQLSRV_PARAM_IN),
+                        array(&$result, SQLSRV_PARAM_OUT) ,
+                        array(&$message, SQLSRV_PARAM_OUT)  
+                        );
+                
+                    $stmt = sqlsrv_query($conn,$sqlcommand,$params);
+                    if($stmt === false){
+                        $resMessage = sqlsrv_errors();
+                        http_response_code(400);
+                        echo json_encode($resMessage);
+                    }else{
+                        $resMessage = array("result"=>$result,"message"=>$message);
+                        http_response_code(200);
+                        echo json_encode($resMessage);
+                    }
+                }
+                else{
+                    $resMessage = array("message"=>"invalid input");
+                    http_response_code(400);
+                    echo json_encode($resMessage);
+                }
+            }             
+        }
         function movetostore(){
             header('Content-type: application/json');
             $conn = get_connection();
@@ -208,8 +283,8 @@
                     $resMessage = array("message"=>"invalid input");
                     http_response_code(400);
                     echo json_encode($resMessage);
-                }
-                                                                                           
+                }    
+                                                                                        
         }
     }
 

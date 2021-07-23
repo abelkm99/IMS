@@ -8,6 +8,7 @@
     require "Models/utils.php";
     require "Models/Item.php";
     require "Models/Purchase.php";
+    require "Models/Driver.php";
     
     $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
 
@@ -16,6 +17,12 @@
                 $r->get('/listSuppliers', 'Supplier/ListAllSuppliers');
                 $r->get('/listSupplier/{Suppliername}','supplier/getSupplierInformation');
                 $r->post('/addSupplier','supplier/addSupplier');
+            });
+
+            $r->addGroup('/driver', function (FastRoute\RouteCollector $r) {
+                $r->get('/list_drivers', 'Driver/ListAllDrivers');
+                $r->get('/list_customer/{CustomerName}','Customer/getCustomerInformation');
+                $r->post('/add_driver','Driver/addDriver');
             });
             $r->addGroup('/customer', function (FastRoute\RouteCollector $r) {
                 $r->get('/list_customers', 'Customer/ListAllCustomers');
@@ -33,11 +40,18 @@
             $r->addGroup('/purchase', function (FastRoute\RouteCollector $r) {
                 $r->post('/make_purchase', 'Purchase/makePurchase');
                 $r->get('/get_purchase_list','Purchase/GetAllPurchases');
-                $r->get('/get_purchase/{id:\d+}','Purchase/GetAllPurchases');
-                $r->delete('/delete_purchase','Purchase/deletePurchase');
+                $r->get('/get_purchase/{id:\d+}','Purchase/GetAllPurchases'); // not done
+                $r->delete('/delete_purchase','Purchase/deletePurchase'); //not done
                 $r->post('/ship_purchase','Purchase/shipPurchase');
                 $r->post('/move_to_store','Purchase/movetostore');
+                $r->post('/make_sales','Purchase/makeSales');
             });
+            $r->addGroup('/order', function (FastRoute\RouteCollector $r) {
+                $r->get('/list_orders', 'Order/getAllItems');
+                $r->get('/list_order/{orderId}','Order/addNewItem');
+                $r->post('/make_order','Order/makeOrder');
+            });
+            
         });
 
     });
