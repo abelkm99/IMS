@@ -5,6 +5,7 @@
     require "Models/Category.php";
     require "Models/DatabaseOperation.php";
     require "Models/utils.php";
+    require "Models/Item.php";
     
     $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
 
@@ -17,6 +18,10 @@
         $r->addGroup('/ims/api/v1/category', function (FastRoute\RouteCollector $r) {
             $r->get('/getcategories', 'Category/getAllCategories');
             $r->get('/addcategory','Category/addCategory');
+        });
+        $r->addGroup('/ims/api/v1/item', function (FastRoute\RouteCollector $r) {
+            $r->get('/get_items', 'Item/getAllItems');
+            $r->get('/add_new_item','Item/addNewItem');
         });
 
         // {id} must be a number (\d+)

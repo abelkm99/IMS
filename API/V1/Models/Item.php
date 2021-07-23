@@ -1,8 +1,7 @@
 <?php
 
-    class Category{
-        function getAllCategories(){
-
+    class Item{
+        function getAllItems(){
             header('Content-type: application/json');
             $conn = get_connection();
             if ($conn) {
@@ -11,7 +10,10 @@
                 http_response_code(500);
                 echo json_encode($resMessage);
             }
-            $sqlcommand = "select * from ItemCategory for json auto,WITHOUT_ARRAY_WRAPPER";
+            $sqlcommand = "select * from item,ItemCategory
+                            where item.CategoryID = ItemCategory.CategoryId
+                            for json auto,WITHOUT_ARRAY_WRAPPER";
+
             
             $stmt = sqlsrv_query($conn, $sqlcommand);
             $res = null;
@@ -27,12 +29,12 @@
                 print_r($res);
             }
             else{
-                $resMessage = array("message"=>"no category found" );
+                $resMessage = array("message"=>"no item has been found found" );
                 http_response_code(404);
                 echo json_encode($resMessage);
             }
         }
-        function addCategory(){
+        function addNewItem(){
             header('Content-type: application/json');
             $conn = get_connection();
             if ($conn) {
@@ -46,7 +48,10 @@
             $json = json_decode($str_json);
 
             $array = array(
-                "CategoryName"=>1,
+                "CategoryID"=>1,
+                "ItemCode"=>1,
+                "ItemType"=>1,
+                "PPP"=>1
             );
             if($json === null){
                 $resMessage = array("message"=>"invalid input");
@@ -54,16 +59,25 @@
                 echo json_encode($resMessage);
             }else{
                 if(key_value_Validator($array,$json)){
-                    $sqlcommand = "EXEC	[dbo].[spAddCategory]
-                                        @CategoryName = ?,
-                                        @result = ?,
-                                        @message = ?";
-                    $CategoryName = $json->CategoryName;
+                    $sqlcommand = "EXEC	[dbo].[spAddItem]
+                                    @CategoryID = ?,
+                                    @ItemCode = ?,
+                                    @ItemType = ?,
+                                    @PPP = ?,
+                                    @result = ?,
+                                    @message = ?";
+                    $CategoryID = $json->CategoryID;
+                    $ItemCode = $json->ItemCode;
+                    $ItemType = $json->ItemType;
+                    $PPP = $json->PPP;
                     $result = 0;
                     $message = "";
 
                     $params = array(   
-                        array(&$CategoryName, SQLSRV_PARAM_IN),
+                        array(&$CategoryID, SQLSRV_PARAM_IN),
+                        array(&$ItemCode, SQLSRV_PARAM_IN),
+                        array(&$ItemType, SQLSRV_PARAM_IN),
+                        array(&$PPP, SQLSRV_PARAM_IN),
                         array(&$result, SQLSRV_PARAM_OUT) ,
                         array(&$message, SQLSRV_PARAM_OUT)  
                         );
@@ -81,7 +95,9 @@
 
                 }
                 else{
-
+                    $resMessage = array("message"=>"invalid input");
+                    http_response_code(400);
+                    echo json_encode($resMessage);
                 }
             }
         }
