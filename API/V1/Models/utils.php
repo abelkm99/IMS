@@ -13,7 +13,6 @@ function key_value_Validator($array,$json){
             $check = false;
             break;
         }
-
     }
     return $check;
 }

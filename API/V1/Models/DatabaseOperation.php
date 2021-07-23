@@ -324,7 +324,7 @@ class dbOperation
         // purchaseId,ItemId,Remainder,Extra
         $DeliverdDate = "12-23-99";
         $GRNNO = 7;
-        $ShipmentInfo = "35,05,0,0;36,10,0;37,45,0;38,50,0;";
+        $ShipmentInfo = "35,0,0;36,10,0;37,45,0;38,50,0;";
         $result = 0;
         $message = '';
         $params = array(   
@@ -363,7 +363,7 @@ class dbOperation
         $SupplierName = 'abel';
         $TransactionID = 1;
         $DriverID = null;
-        $PurchaseString = '10,2,3,4;12,345,567,23;13,444,234,6;13,7,22,33;';
+        $PurchaseString = '10,2,3;12,345,567;13,444,234;13,7,22;';
         $result = 0;
         $message = '';  
         $params = array(   

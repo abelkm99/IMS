@@ -2,32 +2,44 @@
     
     require "../vendor/autoload.php";
     require "Models/Supplier.php";
+    require "Models/Customer.php";
     require "Models/Category.php";
     require "Models/DatabaseOperation.php";
     require "Models/utils.php";
     require "Models/Item.php";
+    require "Models/Purchase.php";
     
     $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
 
-        $r->addGroup('/ims/api/v1/supplier', function (FastRoute\RouteCollector $r) {
-            $r->get('/listSuppliers', 'Supplier/ListAllSuppliers');
-            $r->get('/listSupplier/{Suppliername}','supplier/getSupplierInformation');
-            $r->post('/addSupplier','supplier/addSupplier');
+        $r->addGroup('/ims/api/v1',function (FastRoute\RouteCollector $r){
+            $r->addGroup('/supplier', function (FastRoute\RouteCollector $r) {
+                $r->get('/listSuppliers', 'Supplier/ListAllSuppliers');
+                $r->get('/listSupplier/{Suppliername}','supplier/getSupplierInformation');
+                $r->post('/addSupplier','supplier/addSupplier');
+            });
+            $r->addGroup('/customer', function (FastRoute\RouteCollector $r) {
+                $r->get('/list_customers', 'Customer/ListAllCustomers');
+                $r->get('/list_customer/{CustomerName}','Customer/getCustomerInformation');
+                $r->post('/add_customer','Customer/addCustomer');
+            });
+            $r->addGroup('/category', function (FastRoute\RouteCollector $r) {
+                $r->get('/getcategories', 'Category/getAllCategories');
+                $r->post('/addcategory','Category/addCategory');
+            });
+            $r->addGroup('/item', function (FastRoute\RouteCollector $r) {
+                $r->get('/get_items', 'Item/getAllItems');
+                $r->post('/add_new_item','Item/addNewItem');
+            });
+            $r->addGroup('/purchase', function (FastRoute\RouteCollector $r) {
+                $r->post('/make_purchase', 'Purchase/makePurchase');
+                $r->get('/get_purchase_list','Purchase/GetAllPurchases');
+                $r->get('/get_purchase/{id:\d+}','Purchase/GetAllPurchases');
+                $r->delete('/delete_purchase','Purchase/deletePurchase');
+                $r->post('/ship_purchase','Purchase/shipPurchase');
+                $r->post('/move_to_store','Purchase/movetostore');
+            });
         });
 
-        $r->addGroup('/ims/api/v1/category', function (FastRoute\RouteCollector $r) {
-            $r->get('/getcategories', 'Category/getAllCategories');
-            $r->get('/addcategory','Category/addCategory');
-        });
-        $r->addGroup('/ims/api/v1/item', function (FastRoute\RouteCollector $r) {
-            $r->get('/get_items', 'Item/getAllItems');
-            $r->get('/add_new_item','Item/addNewItem');
-        });
-
-        // {id} must be a number (\d+)
-        $r->addRoute('GET', '/ims/{id}/{name}','nameAndId');
-        // The /{title} suffix is optional
-        $r->addRoute('GET', '/ims/article/{id:\d+}[/{title}]', 'wahtaguan');
     });
 
     // Fetch method and URI from somewhere
