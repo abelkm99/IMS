@@ -2,6 +2,7 @@
 
 function get_connection()
 {
+   
     $database = "Assya-Treading";
     $username = "assya";
     $password = "123";

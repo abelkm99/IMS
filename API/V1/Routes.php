@@ -22,7 +22,7 @@
 
             $r->addGroup('/driver', function (FastRoute\RouteCollector $r) {
                 $r->get('/list_drivers', 'Driver/ListAllDrivers');
-                $r->get('/list_customer/{CustomerName}','Customer/getCustomerInformation');
+                $r->get('/list_driver/{Drivername}','Driver/getDriverInformation');
                 $r->post('/add_driver','Driver/addDriver');
             });
             $r->addGroup('/customer', function (FastRoute\RouteCollector $r) {
@@ -51,7 +51,7 @@
                 $r->get('/list_orders', 'Order/ListAllOrders');
                 $r->get('/list_order/{orderId:\d+}','Order/getOrder');
                 $r->post('/make_order','Order/makeNewOrder');
-                $r->post('/delete_order','Order/deleteOrder');
+                $r->delete('/delete_order/{orderId:\d+}','Order/deleteOrder');
             });
             
         });

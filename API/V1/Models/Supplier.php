@@ -17,18 +17,14 @@
                             ";
             
             $stmt = sqlsrv_query($conn, $sqlcommand);
-            $res = null;
+            $res = array() ;
             while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC )) {
-                // $res.array_push($res,json_encode($row));
-                $res = $row;
+                array_push($res,$row);
             }
-    
-            if($res!=null){
-                foreach ($res as $key => $value) {
-                    $res = $value;
-                }
+            if(count($res)>0){
+                $jsonString = concatranteJson($res);
                 http_response_code(200);
-                print_r($res);
+                print_r($jsonString);
             }
             else{
                 $resMessage = array("message"=>"no supplier found" );
@@ -139,19 +135,16 @@
 
             $stmt = sqlsrv_query($conn, $sqlcommand,$params);
 
-            $res = null;
+            $res = array() ;
             while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC )) {
-                // $res.array_push($res,json_encode($row));
-                $res = $row;
+                array_push($res,$row);
             }
-
-            if($res!=null){
-                foreach ($res as $key => $value) {
-                    $res = $value;
-                }
+            if(count($res)>0){
+                $jsonString = concatranteJson($res);
                 http_response_code(200);
-                print_r($res);
-            }else{
+                print_r($jsonString);
+            }
+            else{
                 $resMessage = array("message"=>"no result for ".$SupplierName." found" );
                 http_response_code(404);
                 echo json_encode($resMessage);

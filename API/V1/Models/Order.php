@@ -19,17 +19,14 @@
 
             $stmt = sqlsrv_query($conn, $sqlcommand,$params);
 
-            $res = null;
+            $res = array() ;
             while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC )) {
-                $res = $row;
+                array_push($res,$row);
             }
-
-            if($res!=null){
-                foreach ($res as $key => $value) {
-                    $res = $value;
-                }
+            if(count($res)>0){
+                $jsonString = concatranteJson($res);
                 http_response_code(200);
-                print_r($res);
+                print_r($jsonString);
             }else{
                 $resMessage = array("message"=>"no result for ".$OrderId." found" );
                 http_response_code(404);
@@ -45,23 +42,21 @@
                 http_response_code(500);
                 echo json_encode($resMessage);
             }
-            $sqlcommand = "select * from [dbo].[Order],[dbo].[Orderitems]
+            $sqlcommand = "select * from [dbo].[Order], Orderitems
                             where  [dbo].[Order].OrderID =  [dbo].[Orderitems].OrderID
                             for json auto
                             ";
             
             $stmt = sqlsrv_query($conn, $sqlcommand);
-            $res = null;
+
+            $res = array() ;
             while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC )) {
-                $res = $row;
+                array_push($res,$row);
             }
-    
-            if($res!=null){
-                foreach ($res as $key => $value) {
-                    $res = $value;
-                }
+            if(count($res)>0){
+                $jsonString = concatranteJson($res);
                 http_response_code(200);
-                print_r($res);
+                print_r($jsonString);
             }
             else{
                 $resMessage = array("message"=>"no Order ha been found found" );
@@ -131,6 +126,40 @@
                     echo json_encode($resMessage);
                 }
             }     
+        }
+        function deleteOrder($OrderId){
+            header('Content-type: application/json');
+            $conn = get_connection();
+            if ($conn) {
+            } else {
+                $resMessage = array("message"=>" database Connection could not be established");
+                http_response_code(500);
+                echo json_encode($resMessage);
+            }
+            $sqlcommand = "EXEC	[dbo].[spDeleteOrder]
+                            @OrderId = ?,
+                            @result = ?,
+                            @message =?";
+            $result = 0;
+            $message = "";
+
+            $params = array(   
+                array(&$OrderId, SQLSRV_PARAM_IN),
+                array(&$result, SQLSRV_PARAM_OUT) ,
+                array(&$message, SQLSRV_PARAM_OUT)  
+                );
+            
+            $stmt = sqlsrv_query($conn,$sqlcommand,$params);
+            if($stmt === false){
+                $resMessage = sqlsrv_errors();
+                http_response_code(400);
+                echo json_encode($resMessage);
+            }else{
+                $resMessage = array("result"=>$result,"message"=>$message);
+                http_response_code(200);
+                echo json_encode($resMessage);
+            }
+            
         }
         
         
