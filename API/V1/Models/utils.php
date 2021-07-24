@@ -16,6 +16,13 @@ function key_value_Validator($array,$json){
     }
     return $check;
 }
-
+function concatranteJson($rows){
+    $jsonString = "";
+    foreach ($rows as $value) {
+        $firskey = array_key_first($value);
+        $jsonString= $jsonString . $value[$firskey];
+    }
+    return $jsonString;
+}
 
 ?>
