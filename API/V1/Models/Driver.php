@@ -15,17 +15,14 @@
                             ";
             
             $stmt = sqlsrv_query($conn, $sqlcommand);
-            $res = null;
+            $res = array() ;
             while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC )) {
-                $res = $row;
+                array_push($res,$row);
             }
-    
-            if($res!=null){
-                foreach ($res as $key => $value) {
-                    $res = $value;
-                }
+            if(count($res)>0){
+                $jsonString = concatranteJson($res);
                 http_response_code(200);
-                print_r($res);
+                print_r($jsonString);
             }
             else{
                 $resMessage = array("message"=>"no Driver found" );
@@ -99,7 +96,7 @@
             }
         }
         // function get only one supplier
-        function getSupplierInformation($SupplierName){
+        function getDriverInformation($DriverName){
             
             header('Content-type: application/json');
             
@@ -109,32 +106,26 @@
                 echo "Connection could not be established";
                 die(print_r(sqlsrv_errors(), true));
             }
-            $sqlcommand = "select * from Supplier as s
-                            inner join SupplierBankAccounts as sb
-                            on s.SupplierID = sb.SupplierID
-                            WHERE SupplierName = ?
-                            for json auto, WITHOUT_ARRAY_WRAPPER
-                            ";
+            $sqlcommand = "select * from Driver
+                            WHERE DriverName = ?
+                            for json auto";
             $params = array(
-                array($SupplierName,SQLSRV_PARAM_IN)
+                array($DriverName,SQLSRV_PARAM_IN)
             );
 
             $stmt = sqlsrv_query($conn, $sqlcommand,$params);
 
-            $res = null;
+            $res = array() ;
             while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC )) {
-                // $res.array_push($res,json_encode($row));
-                $res = $row;
+                array_push($res,$row);
             }
-
-            if($res!=null){
-                foreach ($res as $key => $value) {
-                    $res = $value;
-                }
+            if(count($res)>0){
+                $jsonString = concatranteJson($res);
                 http_response_code(200);
-                print_r($res);
-            }else{
-                $resMessage = array("message"=>"no result for ".$SupplierName." found" );
+                print_r($jsonString);
+            }
+            else{
+                $resMessage = array("message"=>"no result for ".$DriverName." found" );
                 http_response_code(404);
                 echo json_encode($resMessage);
             }
