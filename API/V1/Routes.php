@@ -9,6 +9,7 @@
     require "Models/Item.php";
     require "Models/Purchase.php";
     require "Models/Driver.php";
+    require "Models/Order.php";
     
     $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
 
@@ -47,9 +48,10 @@
                 $r->post('/make_sales','Purchase/makeSales');
             });
             $r->addGroup('/order', function (FastRoute\RouteCollector $r) {
-                $r->get('/list_orders', 'Order/getAllItems');
-                $r->get('/list_order/{orderId}','Order/addNewItem');
-                $r->post('/make_order','Order/makeOrder');
+                $r->get('/list_orders', 'Order/ListAllOrders');
+                $r->get('/list_order/{orderId:\d+}','Order/getOrder');
+                $r->post('/make_order','Order/makeNewOrder');
+                $r->post('/delete_order','Order/deleteOrder');
             });
             
         });
