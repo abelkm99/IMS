@@ -30,10 +30,105 @@
             }
         }
         function addSalaryExpence(){
+            header('Content-type: application/json');
+            $conn = get_connection();
+            if ($conn) {
+            } else {
+                $resMessage = array("message"=>" database Connection could not be established");
+                http_response_code(500);
+                echo json_encode($resMessage);
+                return;
+            }
+
+            $str_json = file_get_contents('php://input');
+            $json = json_decode($str_json);
+
+            $array = array(
+                "Date"=>1,
+                "Cost"=>1,
+                "EmployeeID"=>1
+            );
+            if($json === null) {
+                $resMessage = array("message"=>"invalid input");
+                http_response_code(400);
+                echo json_encode($resMessage);
+            }else{
+                if(key_value_Validator($array,$json)){
+
+                    $sqlcommand = "EXEC	[dbo].[spAddSalaryExpense]
+                                        @Date = ?,
+                                        @Cost = ?,
+                                        @EmployeeID = ?,
+                                        @result = ?,
+                                        @message = ?";
+
+                    $Date = $json->Date;
+                    $Cost = $json->Cost;
+                    $EmployeeID = $json->EmployeeID;
+                    $result = 0;
+                    $message = "";
+
+                    $params = array(   
+                        array(&$Date, SQLSRV_PARAM_IN),
+                        array(&$Cost, SQLSRV_PARAM_IN),
+                        array(&$EmployeeID, SQLSRV_PARAM_IN),
+                        array(&$result, SQLSRV_PARAM_OUT),
+                        array(&$message, SQLSRV_PARAM_OUT)  
+                        );
+                    
+                    $stmt = sqlsrv_query($conn,$sqlcommand,$params);
+                    if($stmt === false){
+                        $resMessage = sqlsrv_errors();
+                        http_response_code(400);
+                        echo json_encode($resMessage);
+                    }else{
+                        $resMessage = array("result"=>$result,"message"=>$message);
+                        http_response_code(200);
+                        echo json_encode($resMessage);
+                    }
+                }
+                else{
+                    $resMessage = array("message"=>"invalid input");
+                    http_response_code(400);
+                    echo json_encode($resMessage);
+                }
+
+            }
 
         }
-        function deleteSalaryExpence(){
+        function deleteSalaryExpence($SalaryId){
+            header('Content-type: application/json');
+            $conn = get_connection();
+            if ($conn) {
+            } else {
+                $resMessage = array("message"=>" database Connection could not be established");
+                http_response_code(500);
+                echo json_encode($resMessage);
+                return;
+            }
+            $sqlcommand = "EXEC	[dbo].[spDeleteSalaryExpence]
+                                @SalaryID = ?,
+                                @result = ?,
+                                @message = ?";
+            $result = 0;
+            $message = "";
 
+            $params = array(   
+                array(&$SalaryId, SQLSRV_PARAM_IN),
+                array(&$result, SQLSRV_PARAM_OUT),
+                array(&$message, SQLSRV_PARAM_OUT)  
+                );
+            
+            $stmt = sqlsrv_query($conn,$sqlcommand,$params);
+            if($stmt === false){
+                $resMessage = sqlsrv_errors();
+                http_response_code(400);
+                echo json_encode($resMessage);
+            }else{
+                $resMessage = array("result"=>$result,"message"=>$message);
+                http_response_code(200);
+                echo json_encode($resMessage);
+            }
         }
         function updateSalaryExpence(){
 
@@ -70,10 +165,103 @@
             }
         }
         function addMasatefiyaExpence(){
+            header('Content-type: application/json');
+            $conn = get_connection();
+            if ($conn) {
+            } else {
+                $resMessage = array("message"=>" database Connection could not be established");
+                http_response_code(500);
+                echo json_encode($resMessage);
+            }
 
+            $str_json = file_get_contents('php://input');
+            $json = json_decode($str_json);
+
+            $array = array(
+                "Date"=>1,
+                "Cost"=>1,
+                "REFNO"=>1
+            );
+            if($json === null) {
+                $resMessage = array("message"=>"invalid input");
+                http_response_code(400);
+                echo json_encode($resMessage);
+            }else{
+                if(key_value_Validator($array,$json)){
+
+                    $sqlcommand = "EXEC	[dbo].[spAddMasatefiya]
+                                        @REFNO = ?,
+                                        @Date = ?,
+                                        @Cost = ?,
+                                        @result = ?,
+                                        @message = ?";
+
+                    $Date = $json->Date;
+                    $Cost = $json->Cost;
+                    $REFNO = $json->REFNO;
+                    $result = 0;
+                    $message = "";
+
+                    $params = array(   
+                        array(&$REFNO, SQLSRV_PARAM_IN),
+                        array(&$Date, SQLSRV_PARAM_IN),
+                        array(&$Cost, SQLSRV_PARAM_IN),
+                        array(&$result, SQLSRV_PARAM_OUT),
+                        array(&$message, SQLSRV_PARAM_OUT)  
+                        );
+                    
+                    $stmt = sqlsrv_query($conn,$sqlcommand,$params);
+                    if($stmt === false){
+                        $resMessage = sqlsrv_errors();
+                        http_response_code(400);
+                        echo json_encode($resMessage);
+                    }else{
+                        $resMessage = array("result"=>$result,"message"=>$message);
+                        http_response_code(200);
+                        echo json_encode($resMessage);
+                    }
+                }
+                else{
+                    $resMessage = array("message"=>"invalid input");
+                    http_response_code(400);
+                    echo json_encode($resMessage);
+                }
+
+            }
         }
-        function deleteMasatefiyaExpence(){
+        function deleteMasatefiyaExpence($MID){
+            header('Content-type: application/json');
+            $conn = get_connection();
+            if ($conn) {
+            } else {
+                $resMessage = array("message"=>" database Connection could not be established");
+                http_response_code(500);
+                echo json_encode($resMessage);
+                return;
+            }
+            $sqlcommand = "EXEC	[dbo].[spDeleteMasatefiyaExpence]
+                                @MID = ?,
+                                @result = ?,
+                                @message = ?";
+            $result = 0;
+            $message = "";
 
+            $params = array(   
+                array(&$MID, SQLSRV_PARAM_IN),
+                array(&$result, SQLSRV_PARAM_OUT),
+                array(&$message, SQLSRV_PARAM_OUT)  
+                );
+            
+            $stmt = sqlsrv_query($conn,$sqlcommand,$params);
+            if($stmt === false){
+                $resMessage = sqlsrv_errors();
+                http_response_code(400);
+                echo json_encode($resMessage);
+            }else{
+                $resMessage = array("result"=>$result,"message"=>$message);
+                http_response_code(200);
+                echo json_encode($resMessage);
+            }
         }
         function updateMasatefiyaExpence(){
 
