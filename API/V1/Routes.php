@@ -10,6 +10,7 @@
     require "Models/Purchase.php";
     require "Models/Driver.php";
     require "Models/Order.php";
+    require "Models/Expences.php";
     
     $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
 
@@ -52,6 +53,32 @@
                 $r->get('/list_order/{orderId:\d+}','Order/getOrder');
                 $r->post('/make_order','Order/makeNewOrder');
                 $r->delete('/delete_order/{orderId:\d+}','Order/deleteOrder');
+            });
+            $r->addGroup('/expence',function(FastRoute\RouteCollector $r){
+                $r->addGroup('/unloadingExpence',function(FastRoute\RouteCollector $r){
+                    $r->get('/get_unloading_expence','LoadUnLoadExpences/getUnloadingExpences');
+                    $r->post('/add_unloading_expence','LoadUnLoadExpences/addUnloadingExpence');
+                    $r->delete('/delete_unloading_expence/{UnloadId:\d+}','LoadUnLoadExpences/deleteUnloadingExpence');
+                    $r->put('/update_unloading_expence','LoadUnLoadExpences/updateUnloadingExpence');
+                });
+                $r->addGroup('/loadingExpence',function(FastRoute\RouteCollector $r){
+                    $r->get('/get_loading_expence','LoadUnLoadExpences/getloadingExpences');
+                    $r->post('/add_loading_expence','LoadUnLoadExpences/addloadingExpence');
+                    $r->delete('/delete_loading_expence/{loadId:\d+}','LoadUnLoadExpences/deleteloadingExpence');
+                    $r->put('/update_loading_expence','LoadUnLoadExpences/updateloadingExpence');
+                });
+                $r->addGroup('/masatefiya',function(FastRoute\RouteCollector $r){
+                    $r->get('/get_masatefiya_expense','Masatefiya/getMasatefiyaExpence');
+                    $r->post('/add_masatefiya_expence','Masatefiya/addMasatefiyaExpence');
+                    $r->delete('/delete_masatefiya_expence/{MID:\d+}','Masatefiya/deleteMasatefiyaExpence');
+                    $r->put('/update_masatefiya_expence','Masatefiya/updateMasatefiyaExpence');
+                });
+                $r->addGroup('/salary',function(FastRoute\RouteCollector $r){
+                    $r->get('/get_salary_expense','Salary/getSalaryExpence');
+                    $r->post('/add_salary_expence','Salary/addSalaryExpence');
+                    $r->delete('/delete_salary_expence/{SalaryId:\d+}','Salary/deleteSalaryExpence');
+                    $r->put('/update_salary_expence','Salary/updateSalaryExpence');
+                });
             });
             
         });

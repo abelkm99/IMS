@@ -13,7 +13,7 @@
             $sqlcommand = "select * from Supplier as s
                             left join SupplierBankAccounts as sb
                             on s.SupplierID = sb.SupplierID
-                            for json auto, WITHOUT_ARRAY_WRAPPER
+                            for json auto
                             ";
             
             $stmt = sqlsrv_query($conn, $sqlcommand);
