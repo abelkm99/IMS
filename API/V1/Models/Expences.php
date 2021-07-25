@@ -131,7 +131,74 @@
             }
         }
         function updateSalaryExpence(){
+            header('Content-type: application/json');
+            $conn = get_connection();
+            if ($conn) {
+            } else {
+                $resMessage = array("message"=>" database Connection could not be established");
+                http_response_code(500);
+                echo json_encode($resMessage);
+            }
 
+            $str_json = file_get_contents('php://input');
+            $json = json_decode($str_json);
+
+            $array = array(
+                "Date"=>0,
+                "Cost"=>0,
+                "EmployeeID"=>0,
+                "SalaryID"=>1
+            );
+            if($json === null) {
+                $resMessage = array("message"=>"invalid input");
+                http_response_code(400);
+                echo json_encode($resMessage);
+            }else{
+                if(key_value_Validator($array,$json)){
+
+                    $sqlcommand = "EXEC	[dbo].[spUpdateSalaryExpence]
+                                        @Date = ?,
+                                        @Cost = ?,
+                                        @EmployeeID = ?,
+                                        @SalaryID = ?,
+                                        @result = ?,
+                                        @message = ?";
+                    
+
+                    $Date = checkNull($json->Date);
+                    $Cost = checkNull($json->Cost);
+                    $EmployeeID = checkNull($json->EmployeeID);
+                    $SalaryID = checkNull($json->SalaryID);
+                    $result = 0;
+                    $message = "";
+
+                    $params = array(   
+                        array(&$Date, SQLSRV_PARAM_IN),
+                        array(&$Cost, SQLSRV_PARAM_IN),
+                        array(&$EmployeeID, SQLSRV_PARAM_IN),
+                        array(&$SalaryID, SQLSRV_PARAM_IN),
+                        array(&$result, SQLSRV_PARAM_OUT) ,
+                        array(&$message, SQLSRV_PARAM_OUT)  
+                        );
+                    
+                    $stmt = sqlsrv_query($conn,$sqlcommand,$params);
+                    if($stmt === false){
+                        $resMessage = sqlsrv_errors();
+                        http_response_code(400);
+                        echo json_encode($resMessage);
+                    }else{
+                        $resMessage = array("result"=>$result,"message"=>$message);
+                        http_response_code(200);
+                        echo json_encode($resMessage);
+                    }
+                }
+                else{
+                    $resMessage = array("message"=>"invalid input on validation");
+                    http_response_code(400);
+                    echo json_encode($resMessage);
+                }
+
+            }
         }
     }
 
@@ -264,7 +331,74 @@
             }
         }
         function updateMasatefiyaExpence(){
+            header('Content-type: application/json');
+            $conn = get_connection();
+            if ($conn) {
+            } else {
+                $resMessage = array("message"=>" database Connection could not be established");
+                http_response_code(500);
+                echo json_encode($resMessage);
+            }
 
+            $str_json = file_get_contents('php://input');
+            $json = json_decode($str_json);
+
+            $array = array(
+                "Date"=>0,
+                "Cost"=>0,
+                "REFNO"=>0,
+                "MID"=>1
+            );
+            if($json === null) {
+                $resMessage = array("message"=>"invalid input");
+                http_response_code(400);
+                echo json_encode($resMessage);
+            }else{
+                if(key_value_Validator($array,$json)){
+
+                    $sqlcommand = "EXEC	[dbo].[spUpdateMasatefiyaExpence]
+                                        @Date = ?,
+                                        @Cost = ?,
+                                        @REFNO = ?,
+                                        @MID = ?,
+                                        @result = ?,
+                                        @message = ?";
+                    
+
+                    $Date = checkNull($json->Date);
+                    $Cost = checkNull($json->Cost);
+                    $REFNO = checkNull($json->REFNO);
+                    $MID = checkNull($json->MID);
+                    $result = 0;
+                    $message = "";
+
+                    $params = array(   
+                        array(&$Date, SQLSRV_PARAM_IN),
+                        array(&$Cost, SQLSRV_PARAM_IN),
+                        array(&$REFNO, SQLSRV_PARAM_IN),
+                        array(&$MID, SQLSRV_PARAM_IN),
+                        array(&$result, SQLSRV_PARAM_OUT) ,
+                        array(&$message, SQLSRV_PARAM_OUT)  
+                        );
+                    
+                    $stmt = sqlsrv_query($conn,$sqlcommand,$params);
+                    if($stmt === false){
+                        $resMessage = sqlsrv_errors();
+                        http_response_code(400);
+                        echo json_encode($resMessage);
+                    }else{
+                        $resMessage = array("result"=>$result,"message"=>$message);
+                        http_response_code(200);
+                        echo json_encode($resMessage);
+                    }
+                }
+                else{
+                    $resMessage = array("message"=>"invalid input on validation");
+                    http_response_code(400);
+                    echo json_encode($resMessage);
+                }
+
+            }
         }
     }
 
