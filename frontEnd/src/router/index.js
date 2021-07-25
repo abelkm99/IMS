@@ -18,6 +18,12 @@ import AddExpenses from "@/components/AddExpenses.vue";
 import AddSupplier from "@/components/AddSupplier.vue";
 import AddDeriver from "@/components/AddDeriver.vue";
 import AddExpenseType from "@/components/AddExpenseType.vue";
+import AddItem from  "@/components/AddItem.vue";
+import ViewItem from "@/components/ViewItem.vue";
+import ViewEmployees from "@/components/ViewEmployees.vue";
+import AddItemCategory from  "@/components/AddItemCategory.vue";
+import viewCategories from "@/components/ViewCategories.vue";
+import ViewSupplier from "@/components/ViewSupplier.vue";
  Vue.use(VueRouter);
 const routes = [
   {
@@ -92,6 +98,18 @@ const routes = [
         name:"AddEmployee",
         component:AddEmployees
       },{
+        path:"viewEmployees",
+        name:"ViewEmployees",
+        component:ViewEmployees
+      },{
+       path:"itemCategory",
+       name:"Add Item Category",
+       component:AddItemCategory
+      },{
+        path:"viewCategory",
+        name:"View Category",
+        component:viewCategories
+      },{
         path:"expenses",
         name:"Expenses",
         component:AddExpenses
@@ -101,6 +119,11 @@ const routes = [
         component:AddSupplier
       },
       {
+        path:"viewSupplier",
+        name:"view Supplier",
+        component:ViewSupplier
+      },
+      {
         path:"deriver",
         name:"Deriver",
         component:AddDeriver
@@ -108,6 +131,16 @@ const routes = [
         path:"addType",
         name:"AddType",
         component:AddExpenseType
+      },{
+        path:"item",
+        name:"AddItem",
+        component:AddItem,
+
+      },{
+        path:"viewItem",
+        name:"AddItem",
+        component:ViewItem,
+
       }
     ]
   }

@@ -53,16 +53,24 @@ data(){
     return{    links:[
         {
             id:0,
-            address:"expenses",
-            displayText:"Add Expenses"
+            address:"loadingExpense",
+            displayText:"Loading "
         },{
             id:1,
-            address:"viewExpenses",
-            displayText:"Expenses"
+            address:"unloadingExpense",
+            displayText:"Unloading "
         },{
             id:2,
-            address:"addType",
-            displayText:"Add Type"
+            address:"salaryExpense",
+            displayText:"Salary "
+        },{
+            id:3,
+            address:"masatefiyaExpense",
+            displayText:"Masatefiya "
+        },{
+            id:4,
+            address:"otherExpense",
+            displayText:"Other "
         }
     ]
 }}

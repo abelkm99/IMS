@@ -10,18 +10,28 @@
                     <li>Employees</li>
                 </a>
                 </router-link>
+                    <router-link to="Item">
+                 <a href="">
+                    <li>Items</li>
+                </a>
+                </router-link>
+                     <router-link to="ItemCategory">
+                 <a href="">
+                    <li>Item  Category</li>
+                </a>
+                </router-link>
+                <router-link to="supplier">
+                  <a href="">
+                    <li>Supplier</li>
+                </a>
+              </router-link> 
               <router-link to="expenses">
                   <a href="">
                     <li>Expenses</li>
                 </a>
             
               </router-link>
-                 <router-link to="supplier">
-                  <a href="">
-                    <li>Supplier</li>
-                </a>
-            
-              </router-link>   
+         
               <router-link to="deriver">
                   <a href="">
                     <li>Driver</li>
@@ -34,7 +44,7 @@
                 </a>
             </router-link>
         
-             
+     
             </ul>
         </div>
         <div class="dashboard-display">

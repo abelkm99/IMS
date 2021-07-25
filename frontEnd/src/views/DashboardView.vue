@@ -22,12 +22,13 @@
                     <li>Sales</li>
                 </a>
             </router-link>
-    
+        
                 <router-link to="shipment">
                  <a href="">
                     <li>Shipment</li>
                 </a>
                 </router-link>
+
              
             </ul>
         </div>

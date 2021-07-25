@@ -4,20 +4,26 @@
         <div class="router-view">
             <div class="add-purchase">
          <fieldset class="form-contain">
+ 
                 <legend>
                     <h3>
                         Add Employees
                     </h3>
                 </legend>
+                       <form @submit.prevent="addEmployee">
+
+     <input v-model="employeeUserName" type="text" class="txt-input" placeholder="Employee UserName">
        
-              <input v-model="employeeName" type="text" class="txt-input" placeholder="Employee Name">
+                <input v-model="employeeName" type="text" class="txt-input" placeholder="Employee Name">
             
-                 <input type="password" class="txt-input" placeholder="****">
+                <input v-model="employeePassword" type="password" class="txt-input" placeholder="****">
               
-                 <input name="employePhone" type="text" class="txt-input" placeholder="employee Phone Number">
+                <input v-model="employeePhoneNumber" name="employePhone" type="text" class="txt-input" placeholder="employee Phone Number">
             
-              <input type="text" class="txt-input" placeholder="Employee Address">
-              <button class="btn-submit">Add</button>
+                <input v-model="employeeAddress" type="text" class="txt-input" placeholder="Employee Address">
+              
+              <button type="submit" class="btn-submit">Add</button>
+             </form>
             </fieldset>
             </div>
          
@@ -26,6 +32,7 @@
 </template>
 <script>
 import SubHeaderControl from "@/components/SubHeaderControl.vue";
+import Employees from "@/api_calls/Employees.js";
 export default {
     name:"AddEmployees",
     components:{
@@ -33,6 +40,11 @@ export default {
     },
     data(){
         return{
+            employeeName:'',
+            employeePhoneNumber:'',
+            employeeAddress:'',
+            employeeUserName:'',
+            employeePassword:'',
            links:
                [
                    {    
@@ -47,6 +59,19 @@ export default {
                    }
                ]
            
+        }
+    },methods:{
+        addEmployee(){
+             
+            const data = {
+    "EmployeeName": this.employeeName,
+    "EmployeePassword": this.employeePassword,
+    "EmployeePhoneNumber":this.employeePhoneNumber,
+    "EmployeeAddress": this.employeeAddress,
+    "EmployeeUserName": this.employeeUserName
+            }
+           console.log(data);
+            Employees.addEmployee(data).then(res=>console.log(res)).catch(err=>console.log(err));
         }
     }
     
