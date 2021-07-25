@@ -11,6 +11,7 @@
     require "Models/Driver.php";
     require "Models/Order.php";
     require "Models/Expences.php";
+    require "Models/Employee.php";
     
     $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
 
@@ -19,25 +20,52 @@
                 $r->get('/listSuppliers', 'Supplier/ListAllSuppliers');
                 $r->get('/listSupplier/{Suppliername}','supplier/getSupplierInformation');
                 $r->post('/addSupplier','supplier/addSupplier');
+                $r->put('/updateSupplier','supplier/updateSupplier');
+                $r->get('/list_supplier_bankaccount/{SupplierID:\d+}','supplier/getSupplierBankAccount');
+                $r->post('/add_supplier_bankaccount','supplier/addSupplierBankAccount');
+                $r->put('/update_supplier_bankaccount','supplier/updateSupplierBankAccount');
+                $r->delete('/delete_supplier_bankaccount/{BankAcountId:\d+}','supplier/delteSupplierBankAccount');
             });
 
             $r->addGroup('/driver', function (FastRoute\RouteCollector $r) {
                 $r->get('/list_drivers', 'Driver/ListAllDrivers');
                 $r->get('/list_driver/{Drivername}','Driver/getDriverInformation');
                 $r->post('/add_driver','Driver/addDriver');
+                $r->put('/update_driver','Driver/updateDriver');
+            });
+
+            $r->addGroup('/employee', function (FastRoute\RouteCollector $r) {
+                $r->get('/list_employees', 'Employee/ListAllEmployees');
+                $r->get('/list_employee_info/{EmployeeId:\d+}','Employee/getEmployeeInfromation');
+                $r->post('/add_employee','Employee/addEmployee');
+                $r->put('/update_employee','Employee/updateEmployee');
+                $r->put('/update_employee_auth','Employee/updateEmployeeAuthentication');
+                $r->post('/activate_employee','Employee/activateEmployee');
+                $r->post('/deactivate_employee','Employee/deactivateEmployee');
+                $r->delete('/delete_employee/{EmployeeId:\d+}','Employee/deleteEmployee');
             });
             $r->addGroup('/customer', function (FastRoute\RouteCollector $r) {
                 $r->get('/list_customers', 'Customer/ListAllCustomers');
                 $r->get('/list_customer/{CustomerName}','Customer/getCustomerInformation');
                 $r->post('/add_customer','Customer/addCustomer');
+                $r->put('/update_customer','Customer/updateCustomer');
+                $r->get('/list_customer_bankaccount/{CustomerId:\d+}','Customer/getCustomerBankAccount');
+                $r->post('/add_customer_bankaccount','Customer/addCustomerBankAccount');
+                $r->put('/update_customer_bankaccount','Customer/updateCustomerBankAccount');
+                $r->delete('/delete_customer_bankaccount/{BankAcountId:\d+}','Customer/deleteCustomerBankAccount');
+
             });
             $r->addGroup('/category', function (FastRoute\RouteCollector $r) {
                 $r->get('/getcategories', 'Category/getAllCategories');
                 $r->post('/addcategory','Category/addCategory');
+                $r->put('/update_category','Category/updateCategory');
+
             });
             $r->addGroup('/item', function (FastRoute\RouteCollector $r) {
                 $r->get('/get_items', 'Item/getAllItems');
                 $r->post('/add_new_item','Item/addNewItem');
+                $r->put('/update_item','Item/updateItem');
+                $r->put('/update_item_price','Item/updateItemPrice');
             });
             $r->addGroup('/purchase', function (FastRoute\RouteCollector $r) {
                 $r->post('/make_purchase', 'Purchase/makePurchase');

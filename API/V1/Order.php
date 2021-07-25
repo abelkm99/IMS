@@ -10,8 +10,7 @@
                 echo json_encode($resMessage);
             }
             $sqlcommand = "select * from Driver
-                            for json auto, WITHOUT_ARRAY_WRAPPER
-                            ";
+                            for json auto";
             
             $stmt = sqlsrv_query($conn, $sqlcommand);
             $res = null;

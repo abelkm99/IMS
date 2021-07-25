@@ -1,8 +1,6 @@
 <?php
-
     class Category{
         function getAllCategories(){
-
             header('Content-type: application/json');
             $conn = get_connection();
             if ($conn) {
@@ -11,7 +9,7 @@
                 http_response_code(500);
                 echo json_encode($resMessage);
             }
-            $sqlcommand = "select * from ItemCategory for json auto,WITHOUT_ARRAY_WRAPPER";
+            $sqlcommand = "select * from ItemCategory for json auto";
             
             $stmt = sqlsrv_query($conn, $sqlcommand);
             $res = array() ;
@@ -83,5 +81,17 @@
                     echo json_encode($resMessage);
                 }
             }
+        }
+        function updateCategory(){
+            $array = array(
+                "CategoryName"=>1,
+                "CategoryId"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spUpdateCategory]
+            @CategoryName = ?,
+            @CategoryId = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
         }
     }

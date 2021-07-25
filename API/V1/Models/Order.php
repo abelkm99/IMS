@@ -12,7 +12,7 @@
                            inner join [dbo].[Orderitems]
                            on [dbo].[Order].OrderID= [dbo].[Orderitems].OrderID
                            where [dbo].[Order].OrderID = ?
-                           for json auto,WITHOUT_ARRAY_WRAPPER";
+                           for json auto";
             $params = array(
                 array($OrderId,SQLSRV_PARAM_IN)
             );

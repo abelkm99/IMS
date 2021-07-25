@@ -139,7 +139,38 @@ function excute_prodecure($inputs,$sqlcommand){
     }
 
 }
+function excute_prepared_statements($inputs,$sqlcommand){
+    header('Content-type: application/json');
+    $conn = get_connection();
+    if ($conn) {
+    } else {
+        echo "Connection could not be established";
+        die(print_r(sqlsrv_errors(), true));
+    }
+    
+    $params = array();
+    foreach($inputs as $paramin){
+        array_push($params,array($paramin,SQLSRV_PARAM_IN));
+    }
 
+    $stmt = sqlsrv_query($conn, $sqlcommand,$params);
+
+    $res = array() ;
+    while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC )) {
+        array_push($res,$row);
+    }
+    if(count($res)>0){
+        $jsonString = concatranteJson($res);
+        http_response_code(200);
+        print_r($jsonString);
+    }
+    else{
+        $resMessage = array("message"=>"no result found" );
+        http_response_code(404);
+        echo json_encode($resMessage);
+    }
+
+}
 
 class dbOperation
 {
@@ -162,7 +193,7 @@ class dbOperation
         $sqlcommand = "select * from Supplier as s
                         inner join SupplierBankAccounts as sb
                         on s.SupplierID = sb.SupplierID
-                        for json auto, WITHOUT_ARRAY_WRAPPER
+                        for json auto
                         ";
         
         $stmt = sqlsrv_query($conn, $sqlcommand);
@@ -213,10 +244,10 @@ class dbOperation
             $jsonMessage =  "Connection could not be established";
         }
         $sqlcommand = "select *  from Item 
-        FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER";
+        FOR JSON AUTO";
         $sql = "select *  from Item inner join ItemCategory
                 on Item.CategoryID = ItemCategory.CategoryId
-                FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER";
+                FOR JSON AUTO";
         $stmt = sqlsrv_query($conn, $sql);
         $res = null;
         while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC )) {
