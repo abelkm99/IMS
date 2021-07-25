@@ -35,7 +35,7 @@ function excute_select_operation($sqlcommand){
         print_r($jsonString);
     }
     else{
-        $resMessage = array("message"=>"no salary Expence is found" );
+        $resMessage = array("message"=>"no data has been  found" );
         http_response_code(404);
         echo json_encode($resMessage);
     }

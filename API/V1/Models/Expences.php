@@ -172,7 +172,6 @@
                             @result = ?,
                             @message = ?";
             excute_prodecure($array,$sqlcommand);
-
         }
 
         function getUnloadingExpences(){
@@ -184,5 +183,259 @@
             $sqlcommand = "select * from [dbo].[Loading-Expence]
                                 for json auto";
             excute_select_operation($sqlcommand);
+        }
+    }
+    class OET{
+        function getOET(){
+            $sqlcommand = "select * from OtherExpencesTypes for json auto";
+            excute_select_operation($sqlcommand);
+        }
+        function addOET(){
+            $array = array(
+                "OEType"=>1,
+                "OEDescription"=>0,
+            );
+
+            $sqlcommand = "EXEC	[dbo].[spAddOtherExpences]
+            @OEType = ?,
+            @OEDescription = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
+        }
+        function deleteOET($OEID){
+            $sqlcommand = "EXEC	[dbo].[spDeleteOtherExpenceTypes]
+            @OEID = ?,
+            @result = ?,
+            @message = ?";
+            excute_delete_prodecure($OEID,$sqlcommand);
+        }
+        function updateOET(){
+            $array = array(
+                "OEType"=>0,
+                "OEDescription"=>0,
+                "OEID"=>1,
+            );
+            $sqlcommand = "EXEC	[dbo].[spUpdateOtherExpenceTypes]
+            @OEType = ?,
+            @OEDescription = ?,
+            @OEID = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
+        }
+    }
+    class PET{
+        function getPET(){
+            $sqlcommand = "select * from PersonalExpencesTypes for json auto";
+            excute_select_operation($sqlcommand);
+        }
+        function addPET(){
+
+            $array = array(
+                "PEType"=>1,
+                "PEDescription"=>0,
+            );
+
+            $sqlcommand = "EXEC	[dbo].[spAddPersonalExpences]
+            @PEType = ?,
+            @PEDescription = ?,
+            @result = ?,
+            @message = ?";
+
+            excute_prodecure($array,$sqlcommand);
+        }
+        function deletePET($PEID){
+            $sqlcommand = "EXEC    [dbo].[spDeletePersonalExpenceTypes]
+            @PEID = ?,
+            @result = ?,
+            @message = ?";
+            excute_delete_prodecure($PEID,$sqlcommand);
+        }
+        function updatePET(){
+            $array = array(
+                "PEType"=>0,
+                "PEDescription"=>0,
+                "PEID"=>1,
+            );
+            $sqlcommand = "EXEC	[dbo].[spUpdatePersonalExpenceTypes]
+            @PEType = ?,
+            @PEDescription = ?,
+            @PEID = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
+        }
+    }
+    class BT{
+        function getBT(){
+            $sqlcommand = "select * from BillTypes for json auto";
+            excute_select_operation($sqlcommand);
+        }
+        function addBT(){
+            $array = array(
+                "BILLType"=>1,
+                "BILLDescription"=>0,
+            );
+
+            $sqlcommand = "EXEC	[dbo].[spAddBillType]
+            @BILLType = ?,
+            @BILLDescription = ?,
+            @result = ?,
+            @message = ?";
+
+            excute_prodecure($array,$sqlcommand);
+        }
+        function deleteBT($BID){
+            $sqlcommand = "EXEC	[dbo].[spDeleteBillExpenceTypes]
+            @BID = ?,
+            @result = ?,
+            @message = ?";
+            excute_delete_prodecure($BID,$sqlcommand);
+        }
+        function updateBT(){
+            $array = array(
+                "BILLType"=>0,
+                "BillDescription"=>0,
+                "BID"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spUpdateBillTypeExpence]
+            @BILLType = ?,
+            @BillDescription = ?,
+            @BID = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
+        }
+    }
+    class OEL{
+        function getOEL(){
+            $sqlcommand = "select * from OtherExpencesList inner join OtherExpencesTypes
+            on OtherExpencesTypes.OEID = OtherExpencesList.OEID
+            for json AUTO";
+            excute_select_operation($sqlcommand);
+        }
+        function addOEL(){
+            $array = array(
+                "OEID"=>1,
+                "Date"=>1,
+                "Cost"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spAddOtherExpenseList]
+            @OEID = ?,
+            @Date = ?,
+            @Cost = ?,
+            @result = ?,
+            @message = ?";
+
+            excute_prodecure($array,$sqlcommand);
+        }
+        function deleteOEL($OExpencesID){
+            $sqlcommand = "EXEC	[dbo].[spDeleteOtherExpenceList]
+            @OExpencesID = ?,
+            @result = ?,
+            @message = ?";
+            excute_delete_prodecure($OExpencesID,$sqlcommand);
+        }
+        function updateOEL(){
+            $array = array(
+                "Date"=>0,
+                "Cost"=>0,
+                "OExpencesID"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spUpdateOtherExpenceList]
+            @Date = ?,
+            @Cost = ?,
+            @OExpencesID = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
+        }
+    }
+    class PEL{
+        function getPEL(){
+            $sqlcommand = "select * from PersonalExpencesList inner join PersonalExpencesTypes
+            on PersonalExpencesList.PEID = PersonalExpencesTypes.PEID
+            for json auto";
+            excute_select_operation($sqlcommand);
+        }
+        function addPEL(){
+            $array = array(
+                "PEID"=>1,
+                "Date"=>1,
+                "Cost"=>1
+            );
+           $sqlcommand = "EXEC	[dbo].[spAddPesonalExpenseList]
+           @PEID = ?,
+           @Date = ?,
+           @Cost = ?,
+           @result = ?,
+           @message = ?";
+           excute_prodecure($array,$sqlcommand);
+        }
+        function deletePEL($PExpencesID){
+            $sqlcommand = "EXEC	[dbo].[spDeletePersonalExpenceList]
+            @PExpencesID = ?,
+            @result = ?,
+            @message = ?";
+            excute_delete_prodecure($PExpencesID,$sqlcommand);
+        }
+        function updatePEL(){
+            $array = array(
+                "Date"=>0,
+                "Cost"=>0,
+                "PExpencesID"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spUpdatePersonalExpenceList]
+            @Date = ?,
+            @Cost = ?,
+            @PExpencesID = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
+
+        }
+    }
+    class BL{
+        function getBL(){
+            $sqlcommand = "select * from BILLExpencesList inner join BillTypes
+            on BILLExpencesList.BID = BillTypes.BID
+            for json auto";
+            excute_select_operation($sqlcommand);
+        }
+        function addBL(){
+            $array = array(
+                "BID"=>1,
+                "Date"=>1,
+                "Cost"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spAddBillExpenseList]
+            @BID = ?,
+            @Date = ?,
+            @Cost = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
+        }
+        function deleteBL($BILLEXPENCEID){
+            $sqlcommand = "EXEC	[dbo].[spDeleteBillExpenceList]
+            @BILLEXPENCEID = ?,
+            @result = ?,
+            @message = ?";
+            excute_delete_prodecure($BILLEXPENCEID,$sqlcommand);
+        }
+        function updateBL(){
+            $array = array(
+                "Date"=>0,
+                "Cost"=>0,
+                "BILLEXPENCEID"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spUpdateBillExpenceList]
+            @Date = ?,
+            @Cost = ?,
+            @BILLEXPENCEID = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
         }
     }

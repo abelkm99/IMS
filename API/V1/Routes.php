@@ -79,11 +79,41 @@
                     $r->delete('/delete_salary_expence/{SalaryId:\d+}','Salary/deleteSalaryExpence');
                     $r->put('/update_salary_expence','Salary/updateSalaryExpence');
                 });
-                $r->addGroup('/otherExpences',function(FastRoute\RouteCollector $r){
-                    $r->get('/get_other_expences','Salary/getSalaryExpence');
-                    $r->post('/add_salary_expence','Salary/addSalaryExpence');
-                    $r->delete('/delete_salary_expence/{SalaryId:\d+}','Salary/deleteSalaryExpence');
-                    $r->put('/update_salary_expence','Salary/updateSalaryExpence');
+                $r->addGroup('/OET',function(FastRoute\RouteCollector $r){
+                    $r->get('/get_OET','OET/getOET');
+                    $r->post('/add_OET','OET/addOET');
+                    $r->delete('/delete_OET/{OEID:\d+}','OET/deleteOET');
+                    $r->put('/update_OET','OET/updateOET');
+                });
+                $r->addGroup('/PET',function(FastRoute\RouteCollector $r){
+                    $r->get('/get_PET','PET/getPET');
+                    $r->post('/add_PET','PET/addPET');
+                    $r->delete('/delete_PET/{PEID:\d+}','PET/deletePET');
+                    $r->put('/update_PET','PET/updatePET');
+                });
+                $r->addGroup('/BT',function(FastRoute\RouteCollector $r){
+                    $r->get('/get_BT','BT/getBT');
+                    $r->post('/add_BT','BT/addBT');
+                    $r->delete('/delete_BT/{BID:\d+}','BT/deleteBT');
+                    $r->put('/update_BT','BT/updateBT');
+                });
+                $r->addGroup('/OEL',function(FastRoute\RouteCollector $r){
+                    $r->get('/get_OEL','OEL/getOEL');
+                    $r->post('/add_OEL','OEL/addOEL');
+                    $r->delete('/delete_OEL/{OExpencesID:\d+}','OEL/deleteOEL');
+                    $r->put('/update_OEL','OEL/updateOEL');
+                });
+                $r->addGroup('/PEL',function(FastRoute\RouteCollector $r){
+                    $r->get('/get_PEL','PEL/getPEL');
+                    $r->post('/add_PEL','PEL/addPEL');
+                    $r->delete('/delete_PEL/{PExpencesID:\d+}','PEL/deletePEL');
+                    $r->put('/update_PEL','PEL/updatePEL');
+                });
+                $r->addGroup('/BL',function(FastRoute\RouteCollector $r){
+                    $r->get('/get_BL','BL/getBL');
+                    $r->post('/add_BL','BL/addBL'); 
+                    $r->delete('/delete_BL/{BILLEXPENCEID:\d+}','BL/deleteBL');
+                    $r->put('/update_BL','BL/updateBL');
                 });
 
             });
@@ -132,9 +162,4 @@
                 }
             }
             break;
-    }
-
-    function nameAndId($vars,$vars2){
-        print_r($vars);
-        print_r($vars2);
     }
