@@ -79,6 +79,13 @@
                     $r->delete('/delete_salary_expence/{SalaryId:\d+}','Salary/deleteSalaryExpence');
                     $r->put('/update_salary_expence','Salary/updateSalaryExpence');
                 });
+                $r->addGroup('/otherExpences',function(FastRoute\RouteCollector $r){
+                    $r->get('/get_other_expences','Salary/getSalaryExpence');
+                    $r->post('/add_salary_expence','Salary/addSalaryExpence');
+                    $r->delete('/delete_salary_expence/{SalaryId:\d+}','Salary/deleteSalaryExpence');
+                    $r->put('/update_salary_expence','Salary/updateSalaryExpence');
+                });
+
             });
             
         });
