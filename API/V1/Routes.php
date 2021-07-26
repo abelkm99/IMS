@@ -12,6 +12,7 @@
     require "Models/Order.php";
     require "Models/Expences.php";
     require "Models/Employee.php";
+    require "Models/CreditSettlement.php";
     
     $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
 
@@ -144,6 +145,23 @@
                     $r->put('/update_BL','BL/updateBL');
                 });
 
+            });
+
+            $r->addGroup('/creaditSettlemnt', function (FastRoute\RouteCollector $r) {
+                $r->addGroup('/GRN',function(FastRoute\RouteCollector $r){
+                    $r->get('/list_all_credit_settlements', 'GRNCreditSettlemnt/ListAllCreditSettlemts');
+                    $r->get('/list_credit_settlement/{CSID:\d+}','GRNCreditSettlemnt/GetCreditSettlment');
+                    $r->post('/add_credit_settlemnts','GRNCreditSettlemnt/addCreditSettlemt');
+                    $r->delete('/delete_credit_settlemnts','GRNCreditSettlemnt/deleteCreditSettlment');
+                    $r->put('/update_credit_settlemt','GRNCreditSettlemnt/updateCreditSettlment');
+                });
+                $r->addGroup('/REF',function(FastRoute\RouteCollector $r){
+                    $r->get('/list_all_credit_settlements', 'REFCreditSettlemnt/ListAllCreditSettlemts');
+                    $r->get('/list_credit_settlement/{CSID:\d+}','REFCreditSettlemnt/GetCreditSettlment');
+                    $r->post('/add_credit_settlemnts','REFCreditSettlemnt/addCreditSettlemt');
+                    $r->delete('/delete_credit_settlemnts','REFCreditSettlemnt/deleteCreditSettlment');
+                    $r->put('/update_credit_settlemt','REFCreditSettlemnt/updateCreditSettlment');
+                });
             });
             
         });

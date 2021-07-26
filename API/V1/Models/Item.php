@@ -2,9 +2,11 @@
 
     class Item{
         function getAllItems(){
+            $pre = "declare @var varchar(max)  = (";
+            $suf = ")select @var as result"; 
             $sqlcommand = "select * from item,ItemCategory
                             where item.CategoryID = ItemCategory.CategoryId
-                            for json auto";
+                            for json auto ";
             excute_select_operation($sqlcommand);
         }
         function addNewItem(){
