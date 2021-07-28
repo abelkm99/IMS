@@ -8,10 +8,13 @@
         |__==> do it for order items table too
 
 [x] use salesID and Purchase ID for tbales store-sales and purchase-warehouse
-
 [] move to store ware house new unloading expence and loadin expence ask ebtisam
 [] ask ebtisam about the order types
-    
+[] add feature to convert purchase to GRN
+
+[] add new order type inside orders tabel
+[] add new GRN inside GRN Tabel
+[] delete also the infromation from the credit settlement
 
 -------------------------
     select operations
@@ -78,7 +81,7 @@
 ----------------------------
 [x] get all grns and there sub information
 [x] get all reference and there references
-[] get all orders and thre order lists
+[x] get all orders and thre order lists
 
 ------------------------------
     delete operation
@@ -86,9 +89,9 @@
 [x] customer bankaccount
 [x] supplier bankaccount
 
-[ ] delete GRN
-    [ ] if not delivered grn
-    [ ] if any condition mate
+[x] delete GRN
+    [x] if not delivered grn
+    [x] if any condition mate
 [ ] delet Reference
 
 [x] delte Purchase
@@ -102,6 +105,8 @@
 --------------------
 [x] sales credit settlement
 [x] purchases credit settlement
+
+[] do the autentication
 
 RULES
 ----------

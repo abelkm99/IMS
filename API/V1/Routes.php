@@ -93,6 +93,7 @@
                 $r->put('/update_ref','Purchase/updateREF');
                 $r->put('/update_sales','Purchase/updateSales');
                 $r->delete('/delete_sales','Purchase/deleteSales');
+                $r->delete('/delte_grn','Purchase/deleteGRN');
             });
             $r->addGroup('/order', function (FastRoute\RouteCollector $r) {
                 $r->get('/list_orders', 'Order/ListAllOrders');

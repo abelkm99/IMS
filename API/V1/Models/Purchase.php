@@ -164,4 +164,17 @@
             @message = ?";
             excute_prodecure($array,$sqlcommand);
         }
+        function deleteGRN(){
+            $array = array(
+                "GRNNO"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spDeleteGRN]
+            @GRNNO = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
+        }
+        function deleteREF(){
+
+        }
     }
