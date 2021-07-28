@@ -11,10 +11,12 @@
             $array = array(
                 "DriverName"=>1,
                 "DriverPhoneNumber"=>1,
+                "DriverPlate"=>0
             );
             $sqlcommand = "EXEC	[dbo].[spAddDriver]
             @DriverName = ?,
             @DriverPhoneNumber = ?,
+            @DriverPlate = ?,
             @result = ?,
             @message = ?";
 
@@ -32,11 +34,13 @@
             $array = array(
                 "DriverName"=>0,
                 "DriverPhoneNumber"=>0,
+                "DriverPlate"=>0,
                 "DriverID"=>1
             );
             $sqlcommand = "EXEC	[dbo].[spUpdateDriver]
             @DriverName = ?,
             @DriverPhoneNumber = ?,
+            @DriverPlate = ?,
             @DriverID = ?,
             @result = ?,
             @message = ?";

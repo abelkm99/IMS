@@ -53,4 +53,10 @@
             @message = ?";
             excute_prodecure($array,$sqlcommand);
         }
+        function ItemInventory($ItemId){
+            $params_in = array($ItemId);
+            $sqlcommand = "EXEC	[dbo].[spGetItemInventory]
+            @ItemID = ?";
+            excute_prepared_statements($params_in,$sqlcommand);
+        }
     }

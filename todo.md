@@ -1,11 +1,16 @@
     suggestion
 ------------------
-[] driver plate
+[x] driver plate
 [x] make sure not item duplication on one Purchase Table
     with the same GRNNO
-[ ] make sure no item duplication during make sales
+[x] make sure no item duplication during make sales
+        |
+        |__==> do it for order items table too
 
-[] move to store ware house new unloading expence and loadin expence 
+[x] use salesID and Purchase ID for tbales store-sales and purchase-warehouse
+
+[] move to store ware house new unloading expence and loadin expence ask ebtisam
+[] ask ebtisam about the order types
     
 
 -------------------------
@@ -14,7 +19,7 @@
 [x] Employee
 [x] CustomerBankAccount
 [x] supplierBankAccount
-[ ] get transactions type (credit or chash)
+[x] get transactions type (credit or chash)
 [x] get credit settlement information
 
 
@@ -46,45 +51,57 @@
     [x] update item price
     [x] update all item information
 [x] item->Category
-[] Order->date
-[] admin->information (validate using old username and password)
-[] GRN Table
+
+[x] Order-> basic info
+[x] order->list individual
+
+[] admin->information(validate using old username and password)
+
+[x] GRN Table
     Rules
-        [] can't update Delivered Date
-        [] update Supplier ID *validation
-        [] update Driver Id *validation
-        [] update transaction type for GRN
-            [] update information also on the credit settlment table
-[] update Purchase
-    [] PPP
-    [] quantity
-    [] total
-    [] remainder and extra
-        [] update directly on the warehouse table if it is not delivered passible
-        [] check if already delivered check condition and add update
-    
+        [x] can't update Delivered Date if it is not delivered
+        [x] update Supplier ID *validation
+        [x] update Driver Id *validation
+
+[x] update Purchase
+    [x] PPP
+    [x] quantity and
+    [x] remainder and extra
+        [x] update directly on the Purchase table first if it is not delivered passible
+        [x] check if already delivered check condition and add update
+[x] Reference table
+[x] sales table
+
+
 ----------------------------
         queries
 ----------------------------
-[ ]  
-[ ]
+[x] get all grns and there sub information
+[x] get all reference and there references
+[] get all orders and thre order lists
 
 ------------------------------
     delete operation
 ------------------------------
 [x] customer bankaccount
 [x] supplier bankaccount
-[] delete GRN
-    [ ] if not delivered grn
-    [ ] 
 
+[ ] delete GRN
+    [ ] if not delivered grn
+    [ ] if any condition mate
+[ ] delet Reference
+
+[x] delte Purchase
+
+[x] delete individual from sales
+
+[x] delete Order
+[x] delete individual orderlist
 --------------------
     database design
 --------------------
-[] sales credit settlement
-[] purchases credit settlement
-[]  
-
+[x] sales credit settlement
+[x] purchases credit settlement
 
 RULES
 ----------

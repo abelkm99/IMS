@@ -2,18 +2,6 @@
 
     class Purchase{
         function makeSales(){
-            header('Content-type: application/json');
-            $conn = get_connection();
-            if ($conn) {
-            } else {
-                $resMessage = array("message"=>" database Connection could not be established");
-                http_response_code(500);
-                echo json_encode($resMessage);
-            }
-
-            $str_json = file_get_contents('php://input');
-            $json = json_decode($str_json);
-
             $array = array(
                 "Date"=>1,
                 "CutomerID"=>1,
@@ -22,209 +10,49 @@
                 "DriverId"=>0,
                 "SalesInformation"=>1,
             );
-            if($json === null) {
-                $resMessage = array("message"=>"invalid input");
-                http_response_code(400);
-                echo json_encode($resMessage);
-            }else{
-                if(key_value_Validator($array,$json)){
-
-                    $sqlcommand = "EXEC	[dbo].[spMakeSales]
-                            @Date = ?,
-                            @CutomerID = ?,
-                            @TransactionID = ?,
-                            @EmployeeId = ?,
-                            @DriverId = ?,
-                            @SalesInformation = ?,
-                            @result = ?,
-                            @message = ?";
-                    
-                    $Date = $json->Date;
-                    $CutomerID = $json->CutomerID;
-                    $TransactionID = $json->TransactionID;
-                    $EmployeeId = $json->EmployeeId;
-                    $DriverId = $json->DriverId == null?null: $json->DriverId;
-                    $SalesInformation = $json->SalesInformation;
-                    $result = 0;
-                    $message = '';
-                    $params = array(   
-                        array(&$Date, SQLSRV_PARAM_IN),
-                        array(&$CutomerID, SQLSRV_PARAM_IN),
-                        array(&$TransactionID, SQLSRV_PARAM_IN),
-                        array(&$EmployeeId, SQLSRV_PARAM_IN),
-                        array(&$DriverId, SQLSRV_PARAM_IN),
-                        array(&$SalesInformation, SQLSRV_PARAM_IN),
-                        array(&$result, SQLSRV_PARAM_OUT) ,
-                        array(&$message, SQLSRV_PARAM_OUT)  
-                        );
-                
-                    $stmt = sqlsrv_query($conn,$sqlcommand,$params);
-                    if($stmt === false){
-                        $resMessage = sqlsrv_errors();
-                        http_response_code(400);
-                        echo json_encode($resMessage);
-                    }else{
-                        $resMessage = array("result"=>$result,"message"=>$message);
-                        http_response_code(200);
-                        echo json_encode($resMessage);
-                    }
-                }
-                else{
-                    $resMessage = array("message"=>"invalid input");
-                    http_response_code(400);
-                    echo json_encode($resMessage);
-                }
-            }             
+            $sqlcommand = "EXEC	[dbo].[spMakeSales]
+            @Date = ?,
+            @CutomerID = ?,
+            @TransactionID = ?,
+            @EmployeeId = ?,
+            @DriverId = ?,
+            @SalesInformation = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);             
         }
         function movetostore(){
-            header('Content-type: application/json');
-            $conn = get_connection();
-            if ($conn) {
-            } else {
-                $resMessage = array("message"=>" database Connection could not be established");
-                http_response_code(500);
-                echo json_encode($resMessage);
-            }
-
-            $str_json = file_get_contents('php://input');
-            $json = json_decode($str_json);
-        
             $array = array(
                 "ItemId"=>1,
                 "Quantity"=>1,
                 "Date"=>1,
             );
-            if($json === null) {
-                $resMessage = array("message"=>"invalid input");
-                http_response_code(400);
-                echo json_encode($resMessage);
-            }
-            else{
-                if(key_value_Validator($array,$json)){
-
-                    $sqlcommand = "EXEC	[dbo].[spMoveWarehouseToStore]
-                            @ItemId = ?,
-                            @Quantity = ?,
-                            @Date = ?,
-                            @result = ?,
-                            @message = ?";
-                    
-                    $ItemId = $json->ItemId;
-                    $Quantity = $json->Quantity;
-                    $Date = $json->Date;
-                    $result = 0;
-                    $message = '';
-                    $params = array(   
-                        array(&$ItemId, SQLSRV_PARAM_IN),
-                        array(&$Quantity, SQLSRV_PARAM_IN),
-                        array(&$Date, SQLSRV_PARAM_IN),
-                        array(&$result, SQLSRV_PARAM_OUT) ,
-                        array(&$message, SQLSRV_PARAM_OUT)  
-                        );
-                
-                    $stmt = sqlsrv_query($conn,$sqlcommand,$params);
-                    if($stmt === false){
-                        $resMessage = sqlsrv_errors();
-                        http_response_code(400);
-                        echo json_encode($resMessage);
-                    }else{
-                        $resMessage = array("result"=>$result,"message"=>$message);
-                        http_response_code(200);
-                        echo json_encode($resMessage);
-                    }
-                }
-                else{
-                    $resMessage = array("message"=>"invalid input");
-                    http_response_code(400);
-                    echo json_encode($resMessage);
-                }
-            }
+            $sqlcommand = "EXEC	[dbo].[spMoveWarehouseToStore]
+            @ItemId = ?,
+            @Quantity = ?,
+            @Date = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
+            
         }
 
         function shipPurchase(){
-            /*
-                ship purchases
-            */
-            header('Content-type: application/json');
-            $conn = get_connection();
-            if ($conn) {
-            } else {
-                $resMessage = array("message"=>" database Connection could not be established");
-                http_response_code(500);
-                echo json_encode($resMessage);
-            }
-
-            $str_json = file_get_contents('php://input');
-            $json = json_decode($str_json);
-
             $array = array(
                 "DeliverdDate"=>1,
                 "GRNNO"=>1,
                 "ShipmentInfo"=>1,
             );
-            if($json === null) {
-                $resMessage = array("message"=>"invalid input");
-                http_response_code(400);
-                echo json_encode($resMessage);
-            }
-            else{
-                if(key_value_Validator($array,$json)){
-
-                    $sqlcommand = "EXEC	[dbo].[spShipPurchases]
-                                @DeliverdDate = ?,
-                                @GRNNO = ?,
-                                @ShipmentInfo = ?,
-                                @result = ?,
-                                @message = ?";
-                    
-                    $DeliverdDate = $json->DeliverdDate;
-                    $GRNNO = $json->GRNNO;
-                    $ShipmentInfo = $json->ShipmentInfo;
-                    $result = 0;
-                    $message = '';
-                    $params = array(   
-                        array(&$DeliverdDate, SQLSRV_PARAM_IN),
-                        array(&$GRNNO, SQLSRV_PARAM_IN),
-                        array(&$ShipmentInfo, SQLSRV_PARAM_IN),
-                        array(&$result, SQLSRV_PARAM_OUT) ,
-                        array(&$message, SQLSRV_PARAM_OUT)  
-                        );
-                
-                    $stmt = sqlsrv_query($conn,$sqlcommand,$params);
-                    if($stmt === false){
-                        $resMessage = sqlsrv_errors();
-                        http_response_code(400);
-                        echo json_encode($resMessage);
-                    }else{
-                        $resMessage = array("result"=>$result,"message"=>$message);
-                        http_response_code(200);
-                        echo json_encode($resMessage);
-                    }
-                }
-                else{
-                    $resMessage = array("message"=>"invalid input");
-                    http_response_code(400);
-                    echo json_encode($resMessage);
-                }
-            }
+            $sqlcommand = "EXEC	[dbo].[spShipPurchases]
+            @DeliverdDate = ?,
+            @GRNNO = ?,
+            @ShipmentInfo = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
         }
         
         function makePurchase(){
-            /*
-                make sure DRIVER ID has either value or null
-            */
-            header('Content-type: application/json');
-            $conn = get_connection();
-            if ($conn) {
-            } else {
-                $resMessage = array("message"=>" database Connection could not be established");
-                http_response_code(500);
-                echo json_encode($resMessage);
-            }
-
-            $str_json = file_get_contents('php://input');
-            $json = json_decode($str_json);
-
             $array = array(
                 "PurchsedDate"=>1,
                 "SupplierName"=>1,
@@ -232,60 +60,108 @@
                 "DriverID"=>0,
                 "PurchaseString"=>1,
             );
-            if($json === null) {
-                $resMessage = array("message"=>"invalid input");
-                http_response_code(400);
-                echo json_encode($resMessage);
-            }else{
-                if(key_value_Validator($array,$json)){
-
-                    $sqlcommand = "exec spMakePurchase
-                        @PurchsedDate = ?,
-                        @DeliverdDate = ?,
-                        @SupplierName = ?,
-                        @TransactionID = ?,
-                        @DriverID = ?,
-                        @PurchaseString = ?,
-                        @result = ?,
-                        @message = ?";
-                    
-                    $PurchsedDate = $json->PurchsedDate;
-                    $DeliverdDate = null;
-                    $SupplierName = $json->SupplierName;
-                    $TransactionID = $json->TransactionID;;
-                    $DriverID = $json->DriverID == null?null:  $json->DriverID;
-                    $PurchaseString = $json->PurchaseString;
-                    $result = 0;
-                    $message = '';
-                    $params = array(   
-                        array(&$PurchsedDate, SQLSRV_PARAM_IN),
-                        array(&$DeliverdDate, SQLSRV_PARAM_IN),
-                        array(&$SupplierName, SQLSRV_PARAM_IN),
-                        array(&$TransactionID, SQLSRV_PARAM_IN),
-                        array(&$DriverID, SQLSRV_PARAM_IN),
-                        array(&$PurchaseString, SQLSRV_PARAM_IN),
-                        array(&$result, SQLSRV_PARAM_OUT) ,
-                        array(&$message, SQLSRV_PARAM_OUT)  
-                        );
-                
-                    $stmt = sqlsrv_query($conn,$sqlcommand,$params);
-                    if($stmt === false){
-                        $resMessage = sqlsrv_errors();
-                        http_response_code(400);
-                        echo json_encode($resMessage);
-                    }else{
-                        $resMessage = array("result"=>$result,"message"=>$message);
-                        http_response_code(200);
-                        echo json_encode($resMessage);
-                    }
-                }
-                else{
-                    $resMessage = array("message"=>"invalid input");
-                    http_response_code(400);
-                    echo json_encode($resMessage);
-                }    
-                                                                                        
+            $sqlcommand = "EXEC	[dbo].[spMakePurchase]
+            @PurchsedDate = ?,
+            @SupplierName = ?,
+            @TransactionID = ?,
+            @DriverID = ?,
+            @PurchaseString = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);                                                                                        
+        }
+        function updatePurchase(){
+            $array = array(
+                "PPP"=>0,
+                "Quantity"=>0,
+                "Remainder"=>0,
+                "Extra"=>0,
+                "PurchaseID"=>1,
+                "GRNNO"=>1,
+            );
+            $sqlcommand = "EXEC	[dbo].[spUpdatePurchase]
+            @PPP = ?,
+            @Quantity = ?,
+            @Remainder = ?,
+            @Extra = ?,
+            @PurchaseID = ?,
+            @GRNNO = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
+        }
+        function deletePurchase(){
+            $array = array(
+                "PurchaseID"=>1,
+                "GRNNO"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spDeletePurchase]
+            @PurchaseID = ?,
+            @GRNNO = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
+        }
+        function updateGRN(){
+            $array = array(
+                "PurchsedDate"=>0,
+                "DeliverdDate"=>0,
+                "SupplierID"=>0,
+                "DriverID"=>0,
+                "GRNNO"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spUpdateGRN]
+            @PurchsedDate = ?,
+            @DeliverdDate = ?,
+            @SupplierID = ?,
+            @DriverID = ?,
+            @GRNNO = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
+        }
+        function updateREF(){
+            $array = array(
+                "SoldDate"=>0,
+                "CutomerID"=>0,
+                "DriverID"=>0,
+                "REFNO"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spUpdateREF]
+            @SoldDate = ?,
+            @CutomerID = ?,
+            @DriverID = ?,
+            @REFNO = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
+        }
+        function updateSales(){
+            $array = array(
+                "PPP"=>0,
+                "Quantity"=>0,
+                "SalesID"=>1,
+                "REFNO"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spUpdateSales]
+            @PPP = ?,
+            @Quantity = ?,
+            @SalesID = ?,
+            @REFNO = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
+        }
+        function deleteSales(){
+            $array = array(
+                "SalesID"=>1,
+                "REFNO"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spDeleteSales]
+            @SalesID = ?,
+            @REFNO = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
         }
     }
-
-}

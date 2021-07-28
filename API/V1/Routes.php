@@ -9,14 +9,25 @@
     require "Models/Item.php";
     require "Models/Purchase.php";
     require "Models/Driver.php";
-    require "Models/Order.php";
     require "Models/Expences.php";
     require "Models/Employee.php";
     require "Models/CreditSettlement.php";
+    require "Models/Basic.php";
     
     $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
 
         $r->addGroup('/ims/api/v1',function (FastRoute\RouteCollector $r){
+            
+            $r->get('/get_transaction_type','BasicApi/getTransactionType');
+            $r->get('/get_item_stock/{ItemID:\d+}','BasicApi/getItemStock');
+            $r->get('/get_all_grns','');
+            $r->get('/get_grn/{GRNNO:\d+}','BasicApi/getGRN');
+            $r->get('/get_ref/{REFNO:\d+}','BasicApi/getREF');
+            $r->get('/get_order/{OrderID:\d+}','BasicApi/getOrder');
+            $r->get('/get_grns','BasicApi/getALLGRN');
+            $r->get('/get_refs','BasicApi/getAllReferences');
+            $r->get('/get_orders','BasicApi/getAllOrders');
+
             $r->addGroup('/supplier', function (FastRoute\RouteCollector $r) {
                 $r->get('/listSuppliers', 'Supplier/ListAllSuppliers');
                 $r->get('/listSupplier/{Suppliername}','supplier/getSupplierInformation');
@@ -67,6 +78,7 @@
                 $r->post('/add_new_item','Item/addNewItem');
                 $r->put('/update_item','Item/updateItem');
                 $r->put('/update_item_price','Item/updateItemPrice');
+                $r->get('/get_item_inventory/{ItemId:\d+}','Item/ItemInventory');
             });
             $r->addGroup('/purchase', function (FastRoute\RouteCollector $r) {
                 $r->post('/make_purchase', 'Purchase/makePurchase');
@@ -76,12 +88,21 @@
                 $r->post('/ship_purchase','Purchase/shipPurchase');
                 $r->post('/move_to_store','Purchase/movetostore');
                 $r->post('/make_sales','Purchase/makeSales');
+                $r->put('/update_purchase','Purchase/updatePurchase');
+                $r->put('/update_grn','Purchase/updateGRN');
+                $r->put('/update_ref','Purchase/updateREF');
+                $r->put('/update_sales','Purchase/updateSales');
+                $r->delete('/delete_sales','Purchase/deleteSales');
             });
             $r->addGroup('/order', function (FastRoute\RouteCollector $r) {
                 $r->get('/list_orders', 'Order/ListAllOrders');
                 $r->get('/list_order/{orderId:\d+}','Order/getOrder');
                 $r->post('/make_order','Order/makeNewOrder');
                 $r->delete('/delete_order/{orderId:\d+}','Order/deleteOrder');
+                $r->put('/update_order','Order/updateOrder');
+                $r->put('/update_order_list','Order/updateOrderList');
+                $r->delete('/delete_order_list/{OrderdItemId:\d+}','Order/DelteOrderItem');
+
             });
             $r->addGroup('/expence',function(FastRoute\RouteCollector $r){
                 $r->addGroup('/unloadingExpence',function(FastRoute\RouteCollector $r){
