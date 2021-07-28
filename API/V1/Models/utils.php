@@ -25,4 +25,8 @@ function concatranteJson($rows){
     return $jsonString;
 }
 
+function checkNull($value){
+    return $value == null?null:$value;
+}
+
 ?>
