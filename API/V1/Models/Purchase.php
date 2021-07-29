@@ -175,6 +175,27 @@
             excute_prodecure($array,$sqlcommand);
         }
         function deleteREF(){
-
+            $array = array(
+                "REFNO"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spDeleteREF]
+            @REFNO = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
+        }
+        function PurchaseFromOrder(){
+            $array = array(
+                "OrderID"=>1,
+                "TransactionID"=>1,
+                "DriverId"=>0
+            );
+            $sqlcommand = "EXEC	[dbo].[spOrderToGRN]
+            @OrderID = ?,
+            @TransactionID = ?,
+            @DriverId = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
         }
     }

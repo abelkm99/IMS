@@ -5,17 +5,18 @@
     with the same GRNNO
 [x] make sure no item duplication during make sales
         |
-        |__==> do it for order items table too
+        |__==>[x] do it for order items table too
 
 [x] use salesID and Purchase ID for tbales store-sales and purchase-warehouse
 [] move to store ware house new unloading expence and loadin expence ask ebtisam
-[] ask ebtisam about the order types
-[] add feature to convert purchase to GRN
+[x] ask ebtisam about the order types
+    [x] make order for purchase and slaes
+[] add feature to ORDERS to GRN and REFERENCE
 
-[] add new order type inside orders tabel
-[] add new GRN inside GRN Tabel
+[x] add new column ordertype inside orders tabel
 [] delete also the infromation from the credit settlement
 
+[] remove identity cache for grn
 -------------------------
     select operations
 -------------------------
@@ -92,7 +93,7 @@
 [x] delete GRN
     [x] if not delivered grn
     [x] if any condition mate
-[ ] delet Reference
+[x] delete Reference
 
 [x] delte Purchase
 

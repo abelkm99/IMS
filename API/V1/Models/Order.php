@@ -18,17 +18,21 @@
         }
         function makeNewOrder(){
             $array = array(
-                "CustomerId"=>1,
+                "OrderType"=>1,
+                "SupplierID"=>0,
+                "CutomerID"=>0,
                 "OrderDate"=>1,
-                "OrderInformation"=>1,
+                "OrderInformation"=>1
             );
             $sqlcommand = "EXEC	[dbo].[spOrderItems]
-                                @CustomerId = ?,
-                                @OrderDate = ?,
-                                @OrderInformation = ?,
-                                @result = ?,
-                                @message = ?";
-            excute_prepared_statements($array,$sqlcommand);
+            @OrderType = ?,
+            @SupplierID = ?,
+            @CutomerID = ?,
+            @OrderDate = ?,
+            @OrderInformation = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
         }
         function deleteOrder($OrderId){
             $sqlcommand = "EXEC	[dbo].[spDeleteOrder]

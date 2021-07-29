@@ -14,8 +14,13 @@
             for json auto";
             excute_select_operation($sqlcommand);
         }
-        function getAllOrders(){
-            $sqlcommand = "select * from [Order] inner join Orderitems on Orderitems.OrderID = [Order].OrderID
+        function getAllPurchaseOrders(){
+            $sqlcommand = "select * from [Order] inner join Orderitems on Orderitems.OrderID = [Order].OrderID and OrderType = 1
+            for json auto";
+            excute_select_operation($sqlcommand);
+        }
+        function getAllSalesOrders(){
+            $sqlcommand = "select * from [Order] inner join Orderitems on Orderitems.OrderID = [Order].OrderID and OrderType = 2
             for json auto";
             excute_select_operation($sqlcommand);
         }

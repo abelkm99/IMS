@@ -1,22 +1,18 @@
     <?php
-    
-    require "../vendor/autoload.php";
-    require "Models/Supplier.php";
-    require "Models/Customer.php";
-    require "Models/Category.php";
-    require "Models/DatabaseOperation.php";
-    require "Models/utils.php";
-    require "Models/Item.php";
-    require "Models/Purchase.php";
-    require "Models/Driver.php";
-    require "Models/Expences.php";
-    require "Models/Employee.php";
-    require "Models/CreditSettlement.php";
-    require "Models/Basic.php";
-    
+
+    require "package.php";
+
+    $str = "walla";
     $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
 
         $r->addGroup('/ims/api/v1',function (FastRoute\RouteCollector $r){
+
+            $r->get('/login',function(){
+                header('Content-type: application/json');
+                $access_token =  create_access_token("abel");
+                $response =  array("access_token"=>$access_token);
+                echo json_encode($response);
+            });
             
             $r->get('/get_transaction_type','BasicApi/getTransactionType');
             $r->get('/get_item_stock/{ItemID:\d+}','BasicApi/getItemStock');
@@ -26,7 +22,8 @@
             $r->get('/get_order/{OrderID:\d+}','BasicApi/getOrder');
             $r->get('/get_grns','BasicApi/getALLGRN');
             $r->get('/get_refs','BasicApi/getAllReferences');
-            $r->get('/get_orders','BasicApi/getAllOrders');
+            $r->get('/get_purchase_orders','BasicApi/getAllPurchaseOrders');
+            $r->get('/get_sales_orders','BasicApi/getAllSalesOrders');
 
             $r->addGroup('/supplier', function (FastRoute\RouteCollector $r) {
                 $r->get('/listSuppliers', 'Supplier/ListAllSuppliers');
@@ -94,6 +91,8 @@
                 $r->put('/update_sales','Purchase/updateSales');
                 $r->delete('/delete_sales','Purchase/deleteSales');
                 $r->delete('/delte_grn','Purchase/deleteGRN');
+                $r->delete('/delte_ref','Purchase/deleteREF');
+                $r->post('/purchase_from_order','Purchase/PurchaseFromOrder');
             });
             $r->addGroup('/order', function (FastRoute\RouteCollector $r) {
                 $r->get('/list_orders', 'Order/ListAllOrders');
