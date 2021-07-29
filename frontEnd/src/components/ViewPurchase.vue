@@ -15,23 +15,24 @@
                         <tr>
                             <td>  <label for="supplier"> <h3>Supplier</h3></label>
                                 <select  v-model="supplierFilter" name="supplier" id="" class="txt-input" @change="filterBySupplier">
+                                    <option value="">---select Supplier---</option>
                                     <option   :key="x.SupplierID" v-for="x in supplierList" :value="x.SupplierID">{{x.SupplierName}}</option>
                     
                                 </select></td> 
                             <td>
                                 <label for="purchaseType"> <h3>Purchase type</h3></label>
-                                <select name="purchaseType" id="" class="txt-input">
-                                    <option value="Cash">cash</option>
-                                    <option value="Credit">Credit</option>
+                                <select  v-model="transactionFilter"  name="purchaseType" id="" class="txt-input" @change="filterByPurhcaseType" >
+                                    <option value="1">cash</option>
+                                    <option value="2">Credit</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                          <td>
                             <label for="purchaseDate"> <h3> Purchase Date </h3></label>
-                            <input type="date" class="txt-input" name="purchaseDate" placeholder="GRN NO"  ></td>
+                            <input  v-model="purchaseDateFilter" type="date" class="txt-input" name="purchaseDate" placeholder="GRN NO"  @input="filterByPurchaseDate"></td>
                          <td>  <label for="purchaseDate"> <h3> Delivery Date </h3></label>
-                            <input type="date" class="txt-input" name="deliveryDate"></td>
+                            <input v-model="deliveredDateFilter" type="date" class="txt-input" name="deliveryDate" @input="filterByDeliveredDate"></td>
                         </tr>
                 
                         <tr>
@@ -100,7 +101,10 @@ export default {
     data(){
         return {
             supplierFilter:'',
+            transactionFilter:"",
             supplierList:[],
+            purchaseDateFilter:"",
+            deliveredDateFilter:"",
             editVisible:"",
             items:[],
             tempItems:[],
@@ -122,6 +126,7 @@ export default {
         getPurchase(){
                 Purchase.getGRN().then(res=>{
                     this.items=res["data"];
+                    this.tempItems = res["data"];
                 })
         },getSuppliers(){
             Suppliers.getSuppliers().then(res=>{
@@ -136,12 +141,42 @@ export default {
                 }
             }
         },filterBySupplier(){
-            this.tempItems  = this.items; 
-            this.items = this.items.filter(item=>{
-                return  item.SupplierID == this.supplierFilter;          
+             this.items = this.tempItems;
+             if(this.supplierFilter != ''){
+                  this.items = this.items.filter(item=>{
+                  return  item.SupplierID == this.supplierFilter;          
             });
+               }else{
+                    this.items = this.tempItems;
+               }
+        },filterByPurhcaseType(){
+            this.items = this.tempItems;
+            if(this.transactionFilter  != ""){
+                  this.items = this.items.filter(item=>{
+                  return  item.TransactionID == this.transactionFilter;          
+            });
+            }else{
+                     this.items = this.tempItems;
+            }
+        },filterByPurchaseDate(){
+  this.items = this.tempItems;
+            if(this.purchaseDateFilter  != ""){
+                  this.items = this.items.filter(item=>{
+                  return  item.PurhcaseDate == this.purchaseDateFilter;          
+            });
+            }else{
+                     this.items = this.tempItems;
+            }
+        },filterByDeliveredDate(){
+  this.items = this.tempItems;
+            if(this.deliveredDateFilter  != ""){
+                  this.items = this.items.filter(item=>{
+                  return  item.DeliveredDate == this.deliveredDateFilter;          
+            });
+            }else{
+                     this.items = this.tempItems;
+            }
         }
-
     },
       created(){
           this.getPurchase();
