@@ -55,14 +55,14 @@
         function makePurchase(){
             $array = array(
                 "PurchsedDate"=>1,
-                "SupplierName"=>1,
+                "SupplierID"=>1,
                 "TransactionID"=>1,
                 "DriverID"=>0,
                 "PurchaseString"=>1,
             );
             $sqlcommand = "EXEC	[dbo].[spMakePurchase]
             @PurchsedDate = ?,
-            @SupplierName = ?,
+            @SupplierID = ?,
             @TransactionID = ?,
             @DriverID = ?,
             @PurchaseString = ?,
@@ -160,6 +160,40 @@
             $sqlcommand = "EXEC	[dbo].[spDeleteSales]
             @SalesID = ?,
             @REFNO = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
+        }
+        function deleteGRN(){
+            $array = array(
+                "GRNNO"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spDeleteGRN]
+            @GRNNO = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
+        }
+        function deleteREF(){
+            $array = array(
+                "REFNO"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spDeleteREF]
+            @REFNO = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
+        }
+        function PurchaseFromOrder(){
+            $array = array(
+                "OrderID"=>1,
+                "TransactionID"=>1,
+                "DriverId"=>0
+            );
+            $sqlcommand = "EXEC	[dbo].[spOrderToGRN]
+            @OrderID = ?,
+            @TransactionID = ?,
+            @DriverId = ?,
             @result = ?,
             @message = ?";
             excute_prodecure($array,$sqlcommand);

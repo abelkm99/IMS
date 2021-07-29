@@ -5,17 +5,27 @@
             excute_select_operation($sqlcommand);
         }
         function getALLGRN(){
-            $sqlcommand = "select * from GRN inner join Purchase on GRN.GRNNO = Purchase.GRNNO
-            for json auto";
-            excute_select_operation($sqlcommand);
+            
+            if (validate_accesstoken(array('admin'))){
+                $sqlcommand = "select * from GRN inner join Purchase on GRN.GRNNO = Purchase.GRNNO
+                for json auto";
+                excute_select_operation($sqlcommand);  
+            }
+            
+            
         }
         function getAllReferences(){
             $sqlcommand = "select * from Reference inner join Sales on Reference.REFNO = Sales.REFNO 
             for json auto";
             excute_select_operation($sqlcommand);
         }
-        function getAllOrders(){
-            $sqlcommand = "select * from [Order] inner join Orderitems on Orderitems.OrderID = [Order].OrderID
+        function getAllPurchaseOrders(){
+            $sqlcommand = "select * from [Order] inner join Orderitems on Orderitems.OrderID = [Order].OrderID and OrderType = 1
+            for json auto";
+            excute_select_operation($sqlcommand);
+        }
+        function getAllSalesOrders(){
+            $sqlcommand = "select * from [Order] inner join Orderitems on Orderitems.OrderID = [Order].OrderID and OrderType = 2
             for json auto";
             excute_select_operation($sqlcommand);
         }

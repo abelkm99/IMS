@@ -1,44 +1,63 @@
 <?php
 
-require "vendorImport.php";
+header('Content-type: application/json');
+
+
+require "./vendor/autoload.php";
 
 use Firebase\JWT\JWT;
 
-$key = "example_key";
-$payload = array(
-"iss" => "http://example.org",
-"aud" => "http://example.com",
-"iat" => 1356999524,
-"nbf" => 1357000000
-);
+$secretKey  = 'bGS6lzFqvvSQ8ALbOxatm7/Vk7mLQyzqaS34Q4oR1ew='; 
 
-/**
- * IMPORTANT:
- * You must specify supported algorithms for your application. See
- * https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40
- * for a list of spec-compliant algorithms.
- */
-$jwt = JWT::encode($payload, $key);
-$decoded = JWT::decode($jwt, $key, array('HS256'));
+function create_access_token($role){
+    $payload = array(
+        "Role" => $role,
+        "iss" => "http://example.org",
+        "aud" => "http://example.com",
+        "iat" => 1356999524,
+        "nbf" => 1357000000,
+        "random"=>random_str(700),
+        "random2"=>random_str(700)
+        );
+    return JWT::encode($payload,$GLOBALS['secretKey']);
+}
+function decode_access_token($jwt){
+     $decoded = JWT::decode($jwt, $GLOBALS['secretKey'], array('HS256'));
+    $decoded_array = (array) $decoded;
 
-print_r($decoded);
+    return $decoded_array;
+}
+function random_str(
+    int $length = 64,
+    string $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+): string {
+    if ($length < 1) {
+        throw new \RangeException("Length must be a positive integer");
+    }
+    $pieces = [];
+    $max = mb_strlen($keyspace, '8bit') - 1;
+    for ($i = 0; $i < $length; ++$i) {
+        $pieces []= $keyspace[random_int(0, $max)];
+    }
+    return implode('', $pieces);
+}
 
-/*
-NOTE: This will now be an object instead of an associative array. To get
-an associative array, you will need to cast it as such:
-*/
-
-$decoded_array = (array) $decoded;
-
-/**
- * You can add a leeway to account for when there is a clock skew times between
- * the signing and verifying servers. It is recommended that this leeway should
- * not be bigger than a few minutes.
- *
- * Source: http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#nbfDef
- */
-JWT::$leeway = 60; // $leeway in seconds
-$decoded = JWT::decode($jwt, $key, array('HS256'));
-
+function validate_accesstoken($roles){
+    if(isset($_COOKIE['access_token'])){
+        $decoded = decode_access_token($_COOKIE['access_token']);
+        if(in_array($decoded['Role'],$roles)){
+            return 1;
+        }   
+        else{
+            http_response_code(401);
+            echo json_encode(array("result"=>'unAuthorized person'));
+            return 0;
+        }
+    }else{
+        http_response_code(401);
+        echo json_encode(array("result"=>'unAuthorized person'));
+        return 0;
+    }
+}
 
 ?>
