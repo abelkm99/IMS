@@ -3,7 +3,7 @@
     require "Models/Supplier.php";
     require "Models/Customer.php";
     require "Models/Category.php";
-    require "Models/DatabaseOperation.php";
+    require "DatabaseOperation.php";
     require "Models/utils.php";
     require "Models/Item.php";
     require "Models/Purchase.php";
@@ -14,3 +14,4 @@
     require "Models/Basic.php";
     require "Models/Order.php";
     require "Token.php";
+    require "Auth.php";

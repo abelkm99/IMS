@@ -1,18 +1,13 @@
     <?php
 
-    require "package.php";
+    require "packages.php";
 
     $str = "walla";
     $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
 
         $r->addGroup('/ims/api/v1',function (FastRoute\RouteCollector $r){
 
-            $r->get('/login',function(){
-                header('Content-type: application/json');
-                $access_token =  create_access_token("abel");
-                $response =  array("access_token"=>$access_token);
-                echo json_encode($response);
-            });
+            $r->get('/login','Auth/Login');
             
             $r->get('/get_transaction_type','BasicApi/getTransactionType');
             $r->get('/get_item_stock/{ItemID:\d+}','BasicApi/getItemStock');

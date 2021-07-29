@@ -55,14 +55,14 @@
         function makePurchase(){
             $array = array(
                 "PurchsedDate"=>1,
-                "SupplierName"=>1,
+                "SupplierID"=>1,
                 "TransactionID"=>1,
                 "DriverID"=>0,
                 "PurchaseString"=>1,
             );
             $sqlcommand = "EXEC	[dbo].[spMakePurchase]
             @PurchsedDate = ?,
-            @SupplierName = ?,
+            @SupplierID = ?,
             @TransactionID = ?,
             @DriverID = ?,
             @PurchaseString = ?,
