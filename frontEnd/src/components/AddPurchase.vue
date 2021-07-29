@@ -10,22 +10,15 @@
                               Add Purchase
                         </h3>
                     </legend>
+                    <form @submit.prevent="addItem">
                     <table>
                         <tr>
                             <td>
                             </td>
-                            <td><button class="btn-submit" @click="addItem">Add Item</button> <button class="btn-submit">Finish</button> <button class="btn-submit error" @click="reload">Cancel</button></td>
+                            <td><button class="btn-submit" type="submit" >Add Item</button> <button @click="addPurchase" type="button" class="btn-submit">Finish</button> <button class="btn-submit error" @click="reload" type="button">Cancel</button></td>
 
                         </tr>
-                        <tr>
-                            <td> <input type="number" class="txt-input"  value="" placeholder="GRN NO" disabled></td> 
-                            <td>
-                                <select v-model="PurchaseType" name="PurchaseType" id="" class="txt-input">
-                                    <option value="Cash">cash</option>
-                                    <option value="Credit">Credit</option>
-                                </select>
-                            </td>
-                        </tr>
+                    
                         <tr>
                          <td>
                             <label for="PurchaseDate"> <h3> Purchase Date </h3></label>
@@ -36,20 +29,18 @@
                         <tr>
                             <td>
                                 <label for="supplier"> <h3>Supplier</h3></label>
-                                <select v-model="Supplier" name="supplier"  class="txt-input">
-                                    <option value="Girma">Girma</option>
-                                    <option value="Girma">Girma</option>
-                                    <option value="">Girma</option>
-                                    <option value="">Girma</option>
+                                <select v-model="Supplier" name="supplier"  class="txt-input" required> 
+                                    
+                                    <option :key="x.SupplierID" v-for="x in supplierList"  :value="x.SupplierID">{{x.SupplierName}}</option>
+                           
+                                  
             
                                 </select></td>
                             <td>
                                 <label for="Driver"> <h3>Driver</h3></label>
-                                <select v-model="Driver" name="Driver"  class="txt-input">
-                                    <option value="Girma">Girma</option>
-                                    <option value="Girma">Girma</option>
-                                    <option value="Girna">Girma</option>
-                                    <option value="Girna">Girma</option>
+                                <select v-model="Driver" name="Driver"  class="txt-input"  >
+                                    <option value="1">Girma</option>
+                    
                                 </select></td>
                           
                         </tr>
@@ -60,10 +51,13 @@
                       
                             <td> 
                                 <label for="quantity"> <h3>Item quantity</h3></label>
-                                <input v-model="ItemQuantity" type="number" class="txt-input"  value="" placeholder="Item quantity" min="1"></td> 
+                                <input v-model="ItemQuantity" type="number" class="txt-input"  value="" placeholder="Item quantity" min="1" required></td> 
                                 <td> 
-                                    <label for="quantity"> <h3>Item Code</h3></label>
-                                    <input  v-model="ItemCode" type="text" class="txt-input"  name="ItemCode" value="" placeholder="Item code">
+                                    <label for="quantity"> <h3>Transaction Type</h3></label>
+                                   <select v-model="PurchaseType" name="PurchaseType" id="" class="txt-input" required>
+                                    <option value="1">cash</option>
+                                    <option value="2">Credit</option>
+                                </select>
                                 </td> 
                                     
                         </tr>
@@ -71,11 +65,10 @@
 
                         <td>
                             <label for="itemType"> <h3>Item Type</h3></label>
-                            <select v-model="ItemType" name="itemType" id="" class="txt-input">
-                                <option value="RHS">RHS</option>
-                                <option value="CHS">CHS</option>
-                               
-        
+                            <select v-model="ItemType" name="itemType" id="" class="txt-input" required>
+                                <option  :key="x.ItemID"  v-for="x in ItemTypeList" :value="x.ItemID">{{x.ItemType}}</option>
+                         
+
                             </select>
                         </td>
                         <td>
@@ -85,7 +78,7 @@
                     </tr>
                     </table>
                      
-                     
+                     </form>
            
                   </fieldset>
                 <fieldset class="view-items-container">
@@ -98,9 +91,7 @@
                             <th>
                                 Item Code
                             </th>
-                            <th>
-                                Item Type
-                            </th>
+                    
                             <th>
                                 Item Quantity
                             </th>
@@ -118,10 +109,9 @@
                             </th>
                           
                         </tr>
-                      <tr  :name="x.Index" v-bind:key="index" v-for="(x,index) in items">  
+                      <tr  :name="x.ItemType" v-bind:key="index" v-for="(x,index) in items">  
                           <td>{{x.Supplier}}</td>
                           <td>{{x.ItemCode}}</td>
-                          <td>{{x.ItemType}}</td>
                           <td>{{x.ItemQuantity}}</td>
                           <td>{{x.PricePerQuantity}}</td>
                           <td>{{x.PurchaseType}}</td>
@@ -139,6 +129,9 @@
 </template>
 <script>
 import SubHeaderControl from "@/components/SubHeaderControl.vue";
+import Items from  "@/api_calls/Items.js";
+import Purchase from "@/api_calls/Purchase.js";
+import Supplier from "@/api_calls/Supplier.js";
 export default {
     name:"AddPurchase",
     components:{
@@ -147,6 +140,9 @@ export default {
     data(){
    return {
        "items":[],
+       data:[],
+       ItemTypeList:[],
+       supplierList:[],
        "Supplier":'',
        "ItemCode":'',
        "ItemType":'',
@@ -157,7 +153,8 @@ export default {
        "PurchaseDate":'',
        "DeliveryDate":'',
        "IndexForDelete":0,
-       links:
+        OrderString:'',
+        links:
                [
                    {    
                        id:0,
@@ -173,43 +170,137 @@ export default {
    }
     },
     methods:{
+       getSupplier(){
+
+           Supplier.getSuppliers().then(
+               res=>{
+                   this.supplierList =  res["data"];
+               }
+           )
+       
+       },
+       getSupplierName(id){
+           for(const x in this.supplierList){
+               if(this.supplierList[x].SupplierID == id){
+
+                    return this.supplierList[x].SupplierName;
+                 
+               }
+           }
+           this.supplierList.forEach((ele)=>{
+              if(ele.SupplierID == id){
+                  return ele.SupplierName;
+              } 
+           })
+       },
         addItem(){
-   
-            this.items.push(
-                {
+         
+            //check item in the string 
+           
+            if(this.OrderString !==""){
+              var OrderList = this.OrderString.split(";")
+              var repeated = false;
+                    console.log(OrderList)
+
+                for(const x in OrderList){
+                    var singleOrder = OrderList[x].split(",");
+                    console.log(singleOrder);                    
+                   
+                 if(singleOrder[0] == this.ItemType){
+                     alert("an  entry with the same ItemType  can not be repeated");
+                     repeated = true;
+                     break;
+                } 
+             } if(!repeated){
+                   this.OrderString += this.ItemType + "," + this.ItemQuantity + "," + this.PricePerQuantity + ";";
+                  
+            }else{
+                 
+                console.log(this.OrderString);
+            
+            }
+            }else{
+                    this.OrderString += this.ItemType + "," + this.ItemQuantity + "," + this.PricePerQuantity + ";";
+                    
+
+            }
+        if(!repeated){
+       this.items.push(
+                    {
                     "Supplier":this.Supplier,
-                    "ItemCode":this.ItemCode,
                     "ItemType":this.ItemType,
+                    "Driver":this.Driver,
                     "ItemQuantity":this.ItemQuantity,
                     "PricePerQuantity":this.PricePerQuantity,
                     "PurchaseType":this.PurchaseType,
-                    "Driver":this.Driver,
                     "Index":this.IndexForDelete
                 }
             )
+        }
+ 
             this.IndexForDelete++;
+            console.log(this.OrderString);
  
         },
         removeItem(e){
+        //remove from the order string 
         const target =   e.target.parentNode.parentNode;
         const index = target.getAttribute("name");
-        this.items =  this.items.filter(item=>{
-             return item.Index !=  index ; 
+        var stringAll =  this.OrderString.split(";");
+        stringAll.forEach((elem,i,obj)=>{
+            if(elem.split(",")[0] == index){
+                obj.splice(i,1);
+            }
         });
-         console.log(this.items);
+        var modifiedString = "";
+        for(let i=0;i<stringAll.length;i++){
+         modifiedString += stringAll[i];
+        }
+        if(modifiedString != ""){
+
+        this.OrderString = modifiedString + ";"; 
+
+        }else{
+            this.OrderString = "";
+        }
+        
+        this.items =  this.items.filter(item=>{
+             return item.ItemType !=  index ; 
+        });
+        
          if(this.items.length == 0){
              this.IndexForDelete=0;
          }
         
-    
+        console.log(this.OrderString);
  
         },
         reload(){
             window.location.reload();
         },
         addPurchase(){
-
+               this.data = {
+                    "PurchsedDate":this.PurchaseDate,
+                    "SupplierID":this.Supplier,
+                    "TransactionID":parseInt(this.PurchaseType),
+                    "DriverID":"",
+                    "PurchaseString":this.OrderString
+            }
+            
+            console.log(this.data);
+            Purchase.addPurchase(this.data).then(res=>console.log(res)).catch(err=>{
+                console.log(err);
+            });
+        },
+        getItemType(){
+            Items.getItems().then(res=>{this.ItemTypeList=res["data"]
+                console.log(res["data"]);
+            });
+          
         }
+        },created(){
+            this.getItemType();
+            this.getSupplier();
         }
 }
 </script>

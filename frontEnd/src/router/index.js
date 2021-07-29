@@ -14,7 +14,7 @@ import AddEmployees from "@/components/AddEmployees.vue";
 import AddOrder from "@/components/AddOrder.vue";
 import ViewOrder from "@/components/ViewOrder.vue";
 import ViewOrderId from "@/components/ViewOrderId.vue";
-import AddExpenses from "@/components/AddExpenses.vue";
+import AddLoadingExpense from "@/components/AddLoadingExpense.vue";
 import AddSupplier from "@/components/AddSupplier.vue";
 import AddDeriver from "@/components/AddDeriver.vue";
 import AddExpenseType from "@/components/AddExpenseType.vue";
@@ -24,6 +24,11 @@ import ViewEmployees from "@/components/ViewEmployees.vue";
 import AddItemCategory from  "@/components/AddItemCategory.vue";
 import viewCategories from "@/components/ViewCategories.vue";
 import ViewSupplier from "@/components/ViewSupplier.vue";
+import AddUnloadingExpense from "@/components/AddUnloadingExpense.vue";
+import AddSalaryExpense from "@/components/AddSalaryExpense.vue";
+import AddMasatefiyaExpense from "@/components/AddMasatefiyaExpense.vue";
+import AddOtherExpenseType from "@/components/AddOtherExpenseType.vue";
+import AddOtherExpense from  "@/components/AddOtherExpense.vue";
  Vue.use(VueRouter);
 const routes = [
   {
@@ -112,13 +117,35 @@ const routes = [
       },{
         path:"expenses",
         name:"Expenses",
-        component:AddExpenses
+        component:AddLoadingExpense
       },{
+        path:"unloadingExpense",
+        name:"Unloading Expense",
+        component:AddUnloadingExpense
+      },{
+        path:"salaryExpense",
+        name:"Salary Expense",
+        component:AddSalaryExpense
+      },
+      {
+        path:"masatefiyaExpense",
+        name:"Masatefiya Expense",
+        component:AddMasatefiyaExpense
+      },{
+        path:"otherExpenseType",
+        name:"Other Expense Type",
+        component:AddOtherExpenseType
+      },{
+        path:"otherExpense",
+        name:"Other Expense",
+        component:AddOtherExpense
+      }
+      ,{
         path:"supplier",
         name:"Supplier",
         component:AddSupplier
-      },
-      {
+      }
+      ,{
         path:"viewSupplier",
         name:"view Supplier",
         component:ViewSupplier

@@ -14,12 +14,9 @@
                 
                         <tr>
                             <td>  <label for="supplier"> <h3>Supplier</h3></label>
-                                <select name="supplier" id="" class="txt-input">
-                                    <option value="Girma">Girma</option>
-                                    <option value="Girma">Girma</option>
-                                    <option value="">Girma</option>
-                                    <option value="">Girma</option>
-            
+                                <select  v-model="supplierFilter" name="supplier" id="" class="txt-input" @change="filterBySupplier">
+                                    <option   :key="x.SupplierID" v-for="x in supplierList" :value="x.SupplierID">{{x.SupplierName}}</option>
+                    
                                 </select></td> 
                             <td>
                                 <label for="purchaseType"> <h3>Purchase type</h3></label>
@@ -52,25 +49,37 @@
                     <table class="view-items">
                         <tr class="view-items-header">
                             <th>
-                                GRN Number
+                             GRNNO
                             </th>
                             <th>
-                                Item Code
+                              Purchase Date
+                            </th>
+                            <th >
+                                Delivered Date
                             </th>
                             <th>
-                                Item Type
+                                Supplier Name
                             </th>
                             <th>
-                                Item Quantity
+                                Item Type Count
                             </th>
                             <th>
-                                Price Per Quantity
+                                X
                             </th>
-                            <th>
-                                Purchase Type
-                            </th>
+                          
                         </tr>
-                     
+            <vue-window-modal  :active="editVisible"  title="Update Purchase"  v-on:clickClose="closeEdit(false)">  
+                
+            </vue-window-modal>
+                      <tr  :name="x.GRNNO" v-bind:key="index" v-for="(x,index) in items" @dblclick="editForm($true)" >  
+                          <td>{{x.GRNNO}}</td>
+                          <td>{{x.PurchsedDate}}</td>
+                          <td :class="x.Delivered==true?'':'missing-delivery'"> {{x.DeliverdDate}}</td>
+                          <td>{{getSupplierName(x.SupplierID)}}</td>
+                          <td>{{x.Purchase.length}}</td>
+                          <td> <button class="btn-del" @click="removeItem($event)">X</button></td>
+                   
+                      </tr>
                     </table>
                 </fieldset>
                 </div>
@@ -81,6 +90,8 @@
 </template>
 <script>
 import SubHeaderControl from "@/components/SubHeaderControl.vue";
+import Purchase from "@/api_calls/Purchase.js";
+import Suppliers from "@/api_calls/Supplier.js";
 export default {
     name:"AddPurchase",
     components:{
@@ -88,7 +99,12 @@ export default {
     },
     data(){
         return {
-
+            supplierFilter:'',
+            supplierList:[],
+            editVisible:"",
+            items:[],
+            tempItems:[],
+            purchaseEdit:[],
             links:[
                 {
                     id:0,
@@ -102,7 +118,35 @@ export default {
             ]
 
         }
-    }
+    },methods:{
+        getPurchase(){
+                Purchase.getGRN().then(res=>{
+                    this.items=res["data"];
+                })
+        },getSuppliers(){
+            Suppliers.getSuppliers().then(res=>{
+                this.supplierList = res["data"];
+            })
+        },getSupplierName(id){
+            for(const x in this.supplierList){
+                if(this.supplierList[x].SupplierID == id){
+                    console.log("check value here");
+                    console.log(this.supplierList[x].SupplierID);
+                    return this.supplierList[x].SupplierName;
+                }
+            }
+        },filterBySupplier(){
+            this.tempItems  = this.items; 
+            this.items = this.items.filter(item=>{
+                return  item.SupplierID == this.supplierFilter;          
+            });
+        }
+
+    },
+      created(){
+          this.getPurchase();
+          this.getSuppliers();
+      }
 }
 </script>
 <style>
@@ -120,6 +164,11 @@ font-size:20px;
 .router-view-nav{
     /* display: grid;
     place-items:center; */
+}
+.min-input{
+    width:100%;
+    border:none;
+    padding:10px;
 }
 .router-view-nav li{
     list-style: none;
@@ -164,6 +213,10 @@ margin-left: 15px;
 .view-items th{
 padding:15px;
 }
+.view-items td{
+    background:white;
+    cursor:pointer;
+}
 .view-items-header{
     background: rgb(11, 170, 96);
     color:white;
@@ -173,6 +226,11 @@ display: grid;
 place-items: center;
 }
 .error{
-    background:red;
+    background:red ;
+}
+.missing-delivery{
+    border-bottom:2px solid rgb(255, 13, 4) !important;
+    color:white;
+    text-align:center;
 }
 </style>
