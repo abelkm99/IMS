@@ -172,3 +172,45 @@ function excute_prepared_statements($inputs,$sqlcommand){
 
 }
 
+function excute_prodecure_json($params,$sqlcommand){
+    header('Content-type: application/json');
+    $conn = get_connection();
+    if ($conn) {
+    } 
+    else {
+        $resMessage = array("message"=>" database Connection could not be established");
+        http_response_code(500);
+        echo json_encode($resMessage);
+    }
+    if(true){
+        $result = 0;
+        $message = "";
+
+        array_push($params,array(&$result,SQLSRV_PARAM_OUT));
+        array_push($params,array(&$message,SQLSRV_PARAM_OUT));
+        
+        $stmt = sqlsrv_query($conn,$sqlcommand,$params);
+        if($stmt === false){
+            $resMessage = sqlsrv_errors();
+            http_response_code(500);
+            echo json_encode($resMessage);
+        }
+        else{
+            if($result){
+                $resMessage = array("result"=>$result,"message"=>$message);
+                http_response_code(200);
+                echo json_encode($resMessage);
+            }
+            else{
+                $resMessage = array("result"=>$result,"message"=>$message);
+                http_response_code(400);
+                echo json_encode($resMessage);
+            }
+        }
+    }
+    else{
+        $resMessage = array("message"=>"invalid input on validation");
+        http_response_code(400);
+        echo json_encode($resMessage);
+    }
+}

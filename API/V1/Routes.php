@@ -78,7 +78,7 @@
                 $r->get('/get_purchase/{id:\d+}','Purchase/GetAllPurchases'); // not done
                 $r->delete('/delete_purchase','Purchase/deletePurchase'); //not done
                 $r->post('/ship_purchase','Purchase/shipPurchase');
-                $r->post('/move_to_store','Purchase/movetostore');
+                $r->post('/move_to_store','Purchase/warehouseToStoreJson');
                 $r->post('/make_sales','Purchase/makeSales');
                 $r->put('/update_purchase','Purchase/updatePurchase');
                 $r->put('/update_grn','Purchase/updateGRN');
@@ -88,6 +88,7 @@
                 $r->delete('/delte_grn','Purchase/deleteGRN');
                 $r->delete('/delte_ref','Purchase/deleteREF');
                 $r->post('/purchase_from_order','Purchase/PurchaseFromOrder');
+                $r->put('/update_transefred_item','Purchase/updateMovedData');
             });
             $r->addGroup('/order', function (FastRoute\RouteCollector $r) {
                 $r->get('/list_orders', 'Order/ListAllOrders');

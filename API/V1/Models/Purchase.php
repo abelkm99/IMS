@@ -21,6 +21,49 @@
             @message = ?";
             excute_prodecure($array,$sqlcommand);             
         }
+        function warehouseToStoreJson(){
+
+            $array = array(
+                "Cost"=>1,
+                "DriverId"=>0,
+                "json"=>1,
+                "Date"=>1
+            );
+
+            $str_json = file_get_contents('php://input');
+            $req = json_decode($str_json);
+            
+            if($req === null) {
+                $resMessage = array("message"=>"invalid json input data");
+                http_response_code(400);
+                echo json_encode($resMessage);
+            }
+            else{
+                if(key_value_Validator($array,$req)){
+                    $Cost = checkNull($req->Cost);
+                    $DriverId = checkNull($req->DriverId);
+                    $json =checkNull(json_encode($req->json));
+                    $date =checkNull($req->Date);
+                    $params = array(
+                        array(&$Cost,SQLSRV_PARAM_IN),
+                        array(&$DriverId,SQLSRV_PARAM_IN),
+                        array(&$json,SQLSRV_PARAM_IN),
+                        array(&$date,SQLSRV_PARAM_IN),
+                    );
+                    $sqlcommand = "EXEC	[dbo].[spTrasferItemsWarehouseStore]
+                    @Cost = ?,
+                    @DriverId = ?,
+                    @json = ?,
+                    @Date = ?,
+                    @result = ?,
+                    @message = ?";
+                    excute_prodecure_json($params,$sqlcommand);
+                }
+            }
+           
+         
+            // excute_prodecure($array,$sqlcommand);
+        }
         function movetostore(){
             $array = array(
                 "ItemId"=>1,
@@ -36,7 +79,6 @@
             excute_prodecure($array,$sqlcommand);
             
         }
-
         function shipPurchase(){
             $array = array(
                 "DeliverdDate"=>1,
@@ -51,7 +93,6 @@
             @message = ?";
             excute_prodecure($array,$sqlcommand);
         }
-        
         function makePurchase(){
             $array = array(
                 "PurchsedDate"=>1,
@@ -194,6 +235,20 @@
             @OrderID = ?,
             @TransactionID = ?,
             @DriverId = ?,
+            @result = ?,
+            @message = ?";
+            excute_prodecure($array,$sqlcommand);
+        }
+        function updateMovedData(){
+            $array = array(
+                "TEID"=>1,
+                "ItemID"=>1,
+                "newVal"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spUpdateMovedData]
+            @TEID = ?,
+            @ItemID = ?,
+            @newVal = ?,
             @result = ?,
             @message = ?";
             excute_prodecure($array,$sqlcommand);

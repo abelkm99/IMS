@@ -5,14 +5,12 @@
             excute_select_operation($sqlcommand);
         }
         function getALLGRN(){
-            
-            if (validate_accesstoken(array('admin'))){
-                $sqlcommand = "select * from GRN inner join Purchase on GRN.GRNNO = Purchase.GRNNO
+            $sqlcommand = "select * from GRN inner join Purchase on GRN.GRNNO = Purchase.GRNNO
                 for json auto";
-                excute_select_operation($sqlcommand);  
-            }
-            
-            
+            excute_select_operation($sqlcommand);
+            // if (validate_accesstoken(array('admin'))){
+                
+            // }
         }
         function getAllReferences(){
             $sqlcommand = "select * from Reference inner join Sales on Reference.REFNO = Sales.REFNO 

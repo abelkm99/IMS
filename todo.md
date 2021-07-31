@@ -6,15 +6,17 @@
 [x] make sure no item duplication during make sales
         |
         |__==>[x] do it for order items table too
-
+[x] add all the necessary constraints
 [x] use salesID and Purchase ID for tbales store-sales and purchase-warehouse
-[] move to store ware house new unloading expence and loadin expence ask ebtisam
+[x] move to store ware house new unloading expence and loadin expence ask ebtisam
+    [x] create Transfer-Expence table for
+    [x] multiple item transfer check 
 [x] ask ebtisam about the order types
     [x] make order for purchase and slaes
-[] add feature to ORDERS to GRN and REFERENCE
+[x] add feature to ORDERS to GRN and REFERENCE
 
 [x] add new column ordertype inside orders tabel
-[] delete also the infromation from the credit settlement
+[x] delete also the infromation from the credit settlement
 
 [] remove identity cache for grn
 -------------------------
@@ -107,7 +109,7 @@
 [x] sales credit settlement
 [x] purchases credit settlement
 
-[] do the autentication
+[x] do the autentication
 
 RULES
 ----------
