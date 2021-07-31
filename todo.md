@@ -17,8 +17,9 @@
 
 [x] add new column ordertype inside orders tabel
 [x] delete also the infromation from the credit settlement
+[] update Date and cost fro transfer items
 
-[] remove identity cache for grn
+[] remove identity cache from the entire table
 -------------------------
     select operations
 -------------------------
