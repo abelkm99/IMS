@@ -4,19 +4,22 @@
          <div class="router-view">
             <div class="add-purchase">
          <fieldset class="form-contain">
+          
                 <legend>
                     <h3>
                         Add Supplier
                     </h3>
                 </legend>
-               
-              <input v-model="dervierName" type="text" class="txt-input" placeholder="Deriver Name">
+                  <form @submit.prevent="addDriver">
+                   <input v-model="DriverName" type="text" class="txt-input" placeholder="Deriver Name" required/>
     
-               <input v-model="deriverPhone" type="text" class="txt-input" placeholder="Deriver Address">
+               <input v-model="DriverPhone" type="text" class="txt-input" placeholder="Deriver Address" required/>
                 
-               <input v-model="deriverPlateNumber"  type="text" class="txt-input" placeholder="Deriver plate Number">  
+               <input v-model="DriverPlateNumber"  type="text" class="txt-input" placeholder="Deriver plate Number" required/>  
  
-              <button class="btn-submit">Add</button>
+              <button class="btn-submit" type="submit">Add</button>
+             </form>
+            
             </fieldset>
             </div>
          
@@ -25,25 +28,40 @@
 </template>
 <script>
 import SubHeaderControl from "@/components/SubHeaderControl.vue";
-
+import Driver from "@/api_calls/Driver.js";
 export default {
 name:"AddDeriver",
 components:{
     SubHeaderControl
 } ,
 data(){
-    return{    links:[
+    return{    
+        DriverName:'',
+        DriverPhone:'',
+        DriverPlateNumber:'',
+        links:[
         {
             id:0,
-            address:"deriver",
-            displayText:"Add Deriver"
+            address:"driver",
+            displayText:"Add Driver"
         },{
             id:1,
-            address:"viewDeriver",
-            displayText:"Derivers"
+            address:"viewDriver",
+            displayText:"Drivers"
         }
     ]
-}}
+}},
+methods:{
+    addDriver(){
+        const data = {
+     "DriverName":this.DriverName,
+    "DriverPhoneNumber":this.DriverPhone,
+    "DriverPlate":this.DriverPlateNumber
+        }
+      Driver.addDriver(data).then(res=>{console.log(res)}).catch(err=>{console.log(err)})  
+    }
+}
+
 }
 </script>
 <style >

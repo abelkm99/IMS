@@ -25,6 +25,12 @@
                     <li>Supplier</li>
                 </a>
               </router-link> 
+                 <router-link to="customer">
+                  <a href="">
+                    <li>Customer</li>
+                </a>
+            
+              </router-link>
               <router-link to="expenses">
                   <a href="">
                     <li>Expenses</li>
@@ -32,12 +38,13 @@
             
               </router-link>
          
-              <router-link to="deriver">
+              <router-link to="driver">
                   <a href="">
                     <li>Driver</li>
                 </a>
             
               </router-link>
+              
             <router-link to="status">
                 <a href="">
                     <li>Status</li>

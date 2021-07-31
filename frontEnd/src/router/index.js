@@ -29,6 +29,9 @@ import AddSalaryExpense from "@/components/AddSalaryExpense.vue";
 import AddMasatefiyaExpense from "@/components/AddMasatefiyaExpense.vue";
 import AddOtherExpenseType from "@/components/AddOtherExpenseType.vue";
 import AddOtherExpense from  "@/components/AddOtherExpense.vue";
+import AddCustomer from "@/components/AddCustomer.vue";
+import ViewCustomer from "@/components/ViewCustomer.vue";
+import ViewDriver from "@/components/ViewDriver.vue";
  Vue.use(VueRouter);
 const routes = [
   {
@@ -50,6 +53,10 @@ const routes = [
         path:'viewpurchase',
         name:"ViewPurchase",
         component:ViewPurchase
+      },{
+        path:"driver",
+        name:"Driver",
+        component:AddDeriver
       },{
         path:"shipment",
         name:"shipment",
@@ -103,6 +110,14 @@ const routes = [
         name:"AddEmployee",
         component:AddEmployees
       },{
+      path:"customer",
+        name:"ADD CUSTOMER",
+        component:AddCustomer
+      },{
+       path:"viewCustomer",
+       name:"view customer",
+       component:ViewCustomer 
+      },{
         path:"viewEmployees",
         name:"ViewEmployees",
         component:ViewEmployees
@@ -151,9 +166,13 @@ const routes = [
         component:ViewSupplier
       },
       {
-        path:"deriver",
+        path:"driver",
         name:"Deriver",
         component:AddDeriver
+      },{
+        path:"viewDriver",
+        name:"Deriver",
+        component:ViewDriver
       },{
         path:"addType",
         name:"AddType",

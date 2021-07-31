@@ -12,19 +12,13 @@
                     </legend>
                     <form @submit.prevent="addItem">
                     <table>
-                        <tr>
-                            <td>
-                            </td>
-                            <td><button class="btn-submit" type="submit" >Add Item</button> <button @click="addPurchase" type="button" class="btn-submit">Finish</button> <button class="btn-submit error" @click="reload" type="button">Cancel</button></td>
-
-                        </tr>
+                
                     
                         <tr>
                          <td>
                             <label for="PurchaseDate"> <h3> Purchase Date </h3></label>
                             <input v-model="PurchaseDate" type="date" class="txt-input" name="PurchaseDate" placeholder="GRN NO"  ></td>
-                         <td>  <label for="PurchaseDate"> <h3> Delivery Date </h3></label>
-                            <input type="date" class="txt-input" name="deliveryDate"></td>
+                          <td><button class="btn-submit" type="submit" >Add Item</button> <button @click="addPurchase" type="button" class="btn-submit">Finish</button> <button class="btn-submit error" @click="reload" type="button">Cancel</button></td>
                         </tr>
                         <tr>
                             <td>

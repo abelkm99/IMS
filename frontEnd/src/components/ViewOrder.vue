@@ -89,7 +89,7 @@
                          <td>5</td>
                          <td>5</td>
                        </tr>  
-            <vue-window-modal  :active="visibleFormCrud"  title="Loaded data"  v-on:clickClose="visibleFormCrudUpdate(false)" style="width:auto;">  
+            <vue-window-modal  :active="visibleFormCrud"  title="EDIT FORM"  v-on:clickClose="visibleFormCrudUpdate(false)" style="width:auto;">  
                <table>
     <tr class="view-items-header">
                             <th>
@@ -171,11 +171,7 @@ export default {
         return {
     links:
                [
-                   {    
-                       id:0,
-                       address:"makeOrder",
-                       displayText:"Make Order"
-                   },
+                
                    {
                     id:1,
                     address:"addOrder",

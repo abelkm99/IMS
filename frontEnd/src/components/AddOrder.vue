@@ -159,11 +159,7 @@ export default {
        "IndexForDelete":0,
        links:
                [
-                   {    
-                       id:0,
-                       address:"makeOrder",
-                       displayText:"Make Order"
-                   },
+              
                    {
                     id:1,
                     address:"addOrder",

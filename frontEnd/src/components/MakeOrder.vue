@@ -217,11 +217,7 @@ export default {
             "PricePerQuantity":'',
 
             links:[
-                {
-                    id:0,
-                    address:"makeOrder",
-                    displayText:"Make Order"
-                },{
+               {
                     id:1,
                     address:"addOrder",
                     displayText:"Add Order"
