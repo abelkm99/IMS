@@ -33,7 +33,7 @@
                             <td>
                                 <label for="Driver"> <h3>Driver</h3></label>
                                 <select v-model="Driver" name="Driver"  class="txt-input"  >
-                                    <option value="1">Girma</option>
+                                    <option  :key="x.DriverID" :value="x.DriverID" v-for="x in DriversList">{{x.DriverName}}</option>
                     
                                 </select></td>
                           
@@ -126,6 +126,7 @@ import SubHeaderControl from "@/components/SubHeaderControl.vue";
 import Items from  "@/api_calls/Items.js";
 import Purchase from "@/api_calls/Purchase.js";
 import Supplier from "@/api_calls/Supplier.js";
+import Driver from "@/api_calls/Driver.js";
 export default {
     name:"AddPurchase",
     components:{
@@ -137,6 +138,7 @@ export default {
        data:[],
        ItemTypeList:[],
        supplierList:[],
+       DriversList:[],
        "Supplier":'',
        "ItemCode":'',
        "ItemType":'',
@@ -206,7 +208,7 @@ export default {
                      break;
                 } 
              } if(!repeated){
-                   this.OrderString += this.ItemType + "," + this.ItemQuantity + "," + this.PricePerQuantity + ";";
+                   this.OrderString += this.ItemType +  "," + this.PricePerQuantity + "," + this.ItemQuantity +";";
                   
             }else{
                  
@@ -214,7 +216,7 @@ export default {
             
             }
             }else{
-                    this.OrderString += this.ItemType + "," + this.ItemQuantity + "," + this.PricePerQuantity + ";";
+                    this.OrderString += this.ItemType + "," + this.PricePerQuantity + "," + this.ItemQuantity + ";";
                     
 
             }
@@ -291,10 +293,16 @@ export default {
                 console.log(res["data"]);
             });
           
+        },
+        getDrivers(){
+            Driver.getDrivers().then(res=>{
+                this.DriversList = res["data"]
+            }).catch(err=>{console.log(err)})
         }
         },created(){
             this.getItemType();
             this.getSupplier();
+            this.getDrivers();
         }
 }
 </script>

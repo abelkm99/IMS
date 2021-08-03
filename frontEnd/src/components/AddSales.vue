@@ -10,46 +10,31 @@
                             Add Sales
                         </h3>
                     </legend>
+                    <form @submit.prevent="addItem">
+       
                     <table>
-                        <tr>
-                            <td>
-                            </td>
-                            <td><button class="btn-submit" @click="addItem">Add Item</button> <button class="btn-submit">Finish</button> <button class="btn-submit error">Cancel</button></td>
-
-                        </tr>
-                        <tr>
-                            <td> <input type="number" class="txt-input"  value="" placeholder="GRN NO" disabled></td> 
-                            <td>
-                                <select name="purchaseType" id="" class="txt-input">
-                                    <option value="Cash">cash</option>
-                                    <option value="Credit">Credit</option>
-                                </select>
-                            </td>
-                        </tr>
+                  
                         <tr>
                          <td>
                             <label for="purchaseDate"> <h3> Sales Date </h3></label>
-                            <input v-model="PurchaseDate" type="date" class="txt-input" name="purchaseDate" placeholder="GRN NO"  ></td>
-                         <td>  <label for="purchaseDate"> <h3> Delivery Date </h3></label>
-                            <input type="date" class="txt-input" name="deliveryDate"></td>
+                            <input v-model="SalesDate" type="date" class="txt-input" name="purchaseDate" placeholder="GRN NO"  >
+                         </td> 
+                         <td><button class="btn-submit"  type="submit">Add Item</button> <button class="btn-submit" @click="addSales" type="button">Finish</button> <button class="btn-submit error" type="button">Cancel</button></td>
+
+  
                         </tr>
                         <tr>
                             <td>
                                 <label  for="Customer"> <h3>Customer</h3></label>
-                                <select v-model="Customer" name="Customer" id="" class="txt-input">
-                                    <option value="Girma">Girma</option>
-                                    <option value="Girma">Girma</option>
-                                    <option value="">Girma</option>
-                                    <option value="">Girma</option>
-            
+                                <select v-model="CustomerID" name="Customer" id="" class="txt-input" required>
+                                    <option  :key="x.CustomerID" :value="x.CustomerID" v-for="x in CustomerList">{{x.CustomerName}}</option>
                                 </select></td>
                             <td>
                                 <label for="Driver"> <h3>Driver</h3></label>
                                 <select v-model="Driver" name="Driver" id="" class="txt-input">
-                                    <option value="Girma">Girma</option>
-                                    <option value="Girma">Girma</option>
-                                    <option value="">Girma</option>
-                                    <option value="">Girma</option>
+                                    <option :key="x.DriverID" :value="x.DriverID" v-for="x in DriverList">{{x.DriverName}}</option>
+                            
+                                 
             
                                 </select></td>
                           
@@ -61,10 +46,14 @@
                       
                             <td> 
                                 <label for="quantity"> <h3>Item quantity</h3></label>
-                                <input  v-model="ItemQuantity" type="number" class="txt-input"  value="" placeholder="Item quantity" min="1"></td> 
+                                <input  v-model="ItemQuantity" type="number" class="txt-input"  value="" placeholder="Item quantity" min="1" requried></td> 
                                 <td> 
-                                    <label for="quantity"> <h3>Item Code</h3></label>
-                                    <input type="text" class="txt-input"  name="itemCode" value="" placeholder="Item code">
+                                    <label for="quantity"> <h3>Purchase Type</h3></label>
+                                    <select v-model="purchaseType" name="purchaseType" id="" class="txt-input" required>
+                                    <option value="1">cash</option>
+                                    <option value="2">Credit</option>
+                                </select>
+                                     
                                 </td> 
                                     
                         </tr>
@@ -72,21 +61,19 @@
 
                         <td>
                             <label for="itemType"> <h3>Item Type</h3></label>
-                            <select v-model="ItemType" name="itemType" id="" class="txt-input">
-                                <option value="Girma">RHS</option>
-                                <option value="Girma">CHS</option>
-                               
-        
+                            <select v-model="ItemType" name="itemType" id="" class="txt-input" required>
+                                <option :key="x.ItemID" :value="x.ItemID" v-for="x in ItemsList">{{x.ItemCode}}</option>
                             </select>
                         </td>
                         <td>
                             <label for="pricePerPiece"> <h3>Price Per quantity</h3></label>
-                            <input type="number"  v-model="PricePerQuantity" name="pricePerPiece" class="txt-input"  value="" placeholder="Price per Peice" min="1">
+                            <input type="number"  v-model="PricePerQuantity" name="pricePerPiece" class="txt-input"  value="" placeholder="Price per Peice" min="1" required>
                         </td>
                     </tr>
                     </table>
                      
-                     
+                                      
+                    </form>
            
                   </fieldset>
                 <fieldset class="view-items-container">
@@ -118,14 +105,14 @@
                                 X
                             </th>
                         </tr>
-                     <tr  :name="x.Index" v-bind:key="index" v-for="(x,index) in items">  
-                          <td>{{x.Supplier}}</td>
-                          <td>{{x.ItemCode}}</td>
+                     <tr  :name="x.ItemType" v-bind:key="index" v-for="(x,index) in items">  
+                          <td>{{getCustomerName(x.Customer)}}</td>
+                          <td>{{getItemCode(x.ItemCode)}}</td>
                           <td>{{x.ItemType}}</td>
                           <td>{{x.ItemQuantity}}</td>
                           <td>{{x.PricePerQuantity}}</td>
-                          <td>{{x.PurchaseType}}</td>
-                          <td>{{x.Driver}}</td>
+                          <td>{{x.PurchaseType==1 ?'Cash':'Credit'}}</td>
+                          <td>{{getDriverName(x.Driver)}}</td>
                           <td> <button class="btn-del" @click="removeItem($event)">X</button></td>
                    
                       </tr>
@@ -139,6 +126,11 @@
 </template>
 <script>
 import SubHeaderControl from "@/components/SubHeaderControl.vue";
+import Driver from "@/api_calls/Driver.js";
+import Customer from "@/api_calls/Customer.js";
+import Sales from "@/api_calls/Sales.js";
+ import Items from "@/api_calls/Items.js";
+
 export default {
     name:"AddSales",
     components:{
@@ -146,48 +138,147 @@ export default {
     },methods:{
           addItem(){
    
-            this.items.push(
-                {
-                    "Supplier":this.Supplier,
-                    "ItemCode":this.ItemCode,
+                 if(this.OrderString !==""){
+              var OrderList = this.OrderString.split(";")
+              var repeated = false;
+                    console.log(OrderList)
+
+                for(const x in OrderList){
+                    var singleOrder = OrderList[x].split(",");
+                    console.log(singleOrder);                    
+                   
+                 if(singleOrder[0] == this.ItemType){
+                     alert("an  entry with the same ItemType  can not be repeated");
+                     repeated = true;
+                     break;
+                } 
+             } if(!repeated){
+                   this.OrderString += this.ItemType +  "," + this.PricePerQuantity +"," + this.ItemQuantity + ";";
+                  
+            }else{
+                 
+                console.log(this.OrderString);
+            
+            }
+            }else{
+                    this.OrderString += this.ItemType +"," + this.PricePerQuantity +  "," + this.ItemQuantity +  ";";
+                    
+
+            }
+        if(!repeated){
+       this.items.push(
+                    {
+                    "Customer":this.Customer,
                     "ItemType":this.ItemType,
+                    "Driver":this.Driver,
                     "ItemQuantity":this.ItemQuantity,
                     "PricePerQuantity":this.PricePerQuantity,
-                    "PurchaseType":this.PurchaseType,
-                    "Driver":this.Driver,
+                    "PurchaseType":this.purchaseType,
                     "Index":this.IndexForDelete
                 }
             )
+        }
+ 
             this.IndexForDelete++;
-            console.log(this.items);
+            console.log(this.OrderString);
  
         },
         removeItem(e){
+        //remove from the order string 
         const target =   e.target.parentNode.parentNode;
         const index = target.getAttribute("name");
-        this.items =  this.items.filter(item=>{
-             return item.Index !=  index ; 
+        var stringAll =  this.OrderString.split(";");
+        stringAll.forEach((elem,i,obj)=>{
+            if(elem.split(",")[0] == index){
+                obj.splice(i,1);
+            }
         });
-         console.log(this.items);
+        var modifiedString = "";
+        for(let i=0;i<stringAll.length;i++){
+         modifiedString += stringAll[i];
+        }
+        if(modifiedString != ""){
+
+        this.OrderString = modifiedString + ";"; 
+
+        }else{
+            this.OrderString = "";
+        }
+        
+        this.items =  this.items.filter(item=>{
+             return item.ItemType !=  index ; 
+        });
+        
          if(this.items.length == 0){
              this.IndexForDelete=0;
          }
         
+        console.log(this.OrderString);
     
  
         },
         reload(){
             window.location.reload();
+        },   getDrivers(){
+            Driver.getDrivers().then(res=>{
+                this.DriverList = res["data"]
+            }).catch(err=>{console.log(err)}) 
+        }
+        ,getCustomers(){
+            Customer.getCustomers().then(res=>{this.CustomerList=res["data"]}).catch(err=>{console.log(err)})
+        }
+        ,
+        addSales(){
+            const data = {
+                    "Date":this.SalesDate,
+                    "CutomerID":this.CustomerID.toString(),
+                    "TransactionID":this.purchaseType,
+                    "EmployeeId":"9",
+                    "DriverId":this.Driver,
+                    "SalesInformation":this.OrderString
+            }
+            Sales.addSales(data).then(res=>{console.log(res)}).catch(err=>{
+                alert(err.response.data.message);
+            });
+            console.log(data);
         },
+        getItems(){
+            Items.getItems().then(res=>{this.ItemsList = res["data"]}).catch(err=>{console.log(err)});
+        },getCustomerName(id){
+            for(const x in this.CustomerList){
+                if(this.CustomerList.CustomerID==id){
+                   return this.CustomerList[x].CustomerName; 
+                }
+            }
+        }, getItemCode(id){
+              for(const x in this.ItemsList){
+                if(this.ItemsList.ItemID==id){
+                   return this.ItemsList[x].ItemCode; 
+                }
+            }
+        }, getDriverName(id){
+            console.log(id);
+               for(const x in this.DriverList){
+                if(this.DriverList[x].DriverID==id){
+                    console.log(this.DriverList[x].DriverName);
+                   return this.DriverList[x].DriverName; 
+                }
+            }
+        }
     },
     data(){
         return{
-                "Customer":'',
+                    ItemsList:[],
+                    OrderString:'',
+                    CustomerList:[],
+                    DriverList:[],
+                    SalesDate:'',
+                    "CustomerID":'',
                     "ItemCode":'',
                     "ItemType":'',
                     "ItemQuantity":'',
                     "PricePerQuantity":'',
-                    "PurchaseType":'',
+                    "purchaseType":'',
                     "PurchaseDate":'',
                     "Driver":'',
                     "Index":'',
@@ -204,7 +295,12 @@ export default {
             IndexForDelete:0,
             items:[]
         }
+    },created(){
+        this.getDrivers();
+        this.getCustomers();
+        this.getItems();
     }
+
 }
 </script>
 <style>

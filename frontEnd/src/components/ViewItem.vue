@@ -19,25 +19,94 @@
                                 Item Type
                             </th>
                             <th>
-                                Item Quantity
-                            </th>
-                            <th>
                                 Price Per Quantity
                             </th>
-    
+                             <th>
+                                 View Details
+                             </th>
                             <th>
                                 X
                             </th>
                           
                         </tr>
-                      <tr  :name="x.CategoryID" v-bind:key="index" v-for="(x,index) in items">  
+                        <vue-window-modal :active="HistoryInfoVisible"  title="Inventory History" v-on:clickClose="closeHistory(false)" style="width:auto;height:auto;">
+  <table class="view-items">
+      <tr class="view-items-header">
+          <th>
+              Date
+          </th>
+          <th>
+              Item ID
+          </th>
+          <th>
+              REFNO
+          </th>
+          <th>
+              GRNNO
+          </th>
+          <th>
+              OUT
+          </th>
+          <th>
+            IN
+          </th>
+        <th>
+              balance
+          </th>
+      </tr>
+      <tr :key="x.ItemId"  v-for="x in historyInfo">
+      
+     <td>
+         {{x.Date}}
+     </td>
+     <td>
+         {{x.ItemId}}
+     </td>
+     <td>
+         {{x.REFNO || "-"}}
+     </td>
+     <td>
+         {{x.GRNNO || "-"}}
+     </td>
+     <td>
+         {{x.OUT || "-"}}
+     </td>
+     <td>
+         {{x.IN || "-"}}
+     </td>
+     <td>
+         {{x.balance}}
+     </td>
+      </tr>
+  </table>
+                        </vue-window-modal>
+            <vue-window-modal  :active="InventoryInfoVisible"  title="Inventory Details"  v-on:clickClose="closeView(false)" style="width:auto;height:auto;">  
+                <table class="view-items">
+                    <tr class="view-items-header"> 
+                        <th>WareHouse</th>
+                        <th>Store</th>
+                        <th>Total</th>
+                         <th> PPP </th>
+                        <th>Total Price</th>
+                        <th>History</th>
+
+                    </tr>
+                    <tr  :key="x.ItemId"  v-for="x in InventoryInfoObj">
+                            <td>{{x["warehouse-balance"]}}</td>
+                            <td>{{x["store-balance"]}}</td>
+                            <td>{{x["total-balance"]}}</td>
+                            <td>{{x["PPP"]}}</td>
+                            <td>{{x["Total-price"]}}</td>
+                            <td><button class="btn-submit"  @click="viewHistoryInfo(x.ItemId)">view</button></td>
+                        </tr>
+                </table>
+            </vue-window-modal>
+                      <tr  :name="x.ItemID" v-bind:key="index" v-for="(x,index) in items">  
                           <td> {{x.ItemCategory[0].CategoryName}}</td>
                           <td>{{x.ItemCode}}</td>
                           <td>{{x.ItemType}}</td>
                           <td>{{x.PPP}}</td>
-                         
-
-                          <td>{{x.PPP}}</td>
+                          <td>  <button class="btn-submit"  @click="viewInfo(x.ItemID)">info</button></td>
                           <td> <button class="btn-del" @click="removeItem($event)">X</button></td>
                       </tr>
                     </table>
@@ -59,6 +128,10 @@ export default {
     data(){
    return {
        "items":[],
+       InventoryInfoVisible:false,
+       InventoryInfoObj:[],
+       historyInfo:[],
+       HistoryInfoVisible:false,
        links:
                [
                    {    
@@ -90,7 +163,28 @@ export default {
     
  
         }
-    
+    ,
+    viewInfo(id){
+        this.InventoryInfoVisible = true;
+     Items.getInventoryInfo(id).then(res=>{
+         this.InventoryInfoObj  = res["data"];
+
+     }).catch(err=>{alert(err.response.data.message)});   
+    },closeView(state){
+        this.InventoryInfoVisible = state;
+    },viewHistoryInfo(id){
+         this.closeView(false);
+        this.HistoryInfoVisible = true;
+        this.historyInfo = [];
+        Items.getInventoryHistoryInfo(id).then(res=>{
+        this.historyInfo = res["data"];
+            console.log("check this",this.historyInfo);
+        }).catch(err=>{
+            alert(err.response.data.message);
+            })
+    },closeHistory(state){
+         this.HistoryInfoVisible = state;
+    }
         },
         created(){
             console.log("here")

@@ -5,6 +5,11 @@
              <div class="dashboard-interactives">
         <div class="dashboard-side-nav">
             <ul>
+                <router-link to="purchase">
+                  <a href="">
+                    <li>Purchase</li>
+                </a>
+                </router-link>
                 <router-link to="employees">
                   <a href="">
                     <li>Employees</li>
@@ -34,6 +39,12 @@
               <router-link to="expenses">
                   <a href="">
                     <li>Expenses</li>
+                </a>
+            
+              </router-link>
+                   <router-link to="bill">
+                  <a href="">
+                    <li>Bill</li>
                 </a>
             
               </router-link>

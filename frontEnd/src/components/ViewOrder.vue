@@ -13,39 +13,19 @@
                     <table>
                 
                         <tr>
-                            <td>  <label for="supplier"> <h3>Supplier</h3></label>
+                            <td>  <label for="supplier"> <h3>Customer</h3></label>
                                 <select name="supplier" id="" class="txt-input">
-                                    <option value="Girma">Girma</option>
-                                    <option value="Girma">Girma</option>
-                                    <option value="">Girma</option>
-                                    <option value="">Girma</option>
-            
+                                    <option   :key="x.CustomerID" :value="x.CustomerID" v-for="x in CustomersList">{{x.CustomerName}}</option>
+                              
                                 </select></td> 
                             <td>
-                                <label for="purchaseType"> <h3>Order type</h3></label>
-                                <select name="purchaseType" id="" class="txt-input">
-                                    <option value="Cash">cash</option>
-                                    <option value="Credit">Credit</option>
-                                </select>
+                                <label for="purchaseDate"> <h3> Order Date </h3></label>
+                                <input type="date" class="txt-input" name="purchaseDate" placeholder="GRN NO">
                             </td>
+                    
                         </tr>
-                        <tr>
-                         <td>
-                            <label for="purchaseDate"> <h3> Order Date </h3></label>
-                            <input type="date" class="txt-input" name="purchaseDate" placeholder="GRN NO"  ></td>
-                         <td>  <label for="purchaseDate"> <h3> Delivery Date </h3></label>
-                            <input type="date" class="txt-input" name="deliveryDate"></td>
-                        </tr>
-                
-                        <tr>
-                            <td>
-                                  <label for="purchaseType"> <h3>Order From</h3></label>
-                                <select name="purchaseType" id="" class="txt-input">
-                                    <option value="ME">ME</option>
-                                    <option value="Customers">Customers</option>
-                                </select>
-                            </td>
-                        </tr>
+                      
+                 
                  
               
                     </table>
@@ -56,88 +36,52 @@
                 <fieldset class="view-items-container">
                     <legend> <h3> Items List </h3></legend>
                     <table class="view-items">
-                        <tr class="view-items-header">
+                   <tr class="view-items-header">
                             <th>
-                                Supplier
+                                Date
                             </th>
                             <th>
-                                Item Code
+                                Customer
                             </th>
                             <th>
-                                Item Type
+                                Total Orders
                             </th>
                             <th>
-                                Item Quantity
+                                Order Type
                             </th>
-                            <th>
-                                Price Per Quantity
-                            </th>
-                            <th>
-                                Purchase Type
-                            </th>
+                    
                             <th>
                                 X
                             </th>
-                        </tr>
-                  
-                          <tr @click="viewWithId" class="clickable">
-                         <td>1</td>
-                         <td>2</td>
-                         <td>3</td>
-                         <td>4</td>
-                         <td>4</td>
-                         <td>5</td>
-                         <td>5</td>
-                       </tr>  
-            <vue-window-modal  :active="visibleFormCrud"  title="EDIT FORM"  v-on:clickClose="visibleFormCrudUpdate(false)" style="width:auto;">  
-               <table>
-    <tr class="view-items-header">
-                            <th>
-                                Supplier
-                            </th>
-                            <th>
-                                Item Code
-                            </th>
-                            <th>
-                                Item Type
-                            </th>
-                            <th>
-                                Item Quantity
-                            </th>
-                            <th>
-                                Price Per Quantity
-                            </th>
-                            <th>
-                                Purchase Type
-                            </th>
-                            <th>
-                                X
-                            </th>
-                       
-                        </tr>
-                        <tr @click="viewItemWithId" class="clickable">
-                         <td>1</td>
-                         <td>2</td>
-                         <td>3</td>
-                         <td>4</td>
-                         <td>4</td>
-                         <td>5</td>
-                         <td>5</td>
+                            </tr>
+                        <tr   class="clickable" :key="x.OrderId" v-for="x in items">
+                         <td  @click="viewItemWithId($event)" >
+                             {{x.OrderDate}}
+                         </td>
+                         <td  @click="viewItemWithId($event)" >
+                             {{getCustomerName(x.CutomerID)}}
+                         </td >
+                         <td @click="viewItemWithId($event)" >
+                             {{x.Orderitems.length}}
+                         </td>
+                         <td @click="viewItemWithId($event)" >
+                             SALES
+                         </td>
+                           <td> <button class="btn-del" @click.prevent="removeOrder(x.OrderID)">X</button></td>
                        </tr> 
-                    <tr>
-                        <td>
-                            <button class="btn-submit">
-                                Confirm
-                            </button>
-                        </td>
-                    </tr>
-               </table>
+                  
+                     
+                
+                  </table>
+            <vue-window-modal  :active="visibleFormCrud"  title="EDIT FORM"  v-on:clickClose="visibleFormCrudUpdate(false)" style="width:auto;">  
+              
+       
                     
             </vue-window-modal>
             <vue-window-modal  :active="visibleFormCrudTwo"  title="Loaded data"  v-on:clickClose="visibleFormCrudTwoUpdate(false)">  
                 details for crudgo here
             </vue-window-modal>
-                    </table>
+                  
                 </fieldset>
                 </div>
             </div>
@@ -147,6 +91,8 @@
 </template>
 <script>
 import SubHeaderControl from "@/components/SubHeaderControl.vue";
+import Orders from "@/api_calls/Orders.js";
+import Customer from "@/api_calls/Customer.js";
 export default {
     name:"ViewOrder",
     components:{
@@ -162,13 +108,41 @@ export default {
         visibleFormCrudTwoUpdate(status){
             this.visibleFormCrudTwo = status;
         },
-        viewItemWithId(){
+        viewItemWithId(e){
+            e.stopPropagation();
+            
           this.visibleFormCrudTwo =  true;  
+        },
+    
+        getSalesOrders(){
+            Orders.getSalesOrders().then(res=>{
+                this.items=res["data"];
+                console.log(res["data"])
+            }).catch(err=>{
+                console.log(err);
+            })
+        },
+        getCustomerName(id){
+            for(const x in this.CustomersList ){
+                if(this.CustomersList[x].CustomerID == id){
+                    return this.CustomersList[x].CustomerName;
+                }
+            }
+        },
+        removeOrder(id){
+            Orders.removeOrder(id).then(res=>{
+                this.items = this.items.filter(item=>{return item.OrderID != id})
+                console.log(res)
+                }).catch(
+                err=>{alert(err.response.data.message)}
+            )
         }
     }
     ,
     data(){
         return {
+            items:[],
+            CustomersList:[],
     links:
                [
                 
@@ -186,6 +160,16 @@ export default {
 visibleFormCrud:false,
 visibleFormCrudTwo:false
         }
+    }
+    ,created(){
+    this.getSalesOrders();
+   // get Customer data
+   Customer.getCustomers().then(
+        res=>{
+            this.CustomersList = res["data"];
+           
+        }
+    ).catch(err=>{console.log(err)})
     }
 }
 </script>

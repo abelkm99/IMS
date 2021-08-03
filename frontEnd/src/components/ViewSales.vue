@@ -14,11 +14,10 @@
                 
                         <tr>
                             <td>  <label for="supplier"> <h3>Supplier</h3></label>
-                                <select name="supplier" id="" class="txt-input">
-                                    <option value="Girma">Girma</option>
-                                    <option value="Girma">Girma</option>
-                                    <option value="">Girma</option>
-                                    <option value="">Girma</option>
+                                <select v-model="SupplierID" name="supplier" id="" class="txt-input">
+                                    <option :key="x.SupplierID" :value="x.SupplierID" v-for="x in SuppliersList">{{x.SupplierName}}</option>
+                                 
+                                 
             
                                 </select></td> 
                             <td>
@@ -52,25 +51,32 @@
                     <table class="view-items">
                         <tr class="view-items-header">
                             <th>
-                                GRN Number
+                             REFNO 
                             </th>
                             <th>
-                                Item Code
+                              Date
                             </th>
                             <th>
-                                Item Type
+                              Type
                             </th>
                             <th>
-                                Item Quantity
+                               Customer
                             </th>
                             <th>
-                                Price Per Quantity
+                              Number of Orders
                             </th>
                             <th>
-                                Purchase Type
+                                X
                             </th>
                         </tr>
-                     
+                     <tr  :key="x.REFNO" :name="x.REFNO" v-for="x in items" >
+                        <td>{{x.REFNO}}</td>
+                          <td>{{x.Date}}</td>
+                          <td> {{x.TransactionID==1?'Cash':'Credit'}}</td>
+                          <td>{{getCustomerName(x.CutomerID)}}</td>
+                          <td>{{x.Sales.length}}</td>
+                          <td> <button class="btn-del" @click="removeSales($event)">X</button></td>
+                     </tr>
                     </table>
                 </fieldset>
                 </div>
@@ -81,12 +87,19 @@
 </template>
 <script>
 import SubHeaderControl from "@/components/SubHeaderControl.vue";
+import Supplier from "@/api_calls/Supplier.js";
+import Sales from "@/api_calls/Sales.js";
+import Customers from "@/api_calls/Customer.js";
 export default {
     name:"ViewSales",
     components:{
         SubHeaderControl
     },data(){
         return {
+            items:[],
+            SuppliersList:[],
+            CustomersList:[],
+            SupplierID:'',
             links:[
                 {
                     id:0,
@@ -100,6 +113,40 @@ export default {
                 }
             ]
         }
+    },methods:{
+        getSuppliers(){
+            Supplier.getSuppliers().then(res=>{
+                this.SuppliersList =  res["data"]
+            })
+        },
+        getSales(){
+            Sales.getSales().then(res=>{
+                this.items =  res["data"];
+            })
+        },
+        getCustomerName(id){
+            for(const x in this.CustomersList){
+              if(this.CustomersList[x].CustomerID==id){
+                  return this.CustomersList[x].CustomerName;
+              }
+            }
+        },
+        removeSales(e){
+            const id = e.target.parentNode.parentNode.getAttribute("name");
+            console.log(id);
+            Sales.removeSales(id).then(res=>{
+                console.log(res);
+                this.items = this.items.filter(item=>{return item.REFNO != id});
+            }).catch(err=>{
+                console.log(err);
+            })
+        }
+    },created(){
+        this.getSuppliers();
+        this.getSales();
+        Customers.getCustomers().then(res=>{
+            this.CustomersList = res["data"];
+        }).catch(err=>console.log(err))
     }
 }
 </script>

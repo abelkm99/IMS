@@ -5,7 +5,6 @@ import Dashboard from "../views/DashboardView.vue"
 import AddPurchase from "@/components/AddPurchase";
 import ViewPurchase from "@/components/ViewPurchase";
 import Shipment from "@/components/Shipment.vue";
-import MakeOrder from "@/components/MakeOrder.vue";
 import AddSales from "@/components/AddSales.vue";
 import ViewSales from "@/components/ViewSales.vue";
 import Login from "../views/Login.vue";
@@ -32,6 +31,8 @@ import AddOtherExpense from  "@/components/AddOtherExpense.vue";
 import AddCustomer from "@/components/AddCustomer.vue";
 import ViewCustomer from "@/components/ViewCustomer.vue";
 import ViewDriver from "@/components/ViewDriver.vue";
+import  ShipToWareHouse from  "@/components/ShipToWareHouse.vue";
+import AddBill from "@/components/AddBill.vue";
  Vue.use(VueRouter);
 const routes = [
   {
@@ -44,16 +45,7 @@ const routes = [
     name:"Dashboard",
     component:Dashboard,
     children:[
-   {
-      path:"purchase",
-        name:"AddPurchase",
-        component:AddPurchase,
-
-      },{
-        path:'viewpurchase',
-        name:"ViewPurchase",
-        component:ViewPurchase
-      },{
+  {
         path:"driver",
         name:"Driver",
         component:AddDeriver
@@ -62,13 +54,13 @@ const routes = [
         name:"shipment",
         component:Shipment
       },{
+        path:"shipToWareHouse",
+        name:"SHIPWAREHOUSE",
+        component:ShipToWareHouse
+      },{
         path:"orders",
         name:"orders",
-        component:MakeOrder
-      },{
-        path:"makeOrder",
-        name:"MakeOrder",
-        component:MakeOrder
+        component:AddOrder
       },{
         path:"addOrder",
         name:"AddOrder",
@@ -106,6 +98,16 @@ const routes = [
     component:AdminDashboard,
     children:[
       {
+        path:"purchase",
+          name:"AddPurchase",
+          component:AddPurchase,
+  
+        },{
+          path:'viewpurchase',
+          name:"ViewPurchase",
+          component:ViewPurchase
+        },
+      {
         path:"employees",
         name:"AddEmployee",
         component:AddEmployees
@@ -133,6 +135,10 @@ const routes = [
         path:"expenses",
         name:"Expenses",
         component:AddLoadingExpense
+      },{
+        path:"bill",
+        name:"Add Bill",
+        component:AddBill
       },{
         path:"unloadingExpense",
         name:"Unloading Expense",
@@ -198,5 +204,5 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-
+router.beforeEnter
 export default router

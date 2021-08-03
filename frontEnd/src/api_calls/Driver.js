@@ -2,7 +2,7 @@ import axios from "axios";
 const getDrivers = ()=>{
     var config = {
         method: 'get',
-        url: 'http://10.4.112.32/ims/api/v1/driver/list_drivers',
+        url: '/api/driver/list_drivers',
         headers: { }
       };
       

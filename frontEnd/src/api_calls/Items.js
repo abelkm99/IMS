@@ -25,9 +25,30 @@ var config = {
 
 return axios(config)
 }
+// const inventory info 
+const getInventoryInfo  = (id)=>{
+  var config = {
+    method: 'get',
+    url: `/api/item/get_item_inventory/${id}`,
+    headers: { }
+  };
+  
+ return  axios(config)
+}
+const getInventoryHistoryInfo = (id)=>{
+  var config = {
+    method: 'get',
+    url: `/api/get_item_stock/${id}`,
+    headers: { }
+  };
+ 
+  return axios(config)
+}
 export default{  
   getItems,
-  addItem
+  addItem,
+  getInventoryInfo,
+  getInventoryHistoryInfo
 
 };
 

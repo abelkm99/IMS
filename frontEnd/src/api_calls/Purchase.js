@@ -36,13 +36,37 @@ const updatePurchase = ()=>{
 
 }
 
-const removePurchase = ()=>{
+const removePurchase = (id)=>{
+  const data = {
+    "GRNNO":id
+  }
+  var config = {
+    method: 'delete',
+    url: '/api//purchase/delte_grn',
+    headers: { 
+      'Content-Type': 'application/json'
+    },
+    data : data
+  };
+  
+  return   axios(config)
 
+}
+// @ get not delivered
+const getNotDelivered = ()=>{
+  var config = {
+    method: 'get',
+    url: '/api/grn_not_delivered',
+    headers: { }
+  };
+  
+  return axios(config)
 }
 export default{
   getPurchase,
   addPurchase,
   updatePurchase,
   removePurchase,
-  getGRN
+  getGRN,
+  getNotDelivered
 }

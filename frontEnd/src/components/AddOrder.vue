@@ -10,47 +10,39 @@
                               Add Order
                         </h3>
                     </legend>
+                    <form @submit.prevent="addItem">
+
+
+                   
                     <table>
                         <tr>
                             <td>
                             </td>
-                            <td><button class="btn-submit" @click="addItem">Add Item</button> <button class="btn-submit">Finish</button> <button class="btn-submit error" @click="reload">Cancel</button></td>
 
                         </tr>
-                        <tr>
-                            <td> <input type="number" class="txt-input"  value="" placeholder="GRN NO" disabled></td> 
-                            <td>
-                                <select v-model="PurchaseType" name="PurchaseType" id="" class="txt-input">
-                                    <option value="Cash">cash</option>
-                                    <option value="Credit">Credit</option>
-                                </select>
-                            </td>
-                        </tr>
+        
+                 
                         <tr>
                          <td>
                             <label for="OrderDate"> <h3> Order Date </h3></label>
-                            <input v-model="OrderDate" type="date" class="txt-input" name="OrderDate" placeholder="GRN NO"  ></td>
-                         <td>  <label for="OrderDate"> <h3> Delivery Date </h3></label>
-                            <input type="date" class="txt-input" name="deliveryDate"></td>
+                            <input v-model="OrderDate" type="date" class="txt-input" name="OrderDate" required></td>
+                            <td><button class="btn-submit" type="submit">Add Item</button> <button class="btn-submit"  @click="addOrder" type="button">Finish</button> <button class="btn-submit error" @click="reload" type="button">Cancel</button></td>
+                       
                         </tr>
                         <tr>
                             <td>
                                 <label for="Customer"> <h3>Customer</h3></label>
                                 <select v-model="Customer" name="Customer"  class="txt-input">
-                                    <option value="Girma">Girma</option>
-                                    <option value="Girma">Girma</option>
-                                    <option value="">Girma</option>
-                                    <option value="">Girma</option>
-            
+                                    <option  :key="x.CustomerID" :value="x.CustomerID" v-for="x in CustomerList">{{x.CustomerName}}</option>
+                                  
                                 </select></td>
-                            <td>
-                                <label for="Driver"> <h3>Driver</h3></label>
-                                <select v-model="Driver" name="Driver"  class="txt-input">
-                                    <option value="Girma">Girma</option>
-                                    <option value="Girma">Girma</option>
-                                    <option value="Girna">Girma</option>
-                                    <option value="Girna">Girma</option>
-                                </select></td>
+                                           <td>
+                            <label for="itemType"> <h3>Item Type</h3></label>
+                            <select v-model="ItemType" name="itemType" id="" class="txt-input">
+                                <option :key="x.ItemID" :value="x.ItemID" v-for="x in ItemsList">{{x.ItemCode}}</option>
+                            
+                            </select>
+                        </td>
                           
                         </tr>
                         <tr>
@@ -61,30 +53,15 @@
                             <td> 
                                 <label for="quantity"> <h3>Item quantity</h3></label>
                                 <input v-model="ItemQuantity" type="number" class="txt-input"  value="" placeholder="Item quantity" min="1"></td> 
-                                <td> 
-                                    <label for="quantity"> <h3>Item Code</h3></label>
-                                    <input  v-model="ItemCode" type="text" class="txt-input"  name="ItemCode" value="" placeholder="Item code">
-                                </td> 
-                                    
-                        </tr>
-                    <tr>
-
-                        <td>
-                            <label for="itemType"> <h3>Item Type</h3></label>
-                            <select v-model="ItemType" name="itemType" id="" class="txt-input">
-                                <option value="RHS">RHS</option>
-                                <option value="CHS">CHS</option>
-                               
-        
-                            </select>
-                        </td>
-                        <td>
+                       
+                                     <td>
                             <label for="pricePerPiece"> <h3>Price Per quantity</h3></label>
-                            <input v-model="PricePerQuantity" type="number" name="pricePerPiece" class="txt-input"  value="" placeholder="Price per Peice" min="1">
-                        </td>
-                    </tr>
+                            <input v-model="PricePerQuantity" type="number" name="pricePerPiece" class="txt-input"  value="" placeholder="Price per Peice"  required>
+                        </td> 
+                        </tr>
+   
                     </table>
-                     
+                      </form>
                      
            
                   </fieldset>
@@ -98,34 +75,25 @@
                             <th>
                                 Item Code
                             </th>
-                            <th>
-                                Item Type
-                            </th>
+
                             <th>
                                 Item Quantity
                             </th>
                             <th>
                                 Price Per Quantity
                             </th>
-                            <th>
-                                Purchase Type
-                            </th>
-                              <th>
-                                Driver
-                            </th>
+                           
                             <th>
                                 X
                             </th>
                           
                         </tr>
-                      <tr  :name="x.Index" v-bind:key="index" v-for="(x,index) in items">  
+                      <tr  :name="x.ItemType" v-bind:key="x.ItemType" v-for="(x) in items">  
+    
                           <td>{{x.Customer}}</td>
-                          <td>{{x.ItemCode}}</td>
-                          <td>{{x.ItemType}}</td>
+                          <td>{{getItemCodeName(x.ItemType)}}</td>
                           <td>{{x.ItemQuantity}}</td>
                           <td>{{x.PricePerQuantity}}</td>
-                          <td>{{x.PurchaseType}}</td>
-                          <td>{{x.Driver}}</td>
                           <td> <button class="btn-del" @click="removeItem($event)">X</button></td>
                    
                       </tr>
@@ -139,6 +107,12 @@
 </template>
 <script>
 import SubHeaderControl from "@/components/SubHeaderControl.vue";
+ 
+import Customer from "@/api_calls/Customer.js";
+import  Supplier from  "@/api_calls/Supplier.js";
+import Driver from "@/api_calls/Driver.js";
+import Items  from "@/api_calls/Items.js";
+import Orders  from "@/api_calls/Orders.js";
 export default {
     name:"AddPurchase",
     components:{
@@ -146,7 +120,12 @@ export default {
     },
     data(){
    return {
-       "items":[],
+        SupplierList:[],
+        CustomerList:[],
+        DriverList:[],
+        ItemsList:[],
+        OrderString:'',
+        "items":[],
        "Customer":'',
        "ItemCode":'',
        "ItemType":'',
@@ -175,42 +154,140 @@ export default {
     methods:{
         addItem(){
    
-            this.items.push(
-                {
+        //check item in the string 
+           
+            if(this.OrderString !==""){
+              var OrderList = this.OrderString.split(";")
+              var repeated = false;
+                    console.log(OrderList)
+
+                for(const x in OrderList){
+                    var singleOrder = OrderList[x].split(",");
+                    console.log(singleOrder);                    
+                   
+                 if(singleOrder[0] == this.ItemType){
+                     alert("an  entry with the same ItemType  can not be repeated");
+                     repeated = true;
+                     break;
+                } 
+             } if(!repeated){
+                   this.OrderString += this.ItemType +  "," + this.PricePerQuantity + "," + this.ItemQuantity +";";
+                  
+            }else{
+                 
+                console.log(this.OrderString);
+            
+            }
+            }else{
+                    this.OrderString += this.ItemType + "," + this.PricePerQuantity + "," + this.ItemQuantity + ";";
+                    
+
+            }
+        if(!repeated){
+       this.items.push(
+                    {
                     "Customer":this.Customer,
-                    "ItemCode":this.ItemCode,
                     "ItemType":this.ItemType,
                     "ItemQuantity":this.ItemQuantity,
                     "PricePerQuantity":this.PricePerQuantity,
-                    "PurchaseType":this.PurchaseType,
-                    "Driver":this.Driver,
+                    "PurchaseType":"2",
                     "Index":this.IndexForDelete
                 }
             )
-            this.IndexForDelete++;
+        }
  
+            this.IndexForDelete++;
+            console.log(this.OrderString);
         },
         removeItem(e){
+        //remove from the order string 
         const target =   e.target.parentNode.parentNode;
         const index = target.getAttribute("name");
-        this.items =  this.items.filter(item=>{
-             return item.Index !=  index ; 
+        console.log("index checker",index);
+        var stringAll =  this.OrderString.split(";");
+        stringAll.forEach((elem,i,obj)=>{
+            if(elem.split(",")[0] == index){
+                obj.splice(i,1);
+            }
         });
-         console.log(this.items);
+        var modifiedString = "";
+        for(let i=0;i<stringAll.length;i++){
+         modifiedString += stringAll[i];
+        }
+        if(modifiedString != ""){
+
+        this.OrderString = modifiedString + ";"; 
+
+        }else{
+            this.OrderString = "";
+        }
+        
+        this.items =  this.items.filter(item=>{
+             return item.ItemType !=  index ; 
+        });
+        
          if(this.items.length == 0){
              this.IndexForDelete=0;
          }
         
-    
+        console.log("you this some bullshit", this.OrderString);
+ 
  
         },
         reload(){
             window.location.reload();
         },
-        addPurchase(){
+        addOrder(){
+            const data = {
+            "OrderType":"2",
+            "SupplierID":"",
+            "CutomerID":this.Customer,
+           "OrderDate":this.OrderDate,
+            "OrderInformation": this.OrderString
+            };
+            Orders.addSalesOrder(data).then(res=>{
+            console.log(res);
+            })
 
+
+        }, 
+        getCustomers(){
+            Customer.getCustomers().then(res=>{
+                this.CustomerList =  res["data"];
+            }).catch(err=>{
+                console.log(err)})
+        },
+        getDrivers(){
+            Driver.getDrivers().then(res=>{
+                this.DriverList =  res["data"];
+                }).catch(err=>{
+                    console.log(err);
+                })
+        },
+        getSupplier(){
+            Supplier.getSuppliers().then(res=>{
+                this.SupplierList  =  res["data"];
+            })
+        },
+        getItems(){
+          Items.getItems().then(res=>{
+              this.ItemsList = res["data"]
+          }).catch(err=>console.log(err));
+        },
+        getItemCodeName(id){
+          
+            for(const x in this.ItemsList){
+                if(this.ItemsList[x].ItemID == id){
+                    return this.ItemsList[x].ItemCode;
+                }
+            }
         }
-        }
+       
+       },
+       created(){
+           this.getItems();
+           this.getCustomers();
+       }
 }
 </script>
 <style>

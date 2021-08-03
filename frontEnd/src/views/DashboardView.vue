@@ -6,22 +6,19 @@
              <div class="dashboard-interactives">
         <div class="dashboard-side-nav">
             <ul>
-                <router-link to="purchase">
-                  <a href="">
-                    <li>Purchase</li>
+           
+                <router-link to="sales">
+                <a href="">
+                    <li>Sales</li>
                 </a>
-                </router-link>
+            </router-link>
               <router-link to="orders">
                   <a href="">
                     <li>Orders</li>
                 </a>
             
               </router-link>
-            <router-link to="sales">
-                <a href="">
-                    <li>Sales</li>
-                </a>
-            </router-link>
+       
         
                 <router-link to="shipment">
                  <a href="">

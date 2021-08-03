@@ -78,7 +78,7 @@
                           <td :class="x.Delivered==true?'':'missing-delivery'"> {{x.DeliverdDate}}</td>
                           <td>{{getSupplierName(x.SupplierID)}}</td>
                           <td>{{x.Purchase.length}}</td>
-                          <td> <button class="btn-del" @click="removeItem($event)">X</button></td>
+                          <td> <button class="btn-del" @click="removePurchase($event)">X</button></td>
                    
                       </tr>
                     </table>
@@ -176,7 +176,16 @@ export default {
             }else{
                      this.items = this.tempItems;
             }
-        }
+        },
+         removePurchase(e){
+             const  id  = e.target.parentNode.parentNode.getAttribute("name");
+             Purchase.removePurchase(id).then(res=>{
+                 this.items=  this.items.filter(ele =>{return  ele.GRNNO !=id} );
+                 console.log(res)
+             }).catch(err=>{
+                alert(err.response.data.message)
+                 })
+         }
     },
       created(){
           this.getPurchase();

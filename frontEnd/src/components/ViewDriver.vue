@@ -31,7 +31,7 @@
                           <td>{{x.DriverPlate}}</td>
                           <td> <button class="btn-del" @click="removeDriver($event)">X</button></td>
 
-                          <!-- <td>{{x.EmployeeAddress}}</td> -->
+                         
                       </tr>
                     </table>
                 </fieldset>
