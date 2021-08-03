@@ -11,14 +11,15 @@
             
             $r->get('/get_transaction_type','BasicApi/getTransactionType');
             $r->get('/get_item_stock/{ItemID:\d+}','BasicApi/getItemStock');
-            $r->get('/get_all_grns','');
-            $r->get('/get_grn/{GRNNO:\d+}','BasicApi/getGRN');
+            $r->get('/get_grn/{GRNNO:\d+}','BasicApi/getGRN'); 
             $r->get('/get_ref/{REFNO:\d+}','BasicApi/getREF');
             $r->get('/get_order/{OrderID:\d+}','BasicApi/getOrder');
             $r->get('/get_grns','BasicApi/getALLGRN');
             $r->get('/get_refs','BasicApi/getAllReferences');
             $r->get('/get_purchase_orders','BasicApi/getAllPurchaseOrders');
             $r->get('/get_sales_orders','BasicApi/getAllSalesOrders');
+            $r->get('/grn_not_delivered','BasicApi/getAllGRNSNOTDelivered');
+            $r->get('/transfered_Items_List','BasicApi/getAllTransferedInfo');
 
             $r->addGroup('/supplier', function (FastRoute\RouteCollector $r) {
                 $r->get('/listSuppliers', 'Supplier/ListAllSuppliers');
@@ -98,6 +99,17 @@
                 $r->put('/update_order','Order/updateOrder');
                 $r->put('/update_order_list','Order/updateOrderList');
                 $r->delete('/delete_order_list/{OrderdItemId:\d+}','Order/DelteOrderItem');
+
+            });
+            $r->addGroup('/personalBankAccount', function (FastRoute\RouteCollector $r) {
+                $r->get('/Accounts', 'Bank/getAllBanks');
+                $r->post('/add_bank_account','Bank/addNewAccount');
+                $r->put('/update_bank_account','Bank/updateBankAccount');
+                $r->delete('/delete_bank_account','Bank/deleteBankAccount');
+                $r->post('/add_transaction','Bank/addTransaction');
+                $r->delete('/delete_transaction','Bank/deleteTransaction');
+                // $r->put('/update_order_list','Order/updateOrderList');
+                // $r->delete('/delete_order_list/{OrderdItemId:\d+}','Order/DelteOrderItem');
 
             });
             $r->addGroup('/expence',function(FastRoute\RouteCollector $r){

@@ -50,4 +50,13 @@
             $sqlcommand = "EXEC [dbo].[spItemStock] @ItemID = ?";
             excute_prepared_statements($params_in,$sqlcommand);
         }
+        function getAllGRNSNOTDelivered(){
+            $sqlcommand = "select * from GRN inner join Purchase on GRN.GRNNO = Purchase.GRNNO where Delivered = 0 for json auto";
+            excute_select_operation($sqlcommand);
+        }
+        function getAllTransferedInfo(){
+            $sqlcommand = "select * from [Transfer-Expence] inner join [Warehouse-Store]
+            on [Transfer-Expence].TEID = [Warehouse-Store].TEID for json auto";
+            excute_select_operation($sqlcommand);
+        }
     }

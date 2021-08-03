@@ -439,3 +439,68 @@
             excute_prodecure($array,$sqlcommand);
         }
     }
+
+    class Bank{
+        function getAllBanks(){
+            $sqlcommand = "select * from PersonalBankAccount left join 
+            BankTransaction on PersonalBankAccount.PBID = BankTransaction.PBID for json auto";
+            excute_select_operation($sqlcommand);
+        }
+        function addNewAccount(){
+            $array = array(
+                "AccountNumber"=>1,
+                "BankName"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spAddPersonalBankAccount]
+            @AccountNumber = ?,
+            @BankName = ?";
+            excute_prodecure2($array,$sqlcommand);
+        }
+        function updateBankAccount(){
+            $input_array = array(
+                "PBID"=>1,
+                "AccountNumber"=>1,
+                "BankName"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spUpdatePersonalBankAccount]
+            @PBID = ?,
+            @AccountNumber = ?,
+            @BankName = ?";
+            excute_prodecure2($input_array,$sqlcommand);
+        }
+        function deleteBankAccount(){
+
+            $input_array = array(
+                "PBID"=>1
+            );
+
+            $sqlcommand = "EXEC	[dbo].[spDeletePersonalBankAccount]
+            @PBID = ?";
+            excute_prodecure2($input_array,$sqlcommand);
+        }
+        function addTransaction(){
+            $input_array = array(
+                "PBID"=>1,
+                "TransactionType"=>1,
+                "Amount"=>1,
+                "Date"=>1
+            );
+
+            $sqlcommand = "EXEC	[dbo].[spAddBankTransaction]
+            @PBID = ?,
+            @TransactionType = ?,
+            @Amount = ?,
+            @Date = ?";
+
+            excute_prodecure2($input_array,$sqlcommand);
+ 
+        }
+        function deleteTransaction(){
+            $input_array = array(
+                "BTID"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spDeleteBankTransaction]
+            @BTID = ?";
+            excute_prodecure2($input_array,$sqlcommand);
+        }
+    }
