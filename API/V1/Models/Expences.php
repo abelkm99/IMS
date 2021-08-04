@@ -503,4 +503,11 @@
             @BTID = ?";
             excute_prodecure2($input_array,$sqlcommand);
         }
+        function getTransaction($PBID){
+            $sqlcommand = "select *,
+            (ISNULL(SUM([TransactionIN]) OVER(ORDER BY [DATE] ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW ),0) 
+            - ISNULL( SUM([TransactionOUT]) OVER(ORDER BY [DATE] ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW ), 0))
+             as balance from BankTransaction where PBID = ? for json auto";
+            excute_prepared_statements(array($PBID),$sqlcommand);
+        }
     }

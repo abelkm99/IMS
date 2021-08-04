@@ -108,8 +108,7 @@
                 $r->delete('/delete_bank_account','Bank/deleteBankAccount');
                 $r->post('/add_transaction','Bank/addTransaction');
                 $r->delete('/delete_transaction','Bank/deleteTransaction');
-                // $r->put('/update_order_list','Order/updateOrderList');
-                // $r->delete('/delete_order_list/{OrderdItemId:\d+}','Order/DelteOrderItem');
+                $r->get('/getBankAccount_transactions/{PBID:\d+}','Bank/getTransaction');
 
             });
             $r->addGroup('/expence',function(FastRoute\RouteCollector $r){
