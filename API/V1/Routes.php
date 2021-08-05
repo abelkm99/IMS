@@ -20,7 +20,9 @@
             $r->get('/get_sales_orders','BasicApi/getAllSalesOrders');
             $r->get('/grn_not_delivered','BasicApi/getAllGRNSNOTDelivered');
             $r->get('/transfered_Items_List','BasicApi/getAllTransferedInfo');
-
+            $r->get('/get_warehouse','BasicApi/getAllWarehouse');
+            $r->get('/get_store','BasicApi/getAllStore');
+            
             $r->addGroup('/supplier', function (FastRoute\RouteCollector $r) {
                 $r->get('/listSuppliers', 'Supplier/ListAllSuppliers');
                 $r->get('/listSupplier/{Suppliername}','supplier/getSupplierInformation');
@@ -30,6 +32,7 @@
                 $r->post('/add_supplier_bankaccount','supplier/addSupplierBankAccount');
                 $r->put('/update_supplier_bankaccount','supplier/updateSupplierBankAccount');
                 $r->delete('/delete_supplier_bankaccount/{BankAcountId:\d+}','supplier/delteSupplierBankAccount');
+                $r->delete('/deleteSupplier','supplier/deleteSupplier');
             });
 
             $r->addGroup('/driver', function (FastRoute\RouteCollector $r) {
@@ -37,6 +40,7 @@
                 $r->get('/list_driver/{Drivername}','Driver/getDriverInformation');
                 $r->post('/add_driver','Driver/addDriver');
                 $r->put('/update_driver','Driver/updateDriver');
+                $r->delete('/delete_driver','Driver/deleteDriver');
             });
 
             $r->addGroup('/employee', function (FastRoute\RouteCollector $r) {
@@ -47,7 +51,7 @@
                 $r->put('/update_employee_auth','Employee/updateEmployeeAuthentication');
                 $r->post('/activate_employee','Employee/activateEmployee');
                 $r->post('/deactivate_employee','Employee/deactivateEmployee');
-                $r->delete('/delete_employee/{EmployeeId:\d+}','Employee/deleteEmployee');
+                $r->delete('/delete_employee','Employee/deleteEmployee');
             });
             $r->addGroup('/customer', function (FastRoute\RouteCollector $r) {
                 $r->get('/list_customers', 'Customer/ListAllCustomers');
@@ -58,13 +62,14 @@
                 $r->post('/add_customer_bankaccount','Customer/addCustomerBankAccount');
                 $r->put('/update_customer_bankaccount','Customer/updateCustomerBankAccount');
                 $r->delete('/delete_customer_bankaccount/{BankAcountId:\d+}','Customer/deleteCustomerBankAccount');
+                $r->delete('/delete_customer','Customer/deleteCustomer');
 
             });
             $r->addGroup('/category', function (FastRoute\RouteCollector $r) {
                 $r->get('/getcategories', 'Category/getAllCategories');
                 $r->post('/addcategory','Category/addCategory');
                 $r->put('/update_category','Category/updateCategory');
-
+                $r->delete('/delete_category','Category/deleteCategory');
             });
             $r->addGroup('/item', function (FastRoute\RouteCollector $r) {
                 $r->get('/get_items', 'Item/getAllItems');
@@ -90,6 +95,7 @@
                 $r->delete('/delte_ref','Purchase/deleteREF');
                 $r->post('/purchase_from_order','Purchase/PurchaseFromOrder');
                 $r->put('/update_transefred_item','Purchase/updateMovedData');
+                $r->delete('/delete_transfered_item','Purchase/deleteTransferedItem');
             });
             $r->addGroup('/order', function (FastRoute\RouteCollector $r) {
                 $r->get('/list_orders', 'Order/ListAllOrders');

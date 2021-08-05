@@ -99,4 +99,12 @@
             @message = ?";
             excute_delete_prodecure($BankAcountId,$sqlcommand);
         }
+        function deleteSupplier(){
+            $array = array(
+                "SupplierID"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spDeleteSupplier]
+            @SupplierID = ?";
+            excute_prodecure2($array,$sqlcommand);
+        }
     }

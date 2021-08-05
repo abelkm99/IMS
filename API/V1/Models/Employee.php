@@ -80,6 +80,9 @@
             excute_prodecure($params_in,$sqlcommand);
         }
         function deleteEmployee(){
-
+            $params_in = array("EmployeeId"=>1);
+            $sqlcommand = "EXEC [dbo].[spDeleteEmployee]
+            @EmployeeID = ?";
+            excute_prodecure2($params_in,$sqlcommand);
         }
     }

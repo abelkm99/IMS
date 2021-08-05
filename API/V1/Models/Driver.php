@@ -46,5 +46,13 @@
             @message = ?";
             excute_prodecure($array,$sqlcommand);
         }
+        function deleteDriver(){
+            $input_array = array(
+                "DriverID"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spDeleteDriver]
+            @DriverID = ?";
+            excute_prodecure2($input_array,$sqlcommand);
+        }
 
     }

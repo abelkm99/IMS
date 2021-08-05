@@ -5,7 +5,7 @@ function get_connection()
    
     $database = "Assya-Treading";
     $username = "assya";
-    $password = "123";
+    $password = "123"; 
     $serverName = "LAPTOP-LIUFT80F";
     $connectionInfo = array("Database" => $database, "UID" => $username, "PWD" => $password);
     $conn = sqlsrv_connect($serverName, $connectionInfo);

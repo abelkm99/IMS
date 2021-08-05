@@ -253,4 +253,12 @@
             @message = ?";
             excute_prodecure($array,$sqlcommand);
         }
+        function deleteTransferedItem(){
+            $params_in = array(
+                "WSID"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spDeleteTransferedItem]
+            @WSID = ?";
+            excute_prodecure2($params_in,$sqlcommand);
+        }
     }

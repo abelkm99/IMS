@@ -98,5 +98,13 @@
             @message = ?";
             excute_delete_prodecure($BankAcountId,$sqlcommand);
         }
+        function deleteCustomer(){
+            $array_input = array(
+                "CustomerID"=>1
+            );
+            $sqlcommand = "EXEC [dbo].[spDeleteCustomer]
+            @CustomerID = ?";
+            excute_prodecure2($array_input,$sqlcommand);
+        }
 
     }

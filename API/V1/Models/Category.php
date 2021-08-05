@@ -27,4 +27,12 @@
             @message = ?";
             excute_prodecure($array,$sqlcommand);
         }
+        function deleteCategory(){
+            $array_input = array(
+                "CategoryId"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spDeleteItemCategory]
+            @CategoryId = ?";
+            excute_prodecure2($array_input,$sqlcommand);
+        }
     }

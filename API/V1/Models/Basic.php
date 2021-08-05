@@ -1,5 +1,13 @@
 <?php
     class BasicApi{
+        function getAllWarehouse(){
+            $sqlcommand = "select * from WareHouse inner join Item on Item.ItemID = WareHouse.ItemID for json auto";
+            excute_select_operation($sqlcommand);
+        }
+        function getAllStore(){
+            $sqlcommand = "select * from Store inner join Item on Item.ItemID = Store.ItemID for json auto";
+            excute_select_operation($sqlcommand);
+        }
         function getTransactionType(){
             $sqlcommand = "select * from TransactionType for json auto";
             excute_select_operation($sqlcommand);

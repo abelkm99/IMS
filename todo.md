@@ -1,12 +1,16 @@
     suggestion
 ------------------
+[ ] do all primary keys and constraints 
 [ ] paginations
+[   ] change loading expences and unloading expences togeather  for only one GRN
+[x] redesign the DrawIO
+
 [x] driver plate
 [x] make sure not item duplication on one Purchase Table
     with the same GRNNO
 [x] make sure no item duplication during make sales
         |
-        |__==>[x] do it for order items table too
+        |======>[x] do it for order items table too
 [x] add all the necessary constraints
 [x] use salesID and Purchase ID for tbales store-sales and purchase-warehouse
 [x] move to store ware house new unloading expence and loadin expence ask ebtisam
@@ -80,6 +84,8 @@
 [x] Reference table
 [x] sales table
 
+[] update individual transfer
+[] update transferexpence
 
 ----------------------------
         queries
@@ -103,6 +109,98 @@
 
 [x] delete individual from sales
 
+[x] delete PersonalBankAccount
+    [x]check if the bankNumber have transaction
+[x] delete BankTransaction
+
+[x] delete Supplier BankAccount
+[x] delete Supplier
+    [x] no need to check just delete all the information
+
+[x] Delete GRN
+    [x] check if ALL GRN_Credit_Settlements
+    [x] check if it is on creadited 
+    [x] check if it is delivered
+    [x] delete if it is possible to sub from every items 
+    [x] check it is has UNLOAD Expence and make sure to delte the unloading Expence first
+    [x] check if Purchase-wareHouse
+    [x] delete all items that are added at from Purchase WareHouse
+
+[x] Delete GRN_Credit_Settlements
+[] ask assya for more information
+    [x] Delete Loading Expence 
+    [x] Delete Load/Unloading Expence
+
+[] Delete Item
+    [] check if it is on purchase tables
+    [] check if it is on sales table
+    [] check it it is on Ordered Items LIST just delete from (then delete from all)
+    [] delete from Purchase-warehouse
+    [] delete from warehouse
+    [] delete from warehouse-store (on transfer should be deleted first)
+    [] delete from store
+    [] delete from store-sales
+    
+[x] Delte WareHouseTostore ( one item from the table)
+    [x] check if there are enought items there at the store
+
+[] Delete Transfer
+    [] check if all the item Count are valid
+
+[x] delete ItemCategory
+    [x] delete if there is no item listed for the item category 
+
+[x] update Category ID
+    [x] update Item Category
+
+[x] Delete DRIVER ID
+    [x] check if is is on GRN
+    [x] check if it is on Reference
+[] can't delte or update from
+    [] 
+    [] warehouse -- it will be deleted when the item id deleted
+    [] purchase-wareHouse -- deletes when deleted from purchase
+    [] store -- it will be deleted when the item id deleted
+    [] store-sales -- it will be deleted when deleted from sales 
+
+[x] delete Employee
+    [x] check if it not on Reference table
+    [x] check it it is on SallaryExpence table
+[x] delete Sallary_EXpence
+
+[x] Delete Reference
+    [x] delete from store-sales table
+    [x] check is it has masatefiya
+    [x] check if it is on loading-expence
+    [x] check it it on REFCreditSettlment
+
+[x]  Delete RefCreDITSettlment
+
+[x] Delete Sales
+    [x] check if is possible to delete from sales
+[x] delete Masatefiya
+
+[x] delte Order
+    [x] just delte both order and OrderItems
+[x] delete OrderItem
+[x] delete CustomerBankAccount
+[x] delete Customer
+    [x] check if it has reference and order record
+    [x] if not delete all bankaccounts of the customer
+[x] delete Other Expence Type
+    [x] check if contain a list
+[x] delete Other Expence List
+[x] delete PersonalExpence Type
+    [x] check if it contain a list
+[x] delete PersonalExpence List
+
+[x] delete BillTypes
+    [x] check if contains a list
+[x] delete BillExpenceList
+[x] delete PersonalBankAccount
+    [x] check it contains a transaction
+[x] delete BankTransaction
+
 [x] delete Order
 [x] delete individual orderlist
 --------------------
@@ -115,7 +213,7 @@
 
 RULES
 ----------
-sales ppp < item ppp [] 
+sales ppp < item ppp [x] -- they can add whatever they want to add 
 
 
 IMS FINAL ANALYSIS
