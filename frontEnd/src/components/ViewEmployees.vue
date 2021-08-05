@@ -4,7 +4,44 @@
                 <SubHeaderControl :links="links"/>
             <div class="router-view">
                 <div class="add-purchase">
- 
+                <vue-window-modal :active="editVisible" title="Update Employee Details" v-on:clickClose="closeUpdate(false)" style="width:auto;height:auto;">
+                         <form @submit.prevent="updateEmployee">
+                         <table class="view-items">
+                        <tr class="view-items-header">
+                            <th>
+                                Name  
+                            </th>
+    
+                            <th>
+                                Phone
+                            </th>
+                            <th>
+                                Address
+                            </th>
+                        </tr>
+                        <tr :key="x.EmployeeID" v-for="x in employeeEditable" >
+                            <td>
+                                <input  v-model="editName" type="text" placeholder="employee Name" required/>
+                            </td>
+                         
+                            <td>
+                                <input  v-model="editPhone" type="text" placeholder="employee Phone" required/>
+
+                            </td>
+                            <td>
+                                    <input v-model="editAddress" type="text"   placeholder="Employee Address" requried/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button class="btn-submit" type="submit">
+                                    Confirm
+                                 </button>
+                            </td>
+                        </tr>
+                         </table>
+                         </form>          
+                         </vue-window-modal>
                 <fieldset class="view-items-container">
                     <legend> <h3> Employees </h3></legend>
                     <table class="view-items">
@@ -21,15 +58,17 @@
                             <th>
                                 Address
                             </th>
-                        
-
-                          
+                            <th>
+                                CHANGE
+                            </th>
                         </tr>
-                      <tr  :name="x.CategoryID" v-bind:key="index" v-for="(x,index) in items">  
+                      <tr  :name="x.EmployeeID" v-bind:key="index" v-for="(x,index) in items">  
                           <td> {{x.EmployeeName}}</td>
                           <td>{{x.EmployeePassword}}</td>
                           <td>{{x.EmployeePhoneNumber}}</td>
                           <td>{{x.EmployeeAddress}}</td>
+                          <td> <button class="btn-submit-mini" @click="editEmployeeView(x.EmployeeID)"><i class="fas fa-edit"></i></button>  <button class="btn-err" @click="removeEmployee(x.EmployeeID)"><i class="fas fa-trash-alt"></i></button></td>
+
                       </tr>
                     </table>
                 </fieldset>
@@ -49,6 +88,11 @@ export default {
     },
     data(){
    return {
+       editName:'',
+       editPass:'',
+       editPhone:'',
+       editAddress:'',
+       editVisible:false,
        "items":[],
        links:
                [
@@ -66,9 +110,34 @@ export default {
    }
     },
     methods:{
-    
-      
-    
+    editEmployeeView(id){
+        this.editVisible = true;
+        this.employeeEditable = this.items.filter(item=>{return item.EmployeeID ==  id});
+        this.editName = this.employeeEditable[0].EmployeeName;
+        this.editPhone = this.employeeEditable[0].EmployeePhoneNumber;
+        this.editAddress = this.employeeEditable[0].EmployeeAddress;
+
+
+    }, removeEmployee(id){
+    Employees.removeEmployee(id).then(res=>{
+        console.log(res["data"])
+        this.items = this.items.filter(item=>{return item.EmployeeID != id});
+        }).catch(err=>{
+        alert(err.response.data.message);
+    })
+    }, updateEmployee(){
+        const data = {
+    "EmployeeName":this.editName,
+    "EmployeePhoneNumber":this.editPhone,
+    "EmployeeAddress":this.editAddress,
+    "EmployeeId":this.employeeEditable[0].EmployeeID
+}
+       Employees.updateEmployee(data).then(res=>console.log(res["data"])).catch(err=>{
+           alert(err.response.data.message);
+       }) 
+    }, closeUpdate(state){
+            this.editVisible = state;
+        }
         },
         created(){
             console.log("here")

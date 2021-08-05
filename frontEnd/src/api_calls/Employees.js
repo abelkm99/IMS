@@ -24,7 +24,36 @@ const addEmployee = (data)=>{
       
       return axios(config)
 }
+const updateEmployee = (data)=>{
+  var config = {
+    method: 'put',
+    url: '/api/employee/update_employee',
+    headers: { 
+      'Content-Type': 'application/json'
+    },
+    data : data
+  };
+  
+  return axios(config)
+}
+const removeEmployee = (id)=>{
+  const data = {
+    "EmployeeId":id
+}
+  var config = {
+       method: 'delete',
+       url: '/api/employee/delete_employee',
+       headers: { 
+       'Content-Type': 'application/json'
+       },
+      data : data
+};
+
+return axios(config);
+}
 export default {
     getEmployees,
-    addEmployee
+    addEmployee,
+    updateEmployee,
+    removeEmployee
 }

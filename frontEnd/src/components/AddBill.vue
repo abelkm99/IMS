@@ -9,15 +9,15 @@
                         Add Bill Expense
                     </h3>
                 </legend>
-                <form action="" @submit.prevent="addUnloadingExpense">
+                <form action="" @submit.prevent="addBillExpense">
 
        <label for="expenseType">
                     <h3>
                     Bill Type
                     </h3>
                     </label>
-                    <select name="" id="" class="txt-input">
-                        <option value="1"> hello</option>
+                    <select v-model="BID" name="" id="" class="txt-input">
+                        <option   :key="x.BID" :value="x.BID" v-for="x in billTypes">{{x.BILLType}}</option>
                     </select>
              
               <label for="Date">
@@ -50,18 +50,21 @@
                                 Cost
                             </th>
                             <th>
-                                GRNNO
+                                GRTypeNNO
                             </th>
                             <th>
                                 X
                             </th> 
                           
                         </tr>
-                      <tr  :name="x.UNLoadID" v-bind:key="index" v-for="(x,index) in items">  
+                      <tr  :name="x.BILLEXPENCEID" v-bind:key="x.BID" v-for="(x) in billExpenses">  
+                          <td>
+                              {{getBillName(x.BID)}}
+                          </td>
                           <td>{{x.Date}}</td>
                           <td>{{x.Cost}}</td>
-                          <td>{{x.GRNNO}}</td>
-                          <td> <button class="btn-del" @click="removeUnloadingExpense($event)">X</button></td>
+            
+                          <td> <button class="btn-del" @click="removeBillExpense($event)">X</button></td>
                    
                       </tr>
                     </table>
@@ -73,7 +76,7 @@
 </template>
 <script>
 import SubHeaderControl from "@/components/SubHeaderControl.vue";
-import Expenses from "@/api_calls/Expenses.js";
+import Bill from "@/api_calls/Bills.js";
 export default {
 name:"AddLoadingExpense",
 components:{
@@ -81,10 +84,14 @@ components:{
 } ,
 data(){
     return{   
+        BID:'',
         items:[],
         billDate:'',
-        Cost:'',
+        billTypes:[],
+        billExpenses:[],
+       Cost:'',
         GRNNO:'',
+        
         links:[
         {
             id:0,
@@ -98,36 +105,47 @@ data(){
     ]
 }},
 methods:{
-getUnloadingExpense(){
-    Expenses.getUnloadingExpense().then(res=>{
-       console.log(res);
-       this.items = res["data"];
-    })
-},
-addUnloadingExpense(){
+ 
+addBillExpense(){
     const data = {
-        "Date":this.unloadingDate,
-    "Cost":this.Cost,
-    "GRNNO":this.GRNNO
+    "BID":this.BID,
+    "Date":this.billDate,
+    "Cost":this.Cost
     };
-    Expenses.addUnloadingExpense(data).then(res=>{
-     this.items.push(data);   
+    Bill.addBillExpense(data).then(res=>{
+     this.billExpenses.push(data);   
      console.los(res);
     }).catch(err=>{
         console.log(err.response);
         alert(err.response.data.message)});
 
 },
-removeUnloadingExpense(e){
+removeBillExpense(e){
     const id= e.target.parentNode.parentNode.getAttribute("name");
-    Expenses.removeUnloadingExpense(id).then(res=>{
-        this.items=this.items.filter(item=>{return item.UNLoadID != id});
+    Bill.removeBillExpense(id).then(res=>{
+        this.billExpenses = this.billExpenses.filter(item=>{return item.BILLEXPENCEID != id});
         console.log(res);
     }).catch(err=>console.log(err));
+}, getAllBillTypes(){
+    Bill.getAllBillTypes().then(res=>{
+        this.billTypes = res["data"];
+    })
+},
+getAllExpenseList(){
+    Bill.getAllExpenseList().then(res=>{
+        this.billExpenses =  res["data"];
+    })
+}, getBillName(id){
+    for(const x in this.billTypes){
+        if(this.billTypes[x].BID == id){
+            return this.billTypes[x].BILLType;
+        }
+    }
 }
 },
 created(){
-this.getUnloadingExpense();
+this.getAllBillTypes();
+this.getAllExpenseList();
 }
 }
 </script>

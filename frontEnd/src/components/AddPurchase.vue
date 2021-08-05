@@ -76,8 +76,8 @@
            
                   </fieldset>
                 <fieldset class="view-items-container">
-                    <legend> <h3> Items Added </h3></legend>
-                    <table class="view-items">
+                    <legend >  Items Added  </legend>
+                    <table class="view-items highlight">
                         <tr class="view-items-header">
                             <th>
                                 Supplier
@@ -307,9 +307,9 @@ export default {
 }
 </script>
 <style>
-    .router-view-container{
+.router-view-container{
     padding:20px;
-    background: #eee;
+    background: #fff !important;
     width:100%;
     height:auto;
 }
@@ -327,7 +327,7 @@ font-size:20px;
     display: inline;
     background: rgb(11, 170, 96);
     color:white;
-    padding:15px;
+    padding:10px !important;
     text-align:center;
     border-radius:5px;
 }
@@ -350,11 +350,11 @@ margin-left: 15px;
 .btn-submit{
     margin:10px;
     width:120px;
-    padding:15px;
+    padding:10px !important;
     border:none;
-    border-radius:15px;
+    color:white ;
+    border-radius:5px  !important;
     cursor:pointer;
-    color:white;
     background: rgb(11, 170, 96);
     font-size:20px;
 }

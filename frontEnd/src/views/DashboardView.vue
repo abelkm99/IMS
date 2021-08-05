@@ -1,12 +1,12 @@
 <template>
 <div>
 
- <MainHeader/>
     <div class="dashboard-container">
              <div class="dashboard-interactives">
         <div class="dashboard-side-nav">
+            <MainHeader id="mn"/>
             <ul>
-           
+                 
                 <router-link to="sales">
                 <a href="">
                     <li>Sales</li>
@@ -50,12 +50,16 @@ export default {
 }
 </script>
 <style>
+#mn{
+    padding:0;
+    margin:0;
+}
  .dashboard-interactives{
     display:grid;
     grid-template-columns:20% 70%;
 }
 .dashboard-side-nav{
-    padding:15px;
+    padding:0px !important;
     height:80vh;
  
 }
@@ -79,7 +83,7 @@ border-right:2px solid black;
     font-weight:bolder;
 }
 .dashboard-display{
-    padding:20px;
+    padding:0px !important;
   
 }
 

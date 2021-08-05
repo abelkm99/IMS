@@ -33,6 +33,9 @@ import ViewCustomer from "@/components/ViewCustomer.vue";
 import ViewDriver from "@/components/ViewDriver.vue";
 import  ShipToWareHouse from  "@/components/ShipToWareHouse.vue";
 import AddBill from "@/components/AddBill.vue";
+import Billtypes from "@/components/BillTypes.vue";
+import BankAccounts from '@/components/BankAccounts.vue';
+import AddBank from  "@/components/AddBank.vue";
  Vue.use(VueRouter);
 const routes = [
   {
@@ -140,6 +143,10 @@ const routes = [
         name:"Add Bill",
         component:AddBill
       },{
+        path:"billTypes",
+        name:"Add Bill",
+        component:Billtypes
+      },{
         path:"unloadingExpense",
         name:"Unloading Expense",
         component:AddUnloadingExpense
@@ -192,6 +199,15 @@ const routes = [
         path:"viewItem",
         name:"AddItem",
         component:ViewItem,
+
+      },{
+        path:"banks",
+        name:"Banks",
+        component:BankAccounts
+      },{
+        path:"addBank",
+        name:"addBank",
+        component:AddBank
 
       }
     ]

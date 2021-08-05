@@ -10,11 +10,11 @@
             </h3>
             <h4>Sales</h4>         
          </div>
-         <div class="logout-container">
+         <!-- <div class="logout-container">
              <button class="btn-logout">
                 Logout
              </button>
-         </div>
+         </div> -->
      </div>
     </div>
 </template>
@@ -23,40 +23,36 @@ export default {
     name:"MainHeader"
 }
 </script>
-<style>
-#main{
-  padding:0;
-  margin:0;
-}
+<style >
+  
     .top-nav{
-    width: 100%;
-    height:130px;
+    width: 245px;
+    height:70px;
     background:url(../assets/images/background-main.png) no-repeat;
     background-size:cover;
     background-position: center;
     display:flex;
     flex-direction: row;
-   
     padding:10px;
 }
 .name-info{
-margin-top:10px;
-padding:15px;
+margin-top:0px;
+padding:5px;
 color:white;
-font-size:20px;
+font-size:17px;
 
 }
 .profile-pic-holder{
-    width:100px;
-    height:100px;
+    width:50px;
+    height:50px;
     background:white;
     border-radius:50%;
-    margin-left:30px;
+    
 }
 .logout-container{
 position: absolute;
 right:10px;
-top:50px;
+top:10px;
  
 }
 .btn-logout{

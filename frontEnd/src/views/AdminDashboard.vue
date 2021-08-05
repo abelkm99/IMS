@@ -1,10 +1,16 @@
 <template>
 <div>
- <MainHeader/>
+ 
     <div class="dashboard-container">
              <div class="dashboard-interactives">
         <div class="dashboard-side-nav">
+          <MainHeader/>
             <ul>
+                <router-link to="status">
+                <a href="">
+                    <li>Status</li>
+                </a>
+            </router-link>
                 <router-link to="purchase">
                   <a href="">
                     <li>Purchase</li>
@@ -15,17 +21,7 @@
                     <li>Employees</li>
                 </a>
                 </router-link>
-                    <router-link to="Item">
-                 <a href="">
-                    <li>Items</li>
-                </a>
-                </router-link>
-                     <router-link to="ItemCategory">
-                 <a href="">
-                    <li>Item  Category</li>
-                </a>
-                </router-link>
-                <router-link to="supplier">
+                        <router-link to="supplier">
                   <a href="">
                     <li>Supplier</li>
                 </a>
@@ -36,6 +32,17 @@
                 </a>
             
               </router-link>
+                    <router-link to="Item">
+                 <a href="">
+                    <li>Inventory</li>
+                </a>
+                </router-link>
+                     <router-link to="ItemCategory">
+                 <a href="">
+                    <li>Item  Category</li>
+                </a>
+                </router-link>
+        
               <router-link to="expenses">
                   <a href="">
                     <li>Expenses</li>
@@ -56,11 +63,13 @@
             
               </router-link>
               
-            <router-link to="status">
-                <a href="">
-                    <li>Status</li>
+                    <router-link to="banks">
+                  <a href="">
+                    <li>MY Bank</li>
                 </a>
-            </router-link>
+            
+              </router-link>
+              
         
      
             </ul>
@@ -86,6 +95,12 @@ export default {
 }
 </script>
 <style>
+ @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+ *{
+font-family: 'Gowun Dodum', sans-serif;
+font-weight:bold;
+ }
+ 
  .dashboard-interactives{
     display:grid;
     grid-template-columns:20% 70%;
@@ -99,11 +114,15 @@ export default {
 list-style: none;
 padding:15px;
 margin:10px;
-background:rgb(11, 170, 96);
-text-align:center;
-border-bottom-left-radius:15px;
-border-top-left-radius:15px;
-border-right:2px solid black;
+background:none !important;
+text-align:left !important;
+border-bottom-left-radius:0px !important;
+border-top-left-radius:0px !important;
+border-right:2px solid rgb(11, 170, 96);
+color:black !important;
+
+}
+.dashboard-side-nav li:hover{
 
 }
 

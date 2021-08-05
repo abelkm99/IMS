@@ -32,17 +32,13 @@ const addPurchase = (data)=>{
       return axios(config);
 
 }
-const updatePurchase = ()=>{
-
-}
-
 const removePurchase = (id)=>{
   const data = {
     "GRNNO":id
   }
   var config = {
     method: 'delete',
-    url: '/api//purchase/delte_grn',
+    url: '/api/purchase/delte_grn',
     headers: { 
       'Content-Type': 'application/json'
     },
@@ -62,11 +58,52 @@ const getNotDelivered = ()=>{
   
   return axios(config)
 }
+
+const updateGRN = (data)=>{
+  var config = {
+    method: 'put',
+    url: '/api/purchase/update_grn',
+    headers: { 
+      'Content-Type': 'application/json'
+    },
+    data : data
+  };
+  
+  return  axios(config);
+}
+const updatePurchase = (data)=>{
+  
+  var config = {
+    method: 'put',
+    url: '/api/purchase/update_purchase',
+    headers: { 
+      'Content-Type': 'application/json'
+    },
+    data : data
+  }
+  
+  return axios(config)
+}
+
+const removeItem = (id)=>{
+  var config = {
+    method: 'delete',
+    url: '/api/purchase/delete_purchase',
+    headers: { 
+      'Content-Type': 'application/json'
+    },
+    data : id
+  };
+  
+  return axios(config);
+}
 export default{
   getPurchase,
   addPurchase,
-  updatePurchase,
   removePurchase,
   getGRN,
-  getNotDelivered
+  getNotDelivered,
+  updateGRN,
+  updatePurchase,
+  removeItem,
 }
