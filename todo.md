@@ -1,8 +1,9 @@
     suggestion
 ------------------
-[ ] do all primary keys and constraints 
+[ ] figure out backup methods
+[x] do all primary keys and constraints 
 [ ] paginations
-[   ] change loading expences and unloading expences togeather  for only one GRN
+[ ] change loading expences and unloading expences togeather  for only one GRN
 [x] redesign the DrawIO
 
 [x] driver plate
@@ -54,7 +55,6 @@
 [x] Driver->information
 [x] Employee
     [x] employee username password(ask privious username and password)
-
     [x] employee name,phonenumber,address
     [x] activate employee
     [x] deactivate employee
@@ -83,8 +83,8 @@
 [x] Reference table
 [x] sales table
 
-[] update individual transfer
-[] update transferexpence
+[x] update individual transfer
+[x] update transferexpence
 ----------------------------
         queries
 ----------------------------
@@ -209,6 +209,55 @@
 
 [x] do the autentication
 
+## CONSTRAINTS TO BE ADDED
+
+ UNLOADING Expence 
+    [x] cost can't be negative 
+ GRNCREDIT-SETTLEMENT
+    [x] Payment->not negative
+ GRN
+    [x] Deliverd Date have to be greater than PurchaseDate
+ Purchase
+    [x]PPP >=0
+    [x]quantity >=0
+    [x] remainder>=0
+    [x] extra>=0
+warehouse
+    [x] itemCount>0
+warehouse-store
+    [x] inCount>=0
+transfer-expence
+    [x] cost>=0
+store
+    [x] itemcount>=0
+item
+    [x] ppp>=0
+store-sales
+    [x] out>=0
+masatefiya
+    [x]cost>=0
+sales
+    [x] PPP>=0
+    [x] quantity>=0
+salary-expence
+    [x] cost>=0
+REF-CREDIT-SETTLEMENT
+    [x] payment>=0
+loading-expence
+    [x] cost>=0
+OrderItems
+    [x] PPP>=0
+    [x] Quantity>=0
+OELIST
+    [x] cost>=0
+PELIST
+    [x] cost>=0
+BILLLIST
+    [x] cost>=0
+ Purchase-warehouse
+    [x] INCOUNT is greater than 0
+
+ 
 RULES
 ----------
 sales ppp < item ppp [x] -- they can add whatever they want to add 

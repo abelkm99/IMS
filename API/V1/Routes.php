@@ -98,6 +98,8 @@
                 $r->put('/update_transefred_item','Purchase/updateMovedData');
                 $r->delete('/delete_transfered_item','Purchase/deleteTransferedItem');
                 $r->delete('/delet_teid','Purchase/deleteTEID');
+                $r->put('/update_transferd_count','Purchase/updateTransferCount');
+                $r->put('/update_teid','Purchase/updateTEID');
             });
             $r->addGroup('/order', function (FastRoute\RouteCollector $r) {
                 $r->get('/list_orders', 'Order/ListAllOrders');

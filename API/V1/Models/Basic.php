@@ -63,7 +63,7 @@
             excute_select_operation($sqlcommand);
         }
         function getAllTransferedInfo(){
-            $sqlcommand = "select * from [Transfer-Expence] inner join [Warehouse-Store]
+            $sqlcommand = "select * from [Transfer-Expence] left join [Warehouse-Store]
             on [Transfer-Expence].TEID = [Warehouse-Store].TEID for json auto";
             excute_select_operation($sqlcommand);
         }
