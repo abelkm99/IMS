@@ -261,4 +261,12 @@
             @WSID = ?";
             excute_prodecure2($params_in,$sqlcommand);
         }
+        function deleteTEID(){
+            $params_in = array(
+                "TEID"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spDeleteAllTransferedItems]
+            @TEID = ?";
+            excute_prodecure2($params_in,$sqlcommand);
+        }
     }

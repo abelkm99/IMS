@@ -77,6 +77,7 @@
                 $r->put('/update_item','Item/updateItem');
                 $r->put('/update_item_price','Item/updateItemPrice');
                 $r->get('/get_item_inventory/{ItemId:\d+}','Item/ItemInventory');
+                $r->delete('/delete_item','Item/deleteItem');
             });
             $r->addGroup('/purchase', function (FastRoute\RouteCollector $r) {
                 $r->post('/make_purchase', 'Purchase/makePurchase');
@@ -96,6 +97,7 @@
                 $r->post('/purchase_from_order','Purchase/PurchaseFromOrder');
                 $r->put('/update_transefred_item','Purchase/updateMovedData');
                 $r->delete('/delete_transfered_item','Purchase/deleteTransferedItem');
+                $r->delete('/delet_teid','Purchase/deleteTEID');
             });
             $r->addGroup('/order', function (FastRoute\RouteCollector $r) {
                 $r->get('/list_orders', 'Order/ListAllOrders');

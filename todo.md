@@ -22,7 +22,6 @@
 
 [x] add new column ordertype inside orders tabel
 [x] delete also the infromation from the credit settlement
-[] update Date and cost fro transfer items
 
 [] remove identity cache from the entire table
 -------------------------
@@ -86,7 +85,6 @@
 
 [] update individual transfer
 [] update transferexpence
-
 ----------------------------
         queries
 ----------------------------
@@ -132,21 +130,21 @@
     [x] Delete Load/Unloading Expence
     
 
-[] Delete Item
-    [] check if it is on purchase tables
-    [] check if it is on sales table
-    [] check it it is on Ordered Items LIST just delete from (then delete from all)
-    [] delete from Purchase-warehouse
-    [] delete from warehouse
-    [] delete from warehouse-store (on transfer should be deleted first)
-    [] delete from store
-    [] delete from store-sales
+[x] Delete Item
+    [x] check if it is on purchase tables
+    [x] check if it is on sales table
+    [x] check it it is on Ordered Items LIST just delete from (then delete from all)
+    [x] delete from Purchase-warehouse (deleted BY GRN)
+    [x] delete from warehouse
+    [x] delete from warehouse-store (deleted on transfer)
+    [x] delete from store
+    [x] delete from store-sales(deleted by REFNO)
     
 [x] Delte WareHouseTostore ( one item from the table)
     [x] check if there are enought items there at the store
 
-[] Delete Transfer
-    [] check if all the item Count are valid
+[x] Delete Transfer
+    [x] check if all the item Count are valid
 
 [x] delete ItemCategory
     [x] delete if there is no item listed for the item category 
@@ -157,12 +155,11 @@
 [x] Delete DRIVER ID
     [x] check if is is on GRN
     [x] check if it is on Reference
-[] can't delte or update from
-    [] 
-    [] warehouse -- it will be deleted when the item id deleted
-    [] purchase-wareHouse -- deletes when deleted from purchase
-    [] store -- it will be deleted when the item id deleted
-    [] store-sales -- it will be deleted when deleted from sales 
+[x] can't delte or update from 
+    [x] warehouse -- it will be deleted when the item id deleted
+    [x] purchase-wareHouse -- deletes when deleted from purchase
+    [x] store -- it will be deleted when the item id deleted
+    [x] store-sales -- it will be deleted when deleted from sales 
 
 [x] delete Employee
     [x] check if it not on Reference table
