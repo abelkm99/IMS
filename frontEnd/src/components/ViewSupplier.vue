@@ -4,11 +4,65 @@
                 <SubHeaderControl :links="links"/>
             <div class="router-view">
                 <div class="add-purchase">
+
+<!-- edit Supplier Bank pop up -->
+
+<vue-window-modal  :active="editSupplierBankVisible" title="Edit Supplier Bank Info" v-on:clickClose="EditBankVisible(false)" style="width:auto;height:auto;">
+<table class="view-items">
+    <tr class="view-items-header">
+        <th>
+            Bank Name
+        </th>
+        <th>
+            Bank Number
+        </th>
+    </tr>
+    <tr>
+        <td> <input  v-model="editBankName"  type="text"  placeholder="Bank Name"> </td>
+        <td>  <input   v-model="editBankNumber"  type="text" placeholder="Bank Number"> </td>
+    </tr>
+</table>
+
+</vue-window-modal>
+
+<!-- /edit Supplier Bank pop up -->
+<!-- add Supplier Bank pop up -->
+<vue-window-modal   :active="addBankVisible"  title="ADD Bank Account" v-on:clickClose="visibleBankUPdate(false)"  style="width:auto;height:auto;">  
+<form  @submit.prevent="addBank">
+<table class="view-items">
+<tr class="view-items-header">
+<th>Bank Name</th>
+<th>  Bank Account</th>
+</tr>
+<tr>
+   <td> <input  v-model="bankNameAdd" type="text" placeholder="Bank Name"> </td>
+   <td> <input  v-model="bankAccoutAdd"  type="text"  placeholder="Bank Account"> </td>
+
+</tr>
+<tr>
+    <td>
+        <button class="btn-submit" type="submit">
+            ADD
+        </button>
+    </td>
+</tr>
+</table>
+</form>
+
+</vue-window-modal>
+
+<!-- / add supplier bank pop up -->
+
+
+
              <vue-window-modal  :active="visibleFormCrud"  title="Bank Details"  v-on:clickClose="visibleFormCrudUpdate(false)" style="width:auto;">  
             <table class="view-items">
                     <tr class="view-items-header">
                         <th>Bank Name</th>
                         <th>Bank Account Number</th>
+                        <th>
+                            Change
+                        </th>
                     </tr>
                     <tr :key="x.BankAccountID" v-for="x in bankDetails" v-show=" bankDetails.length > 0">
                            <td>
@@ -17,6 +71,10 @@
                             <td>
                             {{x.BankAccountNumber}}
                             </td> 
+                         
+                          <td> <button class="btn-submit-mini" @click="editSupplierBankView(x.BankAccountID,x.SupplierID)"><i class="fas fa-edit"></i></button>  <button class="btn-err" @click="removeSupplierBank(x.GRNNO)"><i class="fas fa-trash-alt"></i></button></td>
+
+                        
                     </tr>
 
             </table>
@@ -41,6 +99,10 @@
                             <th>
                                 Bank Info
                             </th>
+
+                            <th>
+                                Change
+                            </th>
                           
                         </tr>
                       <tr  :name="x.SupplierID" v-bind:key="index" v-for="(x,index) in items">  
@@ -48,8 +110,9 @@
                           <td>{{x.SupplierAddress}}</td>
                           <td>{{x.SupplierPhoneNumber}}</td>
                           <td>{{x.SupplierTinNumber}}</td>
-
-                          <td><button class="btn-submit" @click="showDetail($event)">BankInfo</button></td>
+                          <td> <button class="btn-submit-mini" @click="showDetail(x.SupplierID)"><i class="fas fa-eye"></i></button>  <button class="btn-submit-mini" @click="addBankVisibleCall(x.SupplierID)"><i class="fas fa-plus"></i></button></td>
+                          <td> <button class="btn-submit-mini" @click="editPurchaseView(x.GRNNO)"><i class="fas fa-edit"></i></button>  <button class="btn-err" @click="removePurchase(x.GRNNO)"><i class="fas fa-trash-alt"></i></button></td>
+                      
                       </tr>
                     </table>
                 </fieldset>
@@ -70,8 +133,16 @@ export default {
     data(){
    return {
        visibleFormCrud:false,
+       addBankVisible:false,
+       editBankName:'',
+       editBankNumber:'',
+       supplierAddBank:'',
+       bankSupplierID:'',
+       editSupplierBankVisible:true,
        "items":[],
        "bankDetails":[],
+       bankNameAdd:'',
+       bankAccoutAdd:'',
        links:
                [
                    {    
@@ -93,12 +164,48 @@ export default {
           this.visibleFormCrud = state;
                         
       },
-      showDetail(e){
-          const id = e.target.parentNode.parentNode.getAttribute("name");
+      showDetail(id){
+         
           const sb = (this.items.filter(item=>item.SupplierID == id))
         this.bankDetails = sb[0].sb;
         this.visibleFormCrud = true;
-      } 
+      },
+       addBankVisibleCall(id){
+           this.addBankVisible =  true;
+           this.supplierAddBank = id;
+       },
+       addBank(){
+            const data = {
+                  "SupplierID":this.supplierAddBank,
+                  "BankAccount":this.bankAccoutAdd,
+                  "BankName":this.bankNameAdd
+           }
+           Supplier.addBankAccount(data).then(res=>{
+               console.log(res["data"])
+
+              Supplier.getSuppliers().then(item=>{
+                this.items = item["data"];            
+            });
+                    this.supplierAddBank = "";
+                    this.bankAccoutAdd = "";
+                    this.bankNameAdd = "";
+               }).catch(err=>{
+               alert(err.response.data.message);
+           })
+       },
+       visibleBankUPdate(state){
+           this.addBankVisible = state;
+       }, editSupplierBankView(id ,spID ){   
+           this.editSupplierBankVisible = true;
+           this.bankEditId = id;
+           this.bankSupplierID = spID;
+           this.editBankName = this.items.filter(item=>{return item.SupplierID == spID})[0]
+
+           console.log(this.editBankName);
+       },
+       EditBankVisible(state){
+           this.editSupplierBankVisible  = state;
+       }
     
         },
         created(){

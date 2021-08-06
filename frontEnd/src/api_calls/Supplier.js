@@ -21,9 +21,25 @@ const getSuppliers = ()=>{
   
   return axios(config)
 }
+
+const addBankAccount =  (data)=>{
+  var config = {
+    method: 'post',
+    url: '/api/supplier/add_supplier_bankaccount',
+    headers: { 
+      'Content-Type': 'application/json'
+    },
+    data : data
+  };
+  
+  return axios(config)
+}
+
+
 export default {
 
     addSupplier,
     getSuppliers,
+    addBankAccount,
 
 }
