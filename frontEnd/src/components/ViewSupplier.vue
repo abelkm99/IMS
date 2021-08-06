@@ -5,9 +5,58 @@
             <div class="router-view">
                 <div class="add-purchase">
 
+<!-- edit supplier Details pop up -->
+
+<vue-window-modal   :active="editSupplierVisible" title="Edit Supplier Details" v-on:clickClose="closeEditSupplier(false)" style="width:auto;height:auto;">
+<form @submit.prevent="updateSupplier">
+<table class="view-items">
+    <tr class="view-items-header">
+    <th>
+        Name
+    </th>
+    <th>
+        Address
+    </th>
+    <th>
+        Phone
+    </th>
+    <th>
+        Tin Number
+    </th>
+    </tr>
+    <tr>
+        <td>
+                <input   v-model="editName"  type="text" placeholder="Name" required/>
+        </td>
+        <td>
+                <input    v-model="editAddress"  type="text" placeholder="Address" required/>
+        </td>
+        <td>
+                    <input   v-model="editPhone" type="text"   placeholder="Phone" required/>
+        </td>
+        <td>
+                    <input  v-model="editTin"  type="text" placeholder="Tin  Number" required/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <button class="btn-submit" type="submit">
+                Confirm
+            </button>
+        </td>
+    </tr>
+</table>
+</form>
+
+</vue-window-modal>
+
+<!-- /edit supplier Details  pop up-->
+
+
 <!-- edit Supplier Bank pop up -->
 
 <vue-window-modal  :active="editSupplierBankVisible" title="Edit Supplier Bank Info" v-on:clickClose="EditBankVisible(false)" style="width:auto;height:auto;">
+<form @submit.prevent="updateSupplierBank">
 <table class="view-items">
     <tr class="view-items-header">
         <th>
@@ -21,8 +70,15 @@
         <td> <input  v-model="editBankName"  type="text"  placeholder="Bank Name"> </td>
         <td>  <input   v-model="editBankNumber"  type="text" placeholder="Bank Number"> </td>
     </tr>
+    <tr>
+        <td>
+            <button class="btn-submit" type="submit">
+                Confirm
+            </button>
+        </td>
+    </tr>
 </table>
-
+</form>
 </vue-window-modal>
 
 <!-- /edit Supplier Bank pop up -->
@@ -53,9 +109,9 @@
 
 <!-- / add supplier bank pop up -->
 
+<!-- bank details view -->
 
-
-             <vue-window-modal  :active="visibleFormCrud"  title="Bank Details"  v-on:clickClose="visibleFormCrudUpdate(false)" style="width:auto;">  
+             <vue-window-modal  :active="visibleFormCrud"  title="Bank Details"  v-on:clickClose="visibleFormCrudUpdate(false)" style="width:auto;height:auto;overflow-y:scroll;">  
             <table class="view-items">
                     <tr class="view-items-header">
                         <th>Bank Name</th>
@@ -72,7 +128,7 @@
                             {{x.BankAccountNumber}}
                             </td> 
                          
-                          <td> <button class="btn-submit-mini" @click="editSupplierBankView(x.BankAccountID,x.SupplierID)"><i class="fas fa-edit"></i></button>  <button class="btn-err" @click="removeSupplierBank(x.GRNNO)"><i class="fas fa-trash-alt"></i></button></td>
+                          <td> <button class="btn-submit-mini" @click="editSupplierBankView(x.BankAccountID,x.SupplierID)"><i class="fas fa-edit"></i></button>  <button class="btn-err" @click="removeSupplierBank(x.BankAccountID)"><i class="fas fa-trash-alt"></i></button></td>
 
                         
                     </tr>
@@ -111,7 +167,7 @@
                           <td>{{x.SupplierPhoneNumber}}</td>
                           <td>{{x.SupplierTinNumber}}</td>
                           <td> <button class="btn-submit-mini" @click="showDetail(x.SupplierID)"><i class="fas fa-eye"></i></button>  <button class="btn-submit-mini" @click="addBankVisibleCall(x.SupplierID)"><i class="fas fa-plus"></i></button></td>
-                          <td> <button class="btn-submit-mini" @click="editPurchaseView(x.GRNNO)"><i class="fas fa-edit"></i></button>  <button class="btn-err" @click="removePurchase(x.GRNNO)"><i class="fas fa-trash-alt"></i></button></td>
+                          <td> <button class="btn-submit-mini" @click="editSupplierDetailsView(x.SupplierID)"><i class="fas fa-edit"></i></button>  <button class="btn-err" @click="removeSupplier(x.SupplierID)"><i class="fas fa-trash-alt"></i></button></td>
                       
                       </tr>
                     </table>
@@ -132,13 +188,19 @@ export default {
     },
     data(){
    return {
+       editSupplierVisible:false,
        visibleFormCrud:false,
        addBankVisible:false,
+       editableSupplier:[],
        editBankName:'',
        editBankNumber:'',
        supplierAddBank:'',
        bankSupplierID:'',
-       editSupplierBankVisible:true,
+       editName:'',
+       editAddress:'',
+       editPhone:'',
+       editTin:'',
+       editSupplierBankVisible:false,
        "items":[],
        "bankDetails":[],
        bankNameAdd:'',
@@ -182,7 +244,10 @@ export default {
            }
            Supplier.addBankAccount(data).then(res=>{
                console.log(res["data"])
-
+                    this.supplierAddBank='';
+                  this.bankAccoutAdd='';
+                  this.bankNameAdd ='';
+                  this.addBankVisible = false;
               Supplier.getSuppliers().then(item=>{
                 this.items = item["data"];            
             });
@@ -197,15 +262,81 @@ export default {
            this.addBankVisible = state;
        }, editSupplierBankView(id ,spID ){   
            this.editSupplierBankVisible = true;
+           this.visibleFormCrud = false;
            this.bankEditId = id;
            this.bankSupplierID = spID;
-           this.editBankName = this.items.filter(item=>{return item.SupplierID == spID})[0]
-
-           console.log(this.editBankName);
+           const bnk = this.items.filter(item=>{return item.SupplierID == spID})[0].sb;
+           this.editBankName = bnk.filter(bn=>{return bn.BankAccountID==id})[0].BankName;
+           this.editBankNumber = bnk.filter(bn=>{return bn.BankAccountID==id})[0].BankAccountNumber;
+        
        },
        EditBankVisible(state){
            this.editSupplierBankVisible  = state;
-       }
+       },
+       updateSupplierBank(){
+           const data = {
+             "BankAccountID": this.bankEditId,
+             "BankAccountNumber": this.editBankNumber,
+             "BankName": this.editBankName
+           }
+           Supplier.updateSupplierBank(data).then(res=>console.log(res)).catch(err=>alert(err.response.data.message));
+            this.bankEditId="";
+            this.editBankNumber="";
+            this.editBankName="";
+            this.editSupplierBankVisible=false;
+       
+       
+       },editSupplierDetailsView(id){
+           this.editSupplierVisible =true;
+           this.editableSupplier = id;
+           const editable = this.items.filter(item=>{return item.SupplierID == id})[0]
+           this.editName =  editable.SupplierName;
+           this.editAddress = editable.SupplierAddress;
+           this.editTin = editable.SupplierTinNumber ;
+           this.edtiPhone = editable.SupplierPhoneNumber;
+        
+       },
+       closeEditSupplier(state){
+        
+        this.editSupplierVisible =state;
+
+       }, updateSupplier(){
+           const data = {
+ "SupplierName":this.editName,
+    "SupplierAddress":this.editAddress,
+    "SupplierTinNumber":this.editTin,
+    "SupplierPhoneNumber":this.editPhone,
+    "SupplierID":this.editableSupplier
+           }
+
+        Supplier.updateSupplier(data).then(res=>{
+           console.log(res["data"])
+           this.editSupplierVisible = false;
+           this.editableSupplier = "";
+           this.editName =  "";
+           this.editAddress = "";
+           this.editTin = "";
+           this.editPhone = "";
+           Supplier.getSuppliers().then(item=>{
+                this.items = item["data"];            
+            });
+        }).catch(err=>{
+            alert(err.response.data.message)
+        })
+       
+}        , removeSupplier(id){
+             const data = {
+                 "SupplierID":id
+             }
+            Supplier.removeSupplier(data).then(res=>console.log(res)).catch(err=>alert(err.response.data.message));
+                this.items =  this.items.filter(itm=>{return itm.SupplierID != id});
+                } ,
+                removeSupplierBank(id){
+                    Supplier.removeSupplierBank(id).then(res=>{
+                        console.log(res["data"]);
+                        this.bankDetails = this.bankDetails.filter(bnk=>{return bnk.BankAccountID != id});
+                    }).catch(err=>alert(err.response.data.message))
+                }
     
         },
         created(){

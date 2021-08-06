@@ -1,6 +1,37 @@
 <template >
     <div class="router-view-container">
         <SubHeaderControl :links="links"/>
+        <!-- update crud pop up  -->
+        <vue-window-modal :active="editVisible" title="Update Expense" v-on:clickClose="updateVisible(false)" style="width:auto;height:auto;">
+<form @submit.prevent="updateSalary">
+<table class="view-items">
+    <tr class="view-items-header">
+        <th>
+            Date
+        </th>
+        <th>
+            Cost
+        </th>
+    </tr>
+    <tr>
+        <td>
+<input type="date"  v-model="editDate">
+        </td>
+        <td>
+<input type="number" v-model="editCost" min="0" placeholder="Cost">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <button class="btn-submit" type="submit">
+                Confirm
+            </button>
+        </td>
+    </tr>
+</table>
+</form>
+        </vue-window-modal>
+        <!-- /update crud pop  up -->
                <div class="router-view">
             <div class="add-purchase">
          <fieldset class="form-contain">
@@ -55,15 +86,15 @@
                                 Employee Name
                             </th>
                             <th>
-                                X
+                                Change
                             </th> 
                           
                         </tr>
                       <tr  :name="x.SalaryID" v-bind:key="index" v-for="(x,index) in items">  
                           <td>{{x.Date}}</td>
                           <td>{{x.Cost}}</td>
-                          <td>{{x.EmployeeName}}</td>
-                          <td> <button class="btn-del" @click="removeSalaryExpense($event)">X</button></td>
+                          <td>{{getEmployeeName(x.EmployeeID)}}</td>
+                          <td>  <button  @click="updateExpenseView(x.SalaryID,x.EmployeeID)" class="btn-submit-mini">  <i class="fas fa-edit"></i></button> <button class="btn-err" @click="removeSalaryExpense($event)"><i class="fas fa-trash-alt"></i></button></td>
                    
                       </tr>
                     </table>
@@ -85,7 +116,12 @@ components:{
 data(){
     return{   
         items:[],
+        editableExpense:'',
+        editDate:'',
+        editCost:'',
+        editVisible:false,
         employeeDate:'',
+        editableEmployee:'',
         Cost:'',
         employeeID:'',
         EmployeeList:[],
@@ -151,7 +187,40 @@ Employees.getEmployees().then(res=>{this.EmployeeList = res["data"];}
     alert(err.response.message);
 })
 }, 
-
+getEmployeeName(id){
+for(const x in this.EmployeeList){
+    if(this.EmployeeList[x].EmployeeID == id){
+        return this.EmployeeList[x].EmployeeName;
+    }
+}
+},updateExpenseView(id,empID){
+    this.editableExpense = id;
+    this.editVisible = true;
+    this.editableEmployee = empID;
+    const dt = this.items.filter(item=>{return item.SalaryID == id})[0]
+    this.editDate = dt.Date;
+    this.editCost = dt.Cost;
+},updateVisible(state){
+    this.editVisible=state;
+},updateSalary(){
+    const data = {
+        "Date":this.editDate,
+        "Cost":this.editCost,
+        "EmployeeID":this.editableEmployee,
+        "SalaryID":this.editableExpense,
+    }
+    Expenses.updateSalary(data).then(res=>{
+      console.log(res["data"])
+      this.editDate = '';
+      this.editCost='';
+      this.editableEmployee = '';
+      this.editableExpense = "";
+      this.getSalaryExpense();
+      this.editVisible = false;
+}).catch(err=>{
+        alert(err.response.data.message);
+    })
+}
 },
 created(){
 this.getSalaryExpense();

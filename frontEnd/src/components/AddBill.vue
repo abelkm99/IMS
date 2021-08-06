@@ -1,6 +1,40 @@
 <template >
     <div class="router-view-container">
         <SubHeaderControl :links="links"/>
+        <!-- edit Bill Pop Up -->
+        <vue-window-modal :active="editVisible" title="update Bill Expense" v-on:clickClose="editVisibleUpdate(false)" style="width:auto;height:auto;">
+
+    <form @submit.prevent="updateBillExpense">
+        <table class="view-items">
+            <tr class="view-items-header">
+                <th>
+                    Date
+                </th>
+                <th>
+                    Cost
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <input type="date" v-model="editDate" >
+                </td>
+                <td>
+                    <input type="number" v-model="editCost" min="0" placeholder="Cost"  required/>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn-submit" type="submit">
+                        Confirm
+                    </button>
+                </td>
+            </tr>
+        </table>
+        </form>
+        </vue-window-modal>
+    
+        <!-- /edit Bill pop up -->
                <div class="router-view">
             <div class="add-purchase">
          <fieldset class="form-contain">
@@ -53,7 +87,7 @@
                                 GRTypeNNO
                             </th>
                             <th>
-                                X
+                                Change
                             </th> 
                           
                         </tr>
@@ -64,7 +98,7 @@
                           <td>{{x.Date}}</td>
                           <td>{{x.Cost}}</td>
             
-                          <td> <button class="btn-del" @click="removeBillExpense($event)">X</button></td>
+                          <td>   <button  @click="updateBillView(x.BILLEXPENCEID)" class="btn-submit-mini"> <i class="fas fa-edit"></i> </button> <button class="btn-err" @click="removeBillExpense($event)"><i class="fas fa-trash-alt"></i></button></td>
                    
                       </tr>
                     </table>
@@ -85,6 +119,10 @@ components:{
 data(){
     return{   
         BID:'',
+        editVisible:false,
+        editableBill:'',
+        editDate:'',
+        editCost:'',
         items:[],
         billDate:'',
         billTypes:[],
@@ -141,6 +179,33 @@ getAllExpenseList(){
             return this.billTypes[x].BILLType;
         }
     }
+},
+updateBillView(id){
+    console.log("check here", id);
+    this.editVisible=true;
+    this.editableBill = id;
+    const dt = this.billExpenses.filter(item=>{return item.BILLEXPENCEID == id})[0];
+    
+    this.editDate = dt.Date;
+    this.editCost = dt.Cost;
+
+},updateBillExpense(){
+    const data = {
+        "Date":this.editDate,
+    "Cost":this.editCost,
+    "BILLEXPENCEID":this.editableBill
+    }
+    Bill.updateBillExpense(data).then(res=>{
+        console.log(res["data"])
+        this.getAllExpenseList();
+        this.editDate = "";
+        this.editCost = "";
+        this.editVisible=false;
+    }).catch(err=>{
+        alert(err.response.data.message)
+    })
+},editVisibleUpdate(state){
+    this.editVisible = state;
 }
 },
 created(){

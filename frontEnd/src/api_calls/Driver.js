@@ -20,8 +20,33 @@ const addDriver = (data)=>{
       
     return   axios(config)
 }
-
+const updateDriver = (data)=>{
+  var config = {
+    method: 'put',
+    url: '/api/driver/update_driver',
+    headers: { 
+      'Content-Type': 'application/json'
+    },
+    data : data
+  };
+  
+  return axios(config)
+}
+const removeDriver= (data)=>{
+  var config = {
+    method: 'delete',
+    url: '/api/driver/delete_driver',
+    headers: { 
+      'Content-Type': 'application/json'
+    },
+    data : data
+  };
+  
+ return  axios(config)
+}
 export default {
     getDrivers,
     addDriver,
+    updateDriver,
+    removeDriver,
 }

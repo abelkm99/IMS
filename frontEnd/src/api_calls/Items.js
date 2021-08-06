@@ -44,11 +44,51 @@ const getInventoryHistoryInfo = (id)=>{
  
   return axios(config)
 }
+const updateItemDetails = (data)=>{
+  var config = {
+    method: 'put',
+    url: '/api/item/update_item',
+    headers: { 
+      'Content-Type': 'application/json'
+    },
+    data : data
+  };
+  
+  return axios(config)
+
+}
+const updateItemPrice = (data)=>{
+  var config = {
+    method: 'put',
+    url: '/api/item/update_item_price',
+    headers: { 
+      'Content-Type': 'application/json'
+    },
+    data : data
+  };
+  
+  return axios(config)
+}
+const removeItem = (data)=>{
+  var config = {
+    method: 'delete',
+    url: '/api/item/delete_item',
+    headers: { 
+      'Content-Type': 'application/json'
+    },
+    data : data
+  };
+  
+ return  axios(config)
+}
 export default{  
   getItems,
   addItem,
   getInventoryInfo,
-  getInventoryHistoryInfo
+  getInventoryHistoryInfo,
+  updateItemDetails,
+  updateItemPrice,
+  removeItem
 
 };
 

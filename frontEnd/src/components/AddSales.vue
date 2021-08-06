@@ -27,7 +27,8 @@
                             <td>
                                 <label  for="Customer"> <h3>Customer</h3></label>
                                 <select v-model="CustomerID" name="Customer" id="" class="txt-input" required>
-                                    <option  :key="x.CustomerID" :value="x.CustomerID" v-for="x in CustomerList">{{x.CustomerName}}</option>
+                                    
+                                <option  :key="x.CustomerID" :value="x.CustomerID" v-for="x in CustomerList">{{ x.CustomerID }} ,{{ x.CustomerName}}</option>
                                 </select></td>
                             <td>
                                 <label for="Driver"> <h3>Driver</h3></label>

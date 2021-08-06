@@ -1,10 +1,56 @@
 <template>
     <div>
+ <!-- edit details  -->
+<vue-window-modal :active="editPriceVisible"  title="Edit Details" v-on:clickClose="editViewUpdate(false)" style="width:auto;height:auto;">
+    <form  @submit.prevent="updateItemDetails"> 
+<table class="view-items">
+    <tr class="view-items-header">
+        <th>Category</th>
+        <th>Item Code</th>
+        <th>Item Type</th>
+        
+    </tr>
+    <tr>
+    <td> 
+            <select v-model="editCategory" id="">
+                <option  :key="x.CategoryId" :value="x.CategoryId" v-for="x in categoryList">{{x.CategoryName}}</option>
+            </select>
+    </td>
+    <td>
+        <input   v-model="editCode" type="text" placeholder="Item Code" > 
+    </td>
+    <td>
+  <input   v-model="editType" type="text" placeholder="Item Type">
+    </td>
+    </tr>
+    <tr>
+        <td>
+            <button class="btn-submit" type="submit">
+                Confirm
+            </button>
+        </td>
+    </tr>
+</table>
+</form>
+
+</vue-window-modal>
+
+
+ <!-- / edit  -->
+ 
+ 
+ 
             <div class="router-view-container">
+ 
+ 
+ 
                 <SubHeaderControl :links="links"/>
             <div class="router-view">
                 <div class="add-purchase">
  
+
+
+
                 <fieldset class="view-items-container">
                     <legend> <h3> Items Added </h3></legend>
                     <table class="view-items">
@@ -25,7 +71,7 @@
                                  View Details
                              </th>
                             <th>
-                                X
+                             Change
                             </th>
                           
                         </tr>
@@ -81,6 +127,7 @@
   </table>
                         </vue-window-modal>
             <vue-window-modal  :active="InventoryInfoVisible"  title="Inventory Details"  v-on:clickClose="closeView(false)" style="width:auto;height:auto;">  
+             <form @submit.prevent="updateItemPrice">
                 <table class="view-items">
                     <tr class="view-items-header"> 
                         <th>WareHouse</th>
@@ -92,22 +139,30 @@
 
                     </tr>
                     <tr  :key="x.ItemId"  v-for="x in InventoryInfoObj">
+               
                             <td>{{x["warehouse-balance"]}}</td>
                             <td>{{x["store-balance"]}}</td>
                             <td>{{x["total-balance"]}}</td>
-                            <td>{{x["PPP"]}}</td>
+                            <td><input  v-model="editPPP" type="number"  min="0" required> </td>
                             <td>{{x["Total-price"]}}</td>
-                            <td><button class="btn-submit"  @click="viewHistoryInfo(x.ItemId)">view</button></td>
+                            <td><button class="btn-submit-mini"  @click="viewHistoryInfo(x.ItemId)"><i class="fas fa-clock"></i></button></td>
                         </tr>
+                     <tr>
+                         <td>
+                             <button class="btn-submit" type="submit">
+                             Confirm
+                             </button></td>
+                     </tr>
                 </table>
+                </form>
             </vue-window-modal>
                       <tr  :name="x.ItemID" v-bind:key="index" v-for="(x,index) in items">  
                           <td> {{x.ItemCategory[0].CategoryName}}</td>
                           <td>{{x.ItemCode}}</td>
                           <td>{{x.ItemType}}</td>
                           <td>{{x.PPP}}</td>
-                          <td>  <button class="btn-submit"  @click="viewInfo(x.ItemID)">info</button></td>
-                          <td> <button class="btn-del" @click="removeItem($event)">X</button></td>
+                          <td>  <button class="btn-submit-mini"  @click="viewInfo(x.ItemID,x.PPP)"><i class="fa  fa-eye"></i></button> </td>
+                          <td> <button class="btn-submit-mini" @click="editPriceView(x.ItemID,x.ItemCategory[0].CategoryId)">  <i class="fas fa-edit"></i>  </button> <button class="btn-err" @click="removeItem(x.ItemID)"><i class="fas fa-trash-alt"></i></button></td>
                       </tr>
                     </table>
                 </fieldset>
@@ -120,6 +175,7 @@
 <script>
 import SubHeaderControl from "@/components/SubHeaderControl.vue";
 import Items from "@/api_calls/Items.js";
+import Category from "@/api_calls/Category.js";
 export default {
     name:"AddPurchase",
     components:{
@@ -128,10 +184,17 @@ export default {
     data(){
    return {
        "items":[],
+       editCategory:'',
+       editableItem:'',
+       editCode:'',
+       editType:'',
+       editPPP:'',
+       editPriceVisible:false,
        InventoryInfoVisible:false,
        InventoryInfoObj:[],
        historyInfo:[],
        HistoryInfoVisible:false,
+       categoryList:[],
        links:
                [
                    {    
@@ -148,24 +211,40 @@ export default {
    }
     },
     methods:{
-    
-        removeItem(e){
-        const target =   e.target.parentNode.parentNode;
-        const index = target.getAttribute("name");
-        this.items =  this.items.filter(item=>{
-             return item.Index !=  index ; 
+         getItems(){
+                 Items.getItems().then(item=>{
+                this.items = item["data"];
+                
+                
+            });
+         },
+        removeItem(id){
+        
+        const data = {
+    "ItemID":id
+}
+
+
+        Items.removeItem(data).then(res=>{
+            console.log(res["data"])
+            this.items =  this.items.filter(item=>{
+            return item.ItemID !=  id ; 
         });
-         console.log(this.items);
-         if(this.items.length == 0){
-             this.IndexForDelete=0;
-         }
+       
+            }).catch(err=>{
+            alert(err.response.data.message);
+        })
+    
+      
         
     
  
         }
     ,
-    viewInfo(id){
+    viewInfo(id,ppp){
         this.InventoryInfoVisible = true;
+        this.editPPP = ppp;
+         this.editableItem = id;
      Items.getInventoryInfo(id).then(res=>{
          this.InventoryInfoObj  = res["data"];
 
@@ -184,16 +263,60 @@ export default {
             })
     },closeHistory(state){
          this.HistoryInfoVisible = state;
-    }
+    }, editPriceView(id,catId){
+        this.editPriceVisible = true;
+        this.editableItem = id;
+        const dt = this.items.filter(item=>{ return item.ItemID == id})[0];
+        console.log("check here",dt);
+       this.editCategory  =  catId;
+        this.editCode = dt.ItemCode;
+        this.editType = dt.ItemType;
+        
+    },editViewUpdate(state){
+        this.editPriceVisible = state;
+            }
+        ,getCategories(){
+            Category.getCategories().then(res=>this.categoryList=res["data"]).catch(err=>{
+                     alert(err.response.data.message);
+                })
+        },
+        updateItemDetails(){
+    const data = {
+    "CategoryID":this.editCategory,
+    "ItemCode":this.editCode,
+    "ItemType":this.editType,
+    "ItemId":this.editableItem
+}
+    Items.updateItemDetails(data).then(res=>{
+        console.log(res["data"]);
+        this.getItems();
+        this.editPriceVisible = false;
+    }).catch(err=>{
+
+        alert(err.response.data.message);
+
+})
+        },
+        updateItemPrice(){
+            const data  = {
+                    "PPP":this.editPPP,
+                    "ItemId":this.editableItem
+            } 
+            Items.updateItemPrice(data).then(res=>{
+       
+                    console.log(res["data"])
+                    this.getItems();
+                    this.InventoryInfoVisible = false;
+                    
+                
+                }).catch(err=>{alert(err.response.data.message)})
+        }
         },
         created(){
             console.log("here")
-            
-            Items.getItems().then(item=>{
-                this.items = item["data"];
-                
-                
-            });
+            this.getCategories();
+            this.getItems();
+        
         }
 }
 </script>

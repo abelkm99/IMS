@@ -1,6 +1,36 @@
 <template >
     <div class="router-view-container">
         <SubHeaderControl :links="links"/>
+               <!-- update unload pop up -->
+               <vue-window-modal  :active="editUnloadVisible" title="Update Unloading Expense" v-on:clickClose="updateUnloadVisible(false)" style="width:auto;height:auto;">
+                   <form @submit.prevent="updateUnloadingExpense">
+                   <table class="view-items">
+                <tr class="view-items-header">
+                    <th>
+                          Date   
+                    </th>
+                    <th>
+                        Cost
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <input  v-model="editDate" type="date" placeholder="Date">
+                    </td>
+                    <td>
+                        <input  v-model="editCost" type="number" min="0" placeholder="Cost" required/>
+                    </td>
+                </tr>
+                <tr>
+                    <button class="btn-submit" type="submit">
+                            Confirm
+                    </button>
+                </tr>
+                   </table>
+                   </form>
+               </vue-window-modal>
+               <!-- /update unload pop up -->
+               
                <div class="router-view">
             <div class="add-purchase">
          <fieldset class="form-contain">
@@ -50,15 +80,15 @@
                                 GRNNO
                             </th>
                             <th>
-                                X
+                               Change
                             </th> 
                           
                         </tr>
-                      <tr  :name="x.UNLoadID" v-bind:key="index" v-for="(x,index) in items">  
+                      <tr  :name="x.UNLoadID" v-bind:key="x.UNLoadID" v-for="x in items">  
                           <td>{{x.Date}}</td>
                           <td>{{x.Cost}}</td>
                           <td>{{x.GRNNO}}</td>
-                          <td> <button class="btn-del" @click="removeUnloadingExpense($event)">X</button></td>
+                          <td>  <button  @click="updateUnloadView(x.UNLoadID,x.GRNNO)" class="btn-submit-mini"> <i class="fas fa-edit"></i> </button>  <button class="btn-err" @click="removeUnloadingExpense($event)"><i class="fas fa-trash-alt"></i></button></td>
                    
                       </tr>
                     </table>
@@ -78,10 +108,15 @@ components:{
 } ,
 data(){
     return{   
+        editCost:'',
+        editDate:'',
+        editUnloadVisible:false,
         items:[],
         unloadingDate:'',
         Cost:'',
         GRNNO:'',
+        editableUnload:'',
+        editGRN:'',
         links:[
         {
             id:0,
@@ -121,10 +156,11 @@ addUnloadingExpense(){
     const data = {
         "Date":this.unloadingDate,
     "Cost":this.Cost,
-    "GRNNO":this.GRNNO
+    "GRNNO":this.GRNNO,
+  
     };
     Expenses.addUnloadingExpense(data).then(res=>{
-     this.items.push(data);   
+     this.getUnloadingExpense();
      console.los(res);
     }).catch(err=>{
         console.log(err.response);
@@ -136,7 +172,33 @@ removeUnloadingExpense(e){
     Expenses.removeUnloadingExpense(id).then(res=>{
         this.items=this.items.filter(item=>{return item.UNLoadID != id});
         console.log(res);
-    }).catch(err=>console.log(err));
+    }).catch(err=>alert(err.response.data.message));
+},
+updateUnloadView(id,GRN){
+  
+this.editableUnload = id;
+this.editUnloadVisible = true;
+this.editGRN = GRN;
+const dt = this.items.filter(item=>{return item.UNLoadID == id})[0]
+this.editDate = dt.Date;
+this.editCost = dt.Cost;
+},
+updateUnloadingExpense(){
+  const data = {
+    "Date":this.editDate,
+    "Cost":this.editCost,
+    "GRNNO":this.editGRN,
+    "UnLoadID":this.editableUnload
+}
+Expenses.updateUnloadingExpense(data).then(res=>{
+    console.log(res["data"])
+    this.getUnloadingExpense();
+    this.editUnloadVisible = false;
+    }).catch(
+        err=>alert(err.response.data.message)
+    )
+},updateUnloadVisible(state){
+    this.editUnloadVisible  = state;
 }
 },
 created(){

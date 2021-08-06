@@ -1,10 +1,34 @@
 <template>
     <div>
-            <div class="router-view-container">
-                <SubHeaderControl :links="links"/>
+        <div class="router-view-container">
+            <SubHeaderControl :links="links"/>
             <div class="router-view">
                 <div class="add-purchase">
- 
+ <!-- update Catefory pop up -->
+<vue-window-modal :active="editCategoryVisible"  title="Update Category Detail" v-on:clickClose="editCatUpdate(false)" style="width:auto;height:auto;"> 
+<form @submit.prevent="updateCategory" >
+<table class="view-items">
+    <tr class="view-items-header">
+        <th>
+            Category Name
+        </th>
+    </tr>
+    <tr>
+        <td>
+            <input type="text" v-model="editCategory"  placeholder="Category" required/>
+        </td>
+    </tr>
+    <tr>
+        <button class="btn-submit" type="submit">
+            Confirm 
+        </button>
+    </tr>
+</table>
+</form>
+</vue-window-modal>
+
+<!-- /update category pop up -->
+
                 <fieldset class="view-items-container">
                     <legend> <h3> Categories </h3></legend>
                     <table class="view-items">
@@ -17,15 +41,15 @@
                             </th>
                        
                            <th>
-                               X
+                             Change
                            </th>
 
                           
                         </tr>
-                      <tr  :name="x.CategoryID" v-bind:key="index" v-for="(x,index) in items">  
+                      <tr  :name="x.CategoryId" v-bind:key="index" v-for="(x,index) in items">  
                           <td> {{x.CategoryId}}</td>
                           <td>{{x.CategoryName}}</td>
-                      <td> <button class="btn-del" @click="removeItem($event)">X</button></td>
+                      <td>   <button  @click="updateCategoryView(x.CategoryId)" class="btn-submit-mini"> <i class="fas fa-edit"></i> </button> <button class="btn-err" @click="removeCategory(x.CategoryId)"> <i class="fas fa-trash-alt"></i></button></td>
 
                       </tr>
                          
@@ -48,6 +72,9 @@ export default {
     data(){
    return {
        "items":[],
+       editCategoryVisible:false,
+       editableCat:'',
+       editCategory:'',
        links:
                [
                    {    
@@ -64,18 +91,51 @@ export default {
    }
     },
     methods:{
-    
-      
-    
-        },
-        created(){
-            console.log("here")
-            
-            Categories.getCategories().then(item=>{
+      getCategories(){
+           Categories.getCategories().then(item=>{
                 this.items = item["data"];
                 
                 
             });
+      },
+      updateCategoryView(id){
+          this.editCategoryVisible = true;
+          this.editableCat = id;
+      
+         
+      },updateCategory(){
+          const data = {
+    "CategoryName":this.editCategory,
+    "CategoryId":this.editableCat
+}
+Categories.updateCategory(data).then(res=>{
+    console.log(res["data"])
+    this.getCategories();
+    this.editCategoryVisible = false;
+}).catch(err=>{
+    alert(err.response.data.message);
+})
+      },editCatUpdate(state){
+          this.editCategoryVisible = state;
+      },
+      removeCategory(id){
+          const data = {
+            "CategoryId":id
+        }
+          Categories.removeCategory(data).then(res=>{
+              this.items = this.items.filter(item=>{
+                  return item.CategoryId != id
+              })
+              console.log(res["data"]);
+              }).catch(err=>{
+              alert(err.response.data.message);
+          })
+      }
+        },
+        created(){
+            console.log("here")
+            this.getCategories();
+           
         }
 }
 </script>

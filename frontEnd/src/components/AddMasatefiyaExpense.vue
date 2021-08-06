@@ -1,6 +1,40 @@
 <template >
     <div class="router-view-container">
+        
         <SubHeaderControl :links="links"/>
+        <!-- masatefiya edit pop up -->
+        <vue-window-modal :active="editVisible" title="update Masatefiya Expense" v-on:clickClose="updateEditVisible(false)" style="width:auto;height:auto;">
+
+<form @submit.prevent="updateExpense">
+<table class="view-items">
+    <tr class="view-items-header">
+        <th>
+Date
+        </th>
+        <th>
+Cost
+        </th>
+    </tr>
+<tr>
+    <td>
+        <input type="date" v-model="editDate">
+    </td>
+    <td>
+        <input type="text" v-model="editCost" placeholder="Cost">
+    </td>
+</tr>
+<tr>
+    <td>
+        <button class="btn-submit" type="submit">
+            Confirm
+        </button>
+    </td>
+</tr>
+</table>
+</form>
+        </vue-window-modal>
+
+        <!-- /masatefiya edit pop up -->
                <div class="router-view">
             <div class="add-purchase">
          <fieldset class="form-contain">
@@ -50,15 +84,15 @@
                                 REFNO
                             </th>
                             <th>
-                                X
+                             Change
                             </th> 
                           
                         </tr>
-                      <tr  :name="x.MasatefiyaID" v-bind:key="index" v-for="(x,index) in items">  
+                      <tr  :name="x.MID" v-bind:key="index" v-for="(x,index) in items">  
                           <td>{{x.Date}}</td>
                           <td>{{x.Cost}}</td>
                           <td>{{x.REFNO}}</td>
-                          <td> <button class="btn-del" @click="removeMasatefiyaExpense($event)">X</button></td>
+                          <td> <button  @click="updateExpenseView(x.MID,x.REFNO)" class="btn-submit-mini"><i class="fas fa-edit"></i></button>  <button class="btn-err" @click="removeMasatefiyaExpense($event)"><i class="fas fa-trash-alt"></i></button></td>
                    
                       </tr>
                     </table>
@@ -79,6 +113,11 @@ components:{
 data(){
     return{   
         items:[],
+        editableExpense:'',
+        editableRef:'',
+        editVisible:false,
+        editDate:'',
+        editCost:'',
         masatefiyaDate:'',
         Cost:'',
         REFNO:'',
@@ -134,9 +173,35 @@ addMasatefiyaExpense(){
 removeMasatefiyaExpense(e){
     const id= e.target.parentNode.parentNode.getAttribute("name");
     Expenses.removeMasatefiyaExpense(id).then(res=>{
-        this.items=this.items.filter(item=>{return item.MasatefiyaID != id});
+        this.items=this.items.filter(item=>{return item.MID != id});
         console.log(res);
     }).catch(err=>console.log(err));
+},
+updateExpenseView(id,rfno){
+ 
+this.editVisible  = true;
+this.editableExpense = id;
+this.editableRef = rfno;
+const dt = this.items.filter(item=>{return item.MID == id})[0];
+this.editDate = dt.Date;
+this.editCost = dt.Cost;
+},
+updateEditVisible(state){
+    this.editVisible = state;
+},updateExpense(){
+    const data = {
+ "Date":this.editDate,
+    "Cost":this.editCost,
+    "REFNO":this.editableRef,
+    "MID":this.editableExpense
+    }
+    Expenses.updateMasatefiyaExpense(data).then(res=>{
+        console.log(res["data"])
+        this.getMasatefiyaExpense();
+        this.editVisible = false;
+    }).catch(err=>{
+        alert(err.response.data.message)
+    })
 }
 },
 created(){

@@ -2,193 +2,232 @@ import axios from "axios";
 //@ loading Expense 
 
 // addLoadingExpense
-const addLoadingExpense = (data)=>{
-    var config = {
-        method: 'post',
-        url: '/api/expence/loadingExpence/add_loading_expence',
-        headers: { 
-          'Content-Type': 'application/json'
-        },
-        data : data
-      };
-      
-      return axios(config)
+const addLoadingExpense = (data) => {
+  var config = {
+    method: 'post',
+    url: '/api/expence/loadingExpence/add_loading_expence',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: data
+  };
+
+  return axios(config)
 }
 
 // get Loading Expense
-const getLoadingExpense = ()=>{
-    var config = {
-        method: 'get',
-        url: '/api/expence/loadingExpence/get_loading_expence',
-        headers: { }
-      };
-      
-      return axios(config)
+const getLoadingExpense = () => {
+  var config = {
+    method: 'get',
+    url: '/api/expence/loadingExpence/get_loading_expence',
+    headers: {}
+  };
+
+  return axios(config)
 
 }
 
 // removeLoadingExpense
 
-const removeLoadingExpense = (data)=>{
+const removeLoadingExpense = (data) => {
   console.log(data);
   var config = {
     method: 'delete',
     url: `/api/expence/loadingExpence/delete_loading_expence/${data}`,
-    headers: { }
+    headers: {}
   };
-  
+
   return axios(config)
 }
 
 // @unloading Expenses
 
-const getUnloadingExpense = ()=>{
+const getUnloadingExpense = () => {
 
   var config = {
     method: 'get',
     url: '/api/expence/unloadingExpence/get_unloading_expence',
-    headers: { }
+    headers: {}
   };
-  
+
   return axios(config)
 }
 // add unloading expense
-const addUnloadingExpense = (data)=>{
+const addUnloadingExpense = (data) => {
   var config = {
     method: 'post',
     url: '/api/expence/unloadingExpence/add_unloading_expence',
-    headers: { 
+    headers: {
       'Content-Type': 'application/json'
     },
-    data : data
+    data: data
   };
-  
+
   return axios(config)
 }
 // remove unloading expense
-const removeUnloadingExpense = (id)=>{
+const removeUnloadingExpense = (id) => {
 
   var config = {
     method: 'delete',
     url: `/api/expence/unloadingExpence/delete_unloading_expence/${id}`,
-    headers: { }
+    headers: {}
   };
-  
- return  axios(config)
+
+  return axios(config)
+}
+const updateUnloadingExpense = (data) => {
+  var config = {
+    method: 'put',
+    url: '/api/expence/unloadingExpence/update_unloading_expence',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: data
+  };
+
+  return axios(config)
+
+
+
 }
 // @ salary expense
 
 // getSalaryExpense
 
-const getSalaryExpense = ()=>{
+const getSalaryExpense = () => {
   var config = {
     method: 'get',
     url: '/api/expence/salary/get_salary_expense',
-    headers: { }
+    headers: {}
   };
-  
- return  axios(config)
+
+  return axios(config)
 }
 
 // addSalaryExpense
 
-const addSalaryExpense = (data)=>{
+const addSalaryExpense = (data) => {
   var config = {
     method: 'post',
     url: '/api/expence/salary/add_salary_expence',
-    headers: { 
+    headers: {
       'Content-Type': 'application/json'
     },
-    data : data
+    data: data
   };
-  
- return  axios(config)
+
+  return axios(config)
 
 }
+const updateSalary = (data) => {
+  var config = {
+    method: 'put',
+    url: '/api/expence/salary/update_salary_expence',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: data
+  };
 
+  return axios(config)
+}
 // removeSalaryExpense
 
-const removeSalaryExpense  = (id)=>{
+const removeSalaryExpense = (id) => {
   var config = {
     method: 'delete',
     url: `/api/expence/salary/delete_salary_expence/${id}`,
-    headers: { }
+    headers: {}
   };
-  
-return axios(config)
+
+  return axios(config)
 
 }
 // @ masatefiya Expenses
 
 //  getMasatefiyaExpense
-const getMasatefiyaExpense = ()=>{
+const getMasatefiyaExpense = () => {
   var config = {
     method: 'get',
     url: '/api/expence/masatefiya/get_masatefiya_expense',
-    headers: { }
+    headers: {}
   };
-  
+
   return axios(config)
 }
 //  addMasatefiyaExpense
-const  addMasatefiyaExpense = (data)=>{
+const addMasatefiyaExpense = (data) => {
   var config = {
     method: 'post',
     url: '/api/expence/masatefiya/add_masatefiya_expence',
-    headers: { 
+    headers: {
       'Content-Type': 'application/json'
     },
-    data : data
+    data: data
   };
-  
- return  axios(config)
+
+  return axios(config)
 }
 // removeMasatefiyaExpense
-const removeMasatefiyaExpense = (id)=>{
+const removeMasatefiyaExpense = (id) => {
   var config = {
     method: 'delete',
     url: `/api/expence/masatefiya/delete_masatefiya_expence/${id}`,
-    headers: { }
+    headers: {}
   };
-  
+
   return axios(config)
 
+}
+
+const updateMasatefiyaExpense = (data) => {
+  var config = {
+    method: 'put',
+    url: '/api/expence/masatefiya/update_masatefiya_expence',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: data
+  };
+
+  return axios(config)
 }
 //@ other Expensetypes
 
 //  getOtherExpenseType
-const getOtherExpenseType = ()=>{
+const getOtherExpenseType = () => {
   var config = {
     method: 'get',
     url: '/api/expence/OET/get_OET',
-    headers: { }
+    headers: {}
   };
-  
+
   return axios(config)
 }
 
 // addotherExpenseType
-const addOtherExpenseType = (data)=>{
+const addOtherExpenseType = (data) => {
   var config = {
     method: 'post',
     url: '/api/expence/OET/add_OET',
-    headers: { 
+    headers: {
       'Content-Type': 'application/json'
     },
-    data : data
+    data: data
   };
-  
+
   return axios(config)
 }
 // removeOtherExpenseType
-const removeOtherExpenseType = (id)=>{
-  
+const removeOtherExpenseType = (id) => {
+
   var config = {
     method: 'delete',
     url: `/api/expence/OET/delete_OET/${id}`,
-    headers: { }
+    headers: {}
   };
-  
+
   return axios(config)
 
 }
@@ -196,60 +235,89 @@ const removeOtherExpenseType = (id)=>{
 
 
 // getOtherExpenses
-const getOtherExpense = () =>{
+const getOtherExpense = () => {
 
   var config = {
     method: 'get',
     url: '/api/expence/OEL/get_OEL',
-    headers: { }
+    headers: {}
   };
-  
+
   return axios(config)
 }
 // addOtherExpense
-const addOtherExpense = (data)=>{
+const addOtherExpense = (data) => {
   var config = {
     method: 'post',
     url: '/api/expence/OEL/add_OEL',
-    headers: { 
+    headers: {
       'Content-Type': 'application/json'
     },
-    data : data
+    data: data
   };
-  
+
   return axios(config)
 }
 // removeOtherExpense 
-const removeOtherExpense = (id)=>{
-   var data = '';
+const removeOtherExpense = (id) => {
+
   var config = {
     method: 'delete',
     url: `/api/expence/OEL/delete_OEL/${id}`,
-    headers: { },
-    data : data
+    headers: {},
+
   };
-  
-return  axios(config)
+
+  return axios(config)
+}
+const updateExpenseType = (data) => {
+  var config = {
+    method: 'put',
+    url: '/api/expence/OET/update_OET',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: data
+  };
+
+  return axios(config)
+}
+const updateOtherExpense = (data) => {
+  var config = {
+    method: 'put',
+    url: '/api/expence/OEL/update_OEL',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: data
+  };
+
+  return axios(config)
 }
 export default {
-    addLoadingExpense,
-    getLoadingExpense,
-    removeLoadingExpense,
-    getUnloadingExpense,
-    addUnloadingExpense,
-    removeUnloadingExpense,
-    getSalaryExpense,
-    addSalaryExpense,
-    removeSalaryExpense,
-    getMasatefiyaExpense,
-    addMasatefiyaExpense,
-    removeMasatefiyaExpense,
-    getOtherExpense,
-    addOtherExpense,
-    removeOtherExpense,
-    getOtherExpenseType,
-    addOtherExpenseType,
-    removeOtherExpenseType
+  addLoadingExpense,
+  getLoadingExpense,
+  removeLoadingExpense,
+  getUnloadingExpense,
+  addUnloadingExpense,
+  removeUnloadingExpense,
+  getSalaryExpense,
+  addSalaryExpense,
+  removeSalaryExpense,
+  getMasatefiyaExpense,
+  addMasatefiyaExpense,
+  removeMasatefiyaExpense,
+  getOtherExpense,
+  addOtherExpense,
+  removeOtherExpense,
+  getOtherExpenseType,
+  addOtherExpenseType,
+  removeOtherExpenseType,
+  updateUnloadingExpense,
+  updateSalary,
+  updateMasatefiyaExpense,
+  updateExpenseType,
+  updateOtherExpense
 
 
 

@@ -20,9 +20,37 @@ const addCategory = (data)=>{
     data : data
   };
   
-  axios(config)
+  return axios(config)
+}
+const updateCategory = (data)=>{
+  var config = {
+    method: 'put',
+    url: '/api/category/update_category',
+    headers: { 
+      'Content-Type': 'application/json'
+    },
+    data : data
+  };
+  
+  return axios(config)
+}
+const removeCategory = (data)=>{
+  var config = {
+    method: 'delete',
+    url: '/api/category/delete_category',
+    headers: { 
+      'Content-Type': 'application/json'
+    },
+    data : data
+  };
+  
+  return axios(config)
+
 }
 export default {
   getCategories,
   addCategory,
+  updateCategory,
+  removeCategory
+  
 }
