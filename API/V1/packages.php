@@ -13,5 +13,6 @@
     require "Models/CreditSettlement.php";
     require "Models/Basic.php";
     require "Models/Order.php";
+    require "Models/Report.php";
     require "Token.php";
     require "Auth.php";

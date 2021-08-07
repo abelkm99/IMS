@@ -20,8 +20,7 @@
             $r->get('/get_sales_orders','BasicApi/getAllSalesOrders');
             $r->get('/grn_not_delivered','BasicApi/getAllGRNSNOTDelivered');
             $r->get('/transfered_Items_List','BasicApi/getAllTransferedInfo');
-            $r->get('/get_warehouse','BasicApi/getAllWarehouse');
-            $r->get('/get_store','BasicApi/getAllStore');
+            $r->get('/get_all_inventory','BasicApi/getAllItemInventory');
             
             $r->addGroup('/supplier', function (FastRoute\RouteCollector $r) {
                 $r->get('/listSuppliers', 'Supplier/ListAllSuppliers');

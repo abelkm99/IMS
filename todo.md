@@ -327,3 +327,8 @@ Ending Inventory (EI). The value of any unsold, on-hand inventory at the end of 
         get all 
     [] inventory turnover = cost of goods sold/average inventory
     
+
+## anlysis queries
+ [] Total inventory amount
+ [] Totals Sales for day range
+ [] ALL EXPENCE Select * from Expence select * from Expence 
