@@ -1,5 +1,5 @@
 <?php
-    require "../vendor/autoload.php";
+    require "./vendor/autoload.php";
     require "Models/Supplier.php";
     require "Models/Customer.php";
     require "Models/Category.php";
