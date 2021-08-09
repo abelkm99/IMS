@@ -20,11 +20,13 @@
             function addCreditSettlemt(){
                 $array = array(
                     "GRNNO"=>1,
-                    "Payment"=>1
+                    "Payment"=>1,
+                    "Date"=>1
                 );
                 $sqlcommand = "EXEC	[dbo].[spAddGRNCS]
                 @GRNNO = ?,
                 @Payment = ?,
+                @Date = ?,
                 @result = ?,
                 @message = ?";
                 excute_prodecure($array,$sqlcommand);
@@ -45,12 +47,14 @@
                 $array = array(
                     "GRNNO"=>1,
                     "Payment"=>1,
-                    "CSID"=>1
+                    "CSID"=>1,
+                    "Date"=>1
                 );
                 $sqlcommand = "EXEC	[dbo].[spUpdateGRNCS]
                 @GRNNO = ?,
                 @Payment = ?,
                 @CSID = ?,
+                @Date = ?,
                 @result = ?,
                 @message = ?";
                 excute_prodecure($array,$sqlcommand);
@@ -80,11 +84,13 @@
         function addCreditSettlemt(){
             $array = array(
                 "REFNO"=>1,
-                "Payment"=>1
+                "Payment"=>1,
+                "Date"=>1
             );
             $sqlcommand = "EXEC	[dbo].[spAddREFCS]
             @REFNO = ?,
             @Payment = ?,
+            @Date = ?,
             @result = ?,
             @message = ?";
             excute_prodecure($array,$sqlcommand);
@@ -105,12 +111,14 @@
             $array = array(
                 "REFNO"=>1,
                 "Payment"=>1,
-                "CSID"=>1
+                "CSID"=>1,
+                "Date"=>1
             );
             $sqlcommand = "EXEC	[dbo].[spUpdateREFCS]
             @REFNO = ?,
             @Payment = ?,
             @CSID = ?,
+            @Date = ?,
             @result = ?,
             @message = ?";
             excute_prodecure($array,$sqlcommand);

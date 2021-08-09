@@ -20,8 +20,7 @@
             $r->get('/get_sales_orders','BasicApi/getAllSalesOrders');
             $r->get('/grn_not_delivered','BasicApi/getAllGRNSNOTDelivered');
             $r->get('/transfered_Items_List','BasicApi/getAllTransferedInfo');
-            $r->get('/get_warehouse','BasicApi/getAllWarehouse');
-            $r->get('/get_store','BasicApi/getAllStore');
+            $r->get('/get_all_inventory','BasicApi/getAllItemInventory');
             
             $r->addGroup('/supplier', function (FastRoute\RouteCollector $r) {
                 $r->get('/listSuppliers', 'Supplier/ListAllSuppliers');
@@ -77,6 +76,7 @@
                 $r->put('/update_item','Item/updateItem');
                 $r->put('/update_item_price','Item/updateItemPrice');
                 $r->get('/get_item_inventory/{ItemId:\d+}','Item/ItemInventory');
+                $r->delete('/delete_item','Item/deleteItem');
             });
             $r->addGroup('/purchase', function (FastRoute\RouteCollector $r) {
                 $r->post('/make_purchase', 'Purchase/makePurchase');
@@ -96,6 +96,9 @@
                 $r->post('/purchase_from_order','Purchase/PurchaseFromOrder');
                 $r->put('/update_transefred_item','Purchase/updateMovedData');
                 $r->delete('/delete_transfered_item','Purchase/deleteTransferedItem');
+                $r->delete('/delet_teid','Purchase/deleteTEID');
+                $r->put('/update_transferd_count','Purchase/updateTransferCount');
+                $r->put('/update_teid','Purchase/updateTEID');
             });
             $r->addGroup('/order', function (FastRoute\RouteCollector $r) {
                 $r->get('/list_orders', 'Order/ListAllOrders');
