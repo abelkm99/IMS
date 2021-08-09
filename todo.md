@@ -339,4 +339,13 @@ Ending Inventory (EI). The value of any unsold, on-hand inventory at the end of 
 
 ------------------------
 # Deploy the web app on docker
-docker run -t -d -p 81:80 gjuniioor/php-sqlsrv:7.0
+docker run --name php_server -t -d -p 81:80 -v C:\xampp\htdocs\dockerims:/var/www/html/ims gjuniioor/php-sqlsrv:7.0
+
+docker exec -it php_server /bin/bash
+
+
+a2enmod rewrite
+
+https://stackoverflow.com/questions/24743674/htaccess-file-not-working-on-ubuntu-14-04-with-apache2
+
+

@@ -1,7 +1,10 @@
 <?php
     class GRNCreditSettlemnt{
             function ListAllCreditSettlemts(){
-                $sqlcommand = "select GRN.GRNNO,PurchsedDate,SupplierID,[dbo].GetGRNCSRemainder(GRN.GRNNO)as remainder
+                $sqlcommand = "SELECT GRN.GRNNO,PurchsedDate as Date,SupplierID,
+                [dbo].GetGRNCSRemainder(GRN.GRNNO)as Remainder,
+                [dbo].GetGRNPaid(GRN.GRNNO) as Paid,
+                [dbo].GetGRNTotal(GRN.GRNNO) as Total
                 from GRN  where TransactionID = 2
                 for json auto";
                 excute_select_operation($sqlcommand);
