@@ -332,3 +332,7 @@ Ending Inventory (EI). The value of any unsold, on-hand inventory at the end of 
  [] Total inventory amount
  [] Totals Sales for day range
  [] ALL EXPENCE Select * from Expence select * from Expence 
+    [] BILL Expence should be added from the monthly 
+ [] calculate the net profit first
+ 
+  
