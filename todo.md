@@ -335,4 +335,8 @@ Ending Inventory (EI). The value of any unsold, on-hand inventory at the end of 
     [] BILL Expence should be added from the monthly 
  [] calculate the net profit first
  
-  
+
+
+------------------------
+# Deploy the web app on docker
+docker run -t -d -p 81:80 gjuniioor/php-sqlsrv:7.0
