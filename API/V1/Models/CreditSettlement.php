@@ -1,13 +1,16 @@
 <?php
     class GRNCreditSettlemnt{
             function ListAllCreditSettlemts(){
-                $sqlcommand = "select GRN.GRNNO,PurchsedDate,SupplierID,[dbo].GetGRNCSRemainder(GRN.GRNNO)as remainder
+                $sqlcommand = "SELECT GRN.GRNNO,PurchsedDate as Date,SupplierID,
+                [dbo].GetGRNCSRemainder(GRN.GRNNO)as Remainder,
+                [dbo].GetGRNPaid(GRN.GRNNO) as Paid,
+                [dbo].GetGRNTotal(GRN.GRNNO) as Total
                 from GRN  where TransactionID = 2
                 for json auto";
                 excute_select_operation($sqlcommand);
             }
             function GetCreditSettlment($GRNNO){
-                $sqlcommand = "select CSID,GRN.GRNNO,Payment,SupplierID 
+                $sqlcommand = "select *
                 from GRNCreditSettlement inner join GRN 
                 on GRN.GRNNO = GRNCreditSettlement.GRNNO 
                 and GRN.TransactionID = 2
@@ -20,11 +23,13 @@
             function addCreditSettlemt(){
                 $array = array(
                     "GRNNO"=>1,
-                    "Payment"=>1
+                    "Payment"=>1,
+                    "Date"=>1
                 );
                 $sqlcommand = "EXEC	[dbo].[spAddGRNCS]
                 @GRNNO = ?,
                 @Payment = ?,
+                @Date = ?,
                 @result = ?,
                 @message = ?";
                 excute_prodecure($array,$sqlcommand);
@@ -45,12 +50,14 @@
                 $array = array(
                     "GRNNO"=>1,
                     "Payment"=>1,
-                    "CSID"=>1
+                    "CSID"=>1,
+                    "Date"=>1
                 );
                 $sqlcommand = "EXEC	[dbo].[spUpdateGRNCS]
                 @GRNNO = ?,
                 @Payment = ?,
                 @CSID = ?,
+                @Date = ?,
                 @result = ?,
                 @message = ?";
                 excute_prodecure($array,$sqlcommand);
@@ -80,11 +87,13 @@
         function addCreditSettlemt(){
             $array = array(
                 "REFNO"=>1,
-                "Payment"=>1
+                "Payment"=>1,
+                "Date"=>1
             );
             $sqlcommand = "EXEC	[dbo].[spAddREFCS]
             @REFNO = ?,
             @Payment = ?,
+            @Date = ?,
             @result = ?,
             @message = ?";
             excute_prodecure($array,$sqlcommand);
@@ -105,12 +114,14 @@
             $array = array(
                 "REFNO"=>1,
                 "Payment"=>1,
-                "CSID"=>1
+                "CSID"=>1,
+                "Date"=>1
             );
             $sqlcommand = "EXEC	[dbo].[spUpdateREFCS]
             @REFNO = ?,
             @Payment = ?,
             @CSID = ?,
+            @Date = ?,
             @result = ?,
             @message = ?";
             excute_prodecure($array,$sqlcommand);

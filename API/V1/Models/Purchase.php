@@ -239,6 +239,7 @@
             @message = ?";
             excute_prodecure($array,$sqlcommand);
         }
+        /* update transfered item with a count */
         function updateMovedData(){
             $array = array(
                 "TEID"=>1,
@@ -261,4 +262,20 @@
             @WSID = ?";
             excute_prodecure2($params_in,$sqlcommand);
         }
+        /* update transfer expence */
+        function updateTranferExpence(){
+            $params_in = array(
+                "TEID"=>1,
+                "Date"=>1,
+                "Cost"=>1,
+                "DriverID"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spUpdateTransferExpence]
+            @TEID = ?,
+            @Date = ?,
+            @Cost = ?,
+            @DriverID = ?";
+            excute_prodecure2($params_in,$sqlcommand);
+        }
+        /* delete transfer expence--- and all transfered data */
     }

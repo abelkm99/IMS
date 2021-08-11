@@ -281,3 +281,71 @@ Ending Inventory (EI). The value of any unsold, on-hand inventory at the end of 
         get all 
     [] inventory turnover = cost of goods sold/average inventory
     
+# new todos
+[x] description for payment
+[] report
+[] add the transaction on the stock as GROSS
+[x] other incomes -> add it to the bank accounts 
+[] export to excel from table vue js example(https://codepen.io/bellakm/pen/XWROMVq)
+[] make all tables printable
+[] loading and unloading expences are togeather
+
+[] add both ethiopian date and gregorian at the top of dashboard
+
+[] pop up all the responses
+
+[] ship to store
+    [] change ship to warehouse to ship to store
+    [] rename ship warehouse compnent to ship to store
+    [] make the constants fields at the top and the variabls at the bottom
+    [] varify after items are transfered from ship warehouse
+    [] ware the hack is moved items count and details about moved items
+    [] you can't transfer empty items
+
+[] sales
+    [] sales history is not visible
+    [] searching and filtering is not valid
+    [] sort by date and the new one at the top
+    [] suppliers options is not working
+    [] show item code or type to make the list more clearer
+    [] change items list to sales list 
+    [] employee is not visible
+    [] driver is not visible the problem update driver is because it is sending varchar instead of  int of driver_id()
+    [] add total column at sales table
+    [] change item Types to Item Lists
+    [] arrange the add sales
+
+[]  Orders
+    [] add order
+        [] arrange the formation
+        [] make sure print is working
+        [] order types
+    [] orders
+        [] view all ordered items on each order
+        [] update orders
+        [] filter mechanism
+        [] return orders sorted by date in desc
+        [] transfer orders from GRN TO Purchase and also to Sales
+
+[] credit settlements
+    [] if not items are listed from reference
+        [] delete the hole reference
+    [] purchase credits
+        [] find a way  paid and date 
+        [] update operation is not working for GRN CS
+        []  
+    [] sales credits
+        [] same here update is also not working
+    []
+[] add desciption for my bank account transaction
+[] make loading and unloading expence togeather
+[] new table rent with types shop and warehouse
+[] is masatefiya as gebi weys wechi new
+[] other expence lists have to be togeather
+[] inventory should give all necessary infromation on how much items are on warehouse and store
+[] stock have to contain on the prices
+[] admins should see all the purchase infromation
+
+[] delete transfer expence
+[] calculate net gain
+
