@@ -517,4 +517,38 @@
             $sqlcommand = "select * from Rent for json auto";
             excute_select_operation($sqlcommand);
         }
+        function addRent(){
+            $params_in = array(
+                "Date"=>1,
+                "RentType"=>1,
+                "payment"=>1
+            );
+            $sqlcommand = "EXEC [dbo].[spAddRent]
+            @Date = ?,
+            @RentType = ?,
+            @payment = ?";
+            excute_prodecure2($params_in,$sqlcommand);
+        }
+        function updateRent(){
+            $params_in = array(
+                "RentID"=>1,
+                "RentType"=>0,
+                "Date"=>0,
+                "Payment"=>0
+            );
+            $sqlcommand = "EXEC	[dbo].[spUpdateRent]
+            @RentID = ?,
+            @RentType = ?,
+            @Date = ?,
+            @Payment = ?";
+            excute_prodecure2($params_in,$sqlcommand);
+        }
+        function deleteRent(){
+            $params_in = array(
+                "RentID"=>1
+            );
+            $sqlcommand = "EXEC	[dbo].[spDeleteRent]
+            @RentID = ?";
+            excute_prodecure2($params_in,$sqlcommand);
+        }
     }

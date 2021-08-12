@@ -123,9 +123,9 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         $r->addGroup('/expence',function(FastRoute\RouteCollector $r){
             $r->addGroup('/rent',function(FastRoute\RouteCollector $r){
                 $r->get('/get_rents','Rent/getRent');
-                $r->post('/add_rent','Rent/addUnloadingExpence');
-                $r->delete('/delete_rent','Rent/deleteUnloadingExpence');
-                $r->put('/update_rent','Rent/updateUnloadingExpence');
+                $r->post('/add_rent','Rent/addRent');
+                $r->delete('/delete_rent','Rent/deleteRent');
+                $r->put('/update_rent','Rent/updateRent');
             });
             $r->addGroup('/unloadingExpence',function(FastRoute\RouteCollector $r){
                 $r->get('/get_unloading_expence','LoadUnLoadExpences/getUnloadingExpences');

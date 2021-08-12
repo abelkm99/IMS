@@ -1,7 +1,5 @@
 <?php
-    echo "helloooowwwwwwwwwwwww";
     require "./vendor/autoload.php";
-    echo "helloooowwwwwwwwwwwww";
     require "Models/Supplier.php";
     require "Models/Customer.php";
     require "Models/Category.php";
