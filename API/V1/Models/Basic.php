@@ -1,8 +1,9 @@
 <?php
     class BasicApi{
-        function getAllWarehouse(){
+        function getAllItemInventory(){
+            $sqlcommand2 = "exec spItemInventory";
             $sqlcommand = "select * from WareHouse inner join Item on Item.ItemID = WareHouse.ItemID for json auto";
-            excute_select_operation($sqlcommand);
+            excute_select_operation($sqlcommand2);
         }
         function getAllStore(){
             $sqlcommand = "select * from Store inner join Item on Item.ItemID = Store.ItemID for json auto";
@@ -63,7 +64,7 @@
             excute_select_operation($sqlcommand);
         }
         function getAllTransferedInfo(){
-            $sqlcommand = "select * from [Transfer-Expence] inner join [Warehouse-Store]
+            $sqlcommand = "select * from [Transfer-Expence] left join [Warehouse-Store]
             on [Transfer-Expence].TEID = [Warehouse-Store].TEID for json auto";
             excute_select_operation($sqlcommand);
         }

@@ -59,4 +59,12 @@
             @ItemID = ?";
             excute_prepared_statements($params_in,$sqlcommand);
         }
+        function deleteItem(){
+            $sqlcommand = "EXEC	[dbo].[spDeleteItem]
+            @ItemID = ?";
+            $array = array(
+                "ItemID"=>1
+            );
+            excute_prodecure2($array,$sqlcommand);
+        }
     }

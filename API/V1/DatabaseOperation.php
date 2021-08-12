@@ -7,6 +7,12 @@ function get_connection()
     $username = "assya";
     $password = "123"; 
     $serverName = "LAPTOP-LIUFT80F";
+
+    // $database = "Assya-Treading";
+    // $username = "abel";
+    // $password = "ABC123!@#";
+    // $serverName = "assya.database.windows.net";
+
     $connectionInfo = array("Database" => $database, "UID" => $username, "PWD" => $password);
     $conn = sqlsrv_connect($serverName, $connectionInfo);
     return $conn;
@@ -25,6 +31,13 @@ function excute_select_operation($sqlcommand){
     
     
     $stmt = sqlsrv_query($conn, $sqlcommand);
+    if($stmt === false){
+        $resMessage = sqlsrv_errors();
+        http_response_code(400);
+        echo json_encode($resMessage);
+        return;
+    }
+
     $res = array() ;
     while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC )) {
         array_push($res,$row);
