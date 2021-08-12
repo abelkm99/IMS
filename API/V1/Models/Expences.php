@@ -483,7 +483,6 @@
                 "PBID"=>1,
                 "TransactionType"=>1,
                 "Amount"=>1,
-                "Desciption"=>1,
                 "Date"=>1
             );
 
@@ -491,7 +490,6 @@
             @PBID = ?,
             @TransactionType = ?,
             @Amount = ?,
-            @Desciption = ?,
             @Date = ?";
 
             excute_prodecure2($input_array,$sqlcommand);
@@ -511,5 +509,12 @@
             - ISNULL( SUM([TransactionOUT]) OVER(ORDER BY [DATE] ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW ), 0))
              as balance from BankTransaction where PBID = ? for json auto";
             excute_prepared_statements(array($PBID),$sqlcommand);
+        }
+        
+    }
+    class Rent{
+        function getRent(){
+            $sqlcommand = "select * from Rent for json auto";
+            excute_select_operation($sqlcommand);
         }
     }
