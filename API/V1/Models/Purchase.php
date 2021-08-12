@@ -239,7 +239,6 @@
             @message = ?";
             excute_prodecure($array,$sqlcommand);
         }
-        /* update transfered item with a count */
         function updateMovedData(){
             $array = array(
                 "TEID"=>1,
