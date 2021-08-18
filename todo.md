@@ -1,8 +1,8 @@
     suggestion
 ------------------
-[ ] do all primary keys and constraints 
+[x] do all primary keys and constraints 
 [ ] paginations
-[   ] change loading expences and unloading expences togeather  for only one GRN
+[ ] change loading expences and unloading expences togeather  for only one GRN
 [x] redesign the DrawIO
 
 [x] driver plate
@@ -145,8 +145,8 @@
 [x] Delte WareHouseTostore ( one item from the table)
     [x] check if there are enought items there at the store
 
-[] Delete Transfer
-    [] check if all the item Count are valid
+[x] Delete Transfer
+    [x] check if all the item Count are valid
 
 [x] delete ItemCategory
     [x] delete if there is no item listed for the item category 
@@ -157,8 +157,7 @@
 [x] Delete DRIVER ID
     [x] check if is is on GRN
     [x] check if it is on Reference
-[] can't delte or update from
-    [] 
+[] can't delte or update from 
     [] warehouse -- it will be deleted when the item id deleted
     [] purchase-wareHouse -- deletes when deleted from purchase
     [] store -- it will be deleted when the item id deleted
@@ -285,10 +284,11 @@ Ending Inventory (EI). The value of any unsold, on-hand inventory at the end of 
 [x] description for payment
 [] report
 [] add the transaction on the stock as GROSS
-[x] other incomes -> add it to the bank accounts 
+[x] other incomes -> add it to the bank accounts
+[x] add rent 
 [] export to excel from table vue js example(https://codepen.io/bellakm/pen/XWROMVq)
 [] make all tables printable
-[] loading and unloading expences are togeather
+[x] loading and unloading expences are togeather
 
 [] add both ethiopian date and gregorian at the top of dashboard
 

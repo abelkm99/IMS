@@ -96,7 +96,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
             $r->post('/purchase_from_order','Purchase/PurchaseFromOrder');
             $r->put('/update_transefred_item','Purchase/updateMovedData');
             $r->delete('/delete_transfered_item','Purchase/deleteTransferedItem');
-            $r->delete('/delet_teid','Purchase/deleteTEID');
+            $r->delete('/delete_teid','Purchase/deleteTEID');
             $r->put('/update_transferd_count','Purchase/updateTransferCount');
             $r->put('/update_teid','Purchase/updateTEID');
         });
