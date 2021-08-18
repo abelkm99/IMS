@@ -1,4 +1,4 @@
 ﻿# IMS
-[] make purchase\
-[] search purchases\
-[] search by multiple parametes
+[x] make purchase\
+[x] search purchases\
+[ ] Calculare Profits for the Items
