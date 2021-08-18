@@ -158,19 +158,11 @@
 [x] Delete DRIVER ID
     [x] check if is is on GRN
     [x] check if it is on Reference
-<<<<<<< HEAD
 [x] can't delte or update from 
     [x] warehouse -- it will be deleted when the item id deleted
     [x] purchase-wareHouse -- deletes when deleted from purchase
     [x] store -- it will be deleted when the item id deleted
     [x] store-sales -- it will be deleted when deleted from sales 
-=======
-[] can't delte or update from 
-    [] warehouse -- it will be deleted when the item id deleted
-    [] purchase-wareHouse -- deletes when deleted from purchase
-    [] store -- it will be deleted when the item id deleted
-    [] store-sales -- it will be deleted when deleted from sales 
->>>>>>> 749bbd2c26410f2116ab8648792ffcb1862d3c95
 
 [x] delete Employee
     [x] check if it not on Reference table
@@ -407,16 +399,3 @@ Ending Inventory (EI). The value of any unsold, on-hand inventory at the end of 
 [] delete transfer expence
 [] calculate net gain
 
-
-## anlysis queries
- [] Total inventory amount
- [] Totals Sales for day range
- [] ALL EXPENCE Select * from Expence select * from Expence 
-    [] BILL Expence should be added from the monthly 
- [] calculate the net profit first
- 
-
-
-------------------------
-# Deploy the web app on docker
-docker run -t -d -p 81:80 gjuniioor/php-sqlsrv:7.0
