@@ -1,6 +1,9 @@
     suggestion
 ------------------
+<<<<<<< HEAD
 [ ] figure out backup methods
+=======
+>>>>>>> 749bbd2c26410f2116ab8648792ffcb1862d3c95
 [x] do all primary keys and constraints 
 [ ] paginations
 [ ] change loading expences and unloading expences togeather  for only one GRN
@@ -155,11 +158,19 @@
 [x] Delete DRIVER ID
     [x] check if is is on GRN
     [x] check if it is on Reference
+<<<<<<< HEAD
 [x] can't delte or update from 
     [x] warehouse -- it will be deleted when the item id deleted
     [x] purchase-wareHouse -- deletes when deleted from purchase
     [x] store -- it will be deleted when the item id deleted
     [x] store-sales -- it will be deleted when deleted from sales 
+=======
+[] can't delte or update from 
+    [] warehouse -- it will be deleted when the item id deleted
+    [] purchase-wareHouse -- deletes when deleted from purchase
+    [] store -- it will be deleted when the item id deleted
+    [] store-sales -- it will be deleted when deleted from sales 
+>>>>>>> 749bbd2c26410f2116ab8648792ffcb1862d3c95
 
 [x] delete Employee
     [x] check if it not on Reference table
@@ -327,15 +338,15 @@ Ending Inventory (EI). The value of any unsold, on-hand inventory at the end of 
         get all 
     [] inventory turnover = cost of goods sold/average inventory
     
-<<<<<<< HEAD
 # new todos
 [x] description for payment
 [] report
 [] add the transaction on the stock as GROSS
-[x] other incomes -> add it to the bank accounts 
+[x] other incomes -> add it to the bank accounts
+[x] add rent 
 [] export to excel from table vue js example(https://codepen.io/bellakm/pen/XWROMVq)
 [] make all tables printable
-[] loading and unloading expences are togeather
+[x] loading and unloading expences are togeather
 
 [] add both ethiopian date and gregorian at the top of dashboard
 
@@ -396,7 +407,6 @@ Ending Inventory (EI). The value of any unsold, on-hand inventory at the end of 
 [] delete transfer expence
 [] calculate net gain
 
-=======
 
 ## anlysis queries
  [] Total inventory amount
@@ -410,4 +420,3 @@ Ending Inventory (EI). The value of any unsold, on-hand inventory at the end of 
 ------------------------
 # Deploy the web app on docker
 docker run -t -d -p 81:80 gjuniioor/php-sqlsrv:7.0
->>>>>>> 95e5ae92a59f3d8f10406e5fdc58c1f8a70a58c8
