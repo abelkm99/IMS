@@ -1,5 +1,7 @@
     suggestion
 ------------------
+=======
+[ ] figure out backup method
 [x] do all primary keys and constraints 
 [ ] paginations
 [ ] change loading expences and unloading expences togeather  for only one GRN
@@ -22,7 +24,6 @@
 
 [x] add new column ordertype inside orders tabel
 [x] delete also the infromation from the credit settlement
-[] update Date and cost fro transfer items
 
 [] remove identity cache from the entire table
 -------------------------
@@ -55,7 +56,6 @@
 [x] Driver->information
 [x] Employee
     [x] employee username password(ask privious username and password)
-
     [x] employee name,phonenumber,address
     [x] activate employee
     [x] deactivate employee
@@ -84,9 +84,8 @@
 [x] Reference table
 [x] sales table
 
-[] update individual transfer
-[] update transferexpence
-
+[x] update individual transfer
+[x] update transferexpence
 ----------------------------
         queries
 ----------------------------
@@ -132,15 +131,15 @@
     [x] Delete Load/Unloading Expence
     
 
-[] Delete Item
-    [] check if it is on purchase tables
-    [] check if it is on sales table
-    [] check it it is on Ordered Items LIST just delete from (then delete from all)
-    [] delete from Purchase-warehouse
-    [] delete from warehouse
-    [] delete from warehouse-store (on transfer should be deleted first)
-    [] delete from store
-    [] delete from store-sales
+[x] Delete Item
+    [x] check if it is on purchase tables
+    [x] check if it is on sales table
+    [x] check it it is on Ordered Items LIST just delete from (then delete from all)
+    [x] delete from Purchase-warehouse (deleted BY GRN)
+    [x] delete from warehouse
+    [x] delete from warehouse-store (deleted on transfer)
+    [x] delete from store
+    [x] delete from store-sales(deleted by REFNO)
     
 [x] Delte WareHouseTostore ( one item from the table)
     [x] check if there are enought items there at the store
@@ -157,11 +156,13 @@
 [x] Delete DRIVER ID
     [x] check if is is on GRN
     [x] check if it is on Reference
-[] can't delte or update from 
-    [] warehouse -- it will be deleted when the item id deleted
-    [] purchase-wareHouse -- deletes when deleted from purchase
-    [] store -- it will be deleted when the item id deleted
-    [] store-sales -- it will be deleted when deleted from sales 
+
+[x] can't delte or update from 
+    [x] warehouse -- it will be deleted when the item id deleted
+    [x] purchase-wareHouse -- deletes when deleted from purchase
+    [x] store -- it will be deleted when the item id deleted
+    [x] store-sales -- it will be deleted when deleted from sales 
+
 
 [x] delete Employee
     [x] check if it not on Reference table
@@ -211,6 +212,55 @@
 
 [x] do the autentication
 
+## CONSTRAINTS TO BE ADDED
+
+ UNLOADING Expence 
+    [x] cost can't be negative 
+ GRNCREDIT-SETTLEMENT
+    [x] Payment->not negative
+ GRN
+    [x] Deliverd Date have to be greater than PurchaseDate
+ Purchase
+    [x]PPP >=0
+    [x]quantity >=0
+    [x] remainder>=0
+    [x] extra>=0
+warehouse
+    [x] itemCount>0
+warehouse-store
+    [x] inCount>=0
+transfer-expence
+    [x] cost>=0
+store
+    [x] itemcount>=0
+item
+    [x] ppp>=0
+store-sales
+    [x] out>=0
+masatefiya
+    [x]cost>=0
+sales
+    [x] PPP>=0
+    [x] quantity>=0
+salary-expence
+    [x] cost>=0
+REF-CREDIT-SETTLEMENT
+    [x] payment>=0
+loading-expence
+    [x] cost>=0
+OrderItems
+    [x] PPP>=0
+    [x] Quantity>=0
+OELIST
+    [x] cost>=0
+PELIST
+    [x] cost>=0
+BILLLIST
+    [x] cost>=0
+ Purchase-warehouse
+    [x] INCOUNT is greater than 0
+
+ 
 RULES
 ----------
 sales ppp < item ppp [x] -- they can add whatever they want to add 
@@ -349,3 +399,17 @@ Ending Inventory (EI). The value of any unsold, on-hand inventory at the end of 
 [] delete transfer expence
 [] calculate net gain
 
+=======
+
+## anlysis queries
+ [] Total inventory amount
+ [] Totals Sales for day range
+ [] ALL EXPENCE Select * from Expence select * from Expence 
+    [] BILL Expence should be added from the monthly 
+ [] calculate the net profit first
+ 
+
+
+------------------------
+# Deploy the web app on docker
+docker run -t -d -p 81:80 gjuniioor/php-sqlsrv:7.0
