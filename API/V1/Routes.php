@@ -22,6 +22,11 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         $r->get('/transfered_Items_List','BasicApi/getAllTransferedInfo');
         $r->get('/get_all_inventory','BasicApi/getAllItemInventory');
         
+        $r->addGroup('/report', function(FastRoute\RouteCollector $r){
+            $r->get('/get_all_report', 'Report/get_overal_report');
+
+        });
+
         $r->addGroup('/supplier', function (FastRoute\RouteCollector $r) {
             $r->get('/listSuppliers', 'Supplier/ListAllSuppliers');
             $r->get('/listSupplier/{Suppliername}','supplier/getSupplierInformation');
@@ -119,6 +124,12 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
             $r->delete('/delete_transaction','Bank/deleteTransaction');
             $r->get('/getBankAccount_transactions/{PBID:\d+}','Bank/getTransaction');
 
+        });
+        $r->addGroup('/income', function (FastRoute\RouteCollector $r) {
+            $r->get('/get_incomes', 'Income/getAllIncomes');
+            $r->post('/add_new_income','Income/addNewIncome');
+            $r->put('/update_income','Income/updateIncome');
+            $r->delete('/delete_income','Income/deleteIncome');
         });
         $r->addGroup('/expence',function(FastRoute\RouteCollector $r){
             $r->addGroup('/rent',function(FastRoute\RouteCollector $r){

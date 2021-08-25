@@ -14,5 +14,6 @@
     require "Models/Basic.php";
     require "Models/Order.php";
     require "Models/Report.php";
+    require "Models/Income.php";
     require "Token.php";
     require "Auth.php";

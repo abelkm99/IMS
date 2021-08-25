@@ -14,7 +14,7 @@
             excute_select_operation($sqlcommand);
         }
         function getALLGRN(){
-            $sqlcommand = "select * from GRN inner join Purchase on GRN.GRNNO = Purchase.GRNNO for json auto";
+            $sqlcommand = "select * from GRN inner join Purchase on GRN.GRNNO = Purchase.GRNNO ORDER BY GRN.PurchsedDate DESC for json auto";
             excute_select_operation($sqlcommand);
         }
         function getAllReferences(){

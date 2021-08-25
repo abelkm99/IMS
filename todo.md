@@ -320,7 +320,12 @@ Ending Inventory (EI). The value of any unsold, on-hand inventory at the end of 
     The reorder point helps determine when to order new inventory. It is a specific point in time
     that acts as a trigger to re-order as soon as stock has diminished to that certain level.
     Reorder point = avarage daily sales volume + saftey stock
-6
+6 Safety stock = (max daily sales * max lead time in days) – (average daily sales * average lead time in days)
+
+[x] make income-table
+    [x] income caregory
+    [x] CRUD operation
+    
 
 ## inventory analysis
     [] average inventory
@@ -398,4 +403,7 @@ Ending Inventory (EI). The value of any unsold, on-hand inventory at the end of 
 
 [] delete transfer expence
 [] calculate net gain
+[] u cant update delivery date if it is not shiped yet so delivery date updation should be checked first
+# get all the necessay data for income and genereate the a report 
+
 

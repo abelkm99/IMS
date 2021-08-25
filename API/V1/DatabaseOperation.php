@@ -262,14 +262,24 @@ function excute_prodecure2($inputs,$sqlcommand){
             }
             // add the result and message
             $stmt = sqlsrv_query($conn, $sqlcommand,$params);
-
-            $res = array() ;
-            while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC )) {
-                array_push($res,$row);
+            if(!$stmt){
+                echo "NONE";
+                return;
             }
-            if(count($res)>0){
-                $jsonString = concatranteJson($res);
+            
+            $result = array();
+
+            // Get return value
+            do {
+            while ($row = sqlsrv_fetch_array($stmt)) {
+                // Loop through each result set and add to result array
+                $result[] = $row;
+            }
+            } while (sqlsrv_next_result($stmt));
+
+            if(count($result)>0){
                 http_response_code(200);
+                $jsonString = concatranteJson($result);
                 print_r($jsonString);
             }
             else{
