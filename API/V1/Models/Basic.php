@@ -7,7 +7,7 @@
         }
         function getAllStore(){
             $sqlcommand = "select * from Store inner join Item on Item.ItemID = Store.ItemID for json auto";
-            excute_select_operation($sqlcommand);
+            excute_select_operation($sqlcommand); 
         }
         function getTransactionType(){
             $sqlcommand = "select * from TransactionType for json auto";
@@ -18,7 +18,7 @@
             excute_select_operation($sqlcommand);
         }
         function getAllReferences(){
-            $sqlcommand = "select * from Reference inner join Sales on Reference.REFNO = Sales.REFNO 
+            $sqlcommand = "select * from Reference inner join Sales on Reference.REFNO = Sales.REFNO ORDER BY Reference.Date DESC
             for json auto";
             excute_select_operation($sqlcommand);
         }

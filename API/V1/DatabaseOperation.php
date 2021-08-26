@@ -262,10 +262,6 @@ function excute_prodecure2($inputs,$sqlcommand){
             }
             // add the result and message
             $stmt = sqlsrv_query($conn, $sqlcommand,$params);
-            if(!$stmt){
-                echo "NONE";
-                return;
-            }
             
             $result = array();
 

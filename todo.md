@@ -395,7 +395,7 @@ Ending Inventory (EI). The value of any unsold, on-hand inventory at the end of 
 [] add desciption for my bank account transaction
 [] make loading and unloading expence togeather
 [] new table rent with types shop and warehouse
-[] is masatefiya as gebi weys wechi new
+[] is masatefiya as gebi weys wechi new??
 [] other expence lists have to be togeather
 [] inventory should give all necessary infromation on how much items are on warehouse and store
 [] stock have to contain on the prices
@@ -405,5 +405,20 @@ Ending Inventory (EI). The value of any unsold, on-hand inventory at the end of 
 [] calculate net gain
 [] u cant update delivery date if it is not shiped yet so delivery date updation should be checked first
 # get all the necessay data for income and genereate the a report 
+
+
+[x] ALL THE GRNS
+[] ALL THE PURCHASES
+[x] ALL THE ITEMS STOCK HISTORY AND SALES AND REPORTS
+[x] BANK HISTORY
+    [] ALL TRANSACTION IN
+    [] ALL TRANSACTION OUT
+[] Income
+    [] select all other incomes
+------------ INCOME -----------------
+[] List All other Expence Lists
+[] Get All other Expence List
+[] Get All BILLEXPENCE LIST
+[] Rent
 
 

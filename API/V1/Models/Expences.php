@@ -483,6 +483,7 @@
                 "PBID"=>1,
                 "TransactionType"=>1,
                 "Amount"=>1,
+                "Description"=>0,
                 "Date"=>1
             );
 
@@ -490,6 +491,7 @@
             @PBID = ?,
             @TransactionType = ?,
             @Amount = ?,
+            @Desciption = ?,
             @Date = ?";
 
             excute_prodecure2($input_array,$sqlcommand);
