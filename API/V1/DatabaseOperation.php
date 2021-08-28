@@ -18,8 +18,7 @@ function get_connection()
     return $conn;
 }
 function excute_select_operation($sqlcommand){
-
-    header('Content-type: application/json');
+    header("Access-Control-Allow-Origin: *");
     $conn = get_connection();
     if ($conn) {
     } else {
@@ -54,7 +53,6 @@ function excute_select_operation($sqlcommand){
     }
 }
 function excute_delete_prodecure($valueId,$sqlcommand){
-    header('Content-type: application/json');
     $conn = get_connection();
     if ($conn) {
     } else {
@@ -90,7 +88,6 @@ function excute_delete_prodecure($valueId,$sqlcommand){
     }
 }
 function excute_prodecure($inputs,$sqlcommand){
-    header('Content-type: application/json');
     $conn = get_connection();
     if ($conn) {
     } else {
@@ -153,7 +150,6 @@ function excute_prodecure($inputs,$sqlcommand){
 
 }
 function excute_prepared_statements($inputs,$sqlcommand){
-    header('Content-type: application/json');
     $conn = get_connection();
     if ($conn) {
     } else {
@@ -186,7 +182,6 @@ function excute_prepared_statements($inputs,$sqlcommand){
 }
 
 function excute_prodecure_json($params,$sqlcommand){
-    header('Content-type: application/json');
     $conn = get_connection();
     if ($conn) {
     } 
@@ -230,7 +225,6 @@ function excute_prodecure_json($params,$sqlcommand){
 
 
 function excute_prodecure2($inputs,$sqlcommand){
-    header('Content-type: application/json');
     $conn = get_connection();
     if ($conn) {
     } else {

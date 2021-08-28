@@ -1,6 +1,4 @@
 <?php
-    header('Content-type: application/json');
-
     class Auth{
         function Login(){
             $access_token =  create_access_token('admin');

@@ -13,7 +13,6 @@
             );
             
             excute_prodecure2($params_in,$sqlcommand);
-            // header('Content-type: application/json');
             // $conn = get_connection();
             // if ($conn) {
             // } else {
