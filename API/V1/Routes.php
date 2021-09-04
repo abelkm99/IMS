@@ -52,7 +52,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         
         $r->addGroup('/report', function(FastRoute\RouteCollector $r){
             $r->post('/get_all_report', 'Report/get_overal_report');
-
+            $r->post('/get_all_report_tiny', 'Report/get_overal_report_tiny');
+            $r->post('/get_report_interval', 'Report/get_report_interval');
         });
 
         $r->addGroup('/supplier', function (FastRoute\RouteCollector $r) {

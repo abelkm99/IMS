@@ -1,5 +1,40 @@
 <?php
     class Report{
+        function get_report_interval(){
+            $sqlcommand = "EXEC	[dbo].[spReport_Interval]
+            @date1 = ?,
+            @date2 = ?,
+            @option = ?,
+            @dayInterval = ?,
+            @weekInterval = ?,
+            @monthInterval = ?,
+            @yearInterval = ?";
+            $params_in = array(
+                "date1"=>1,
+                "date2"=>1,
+                "option"=>1,
+                "dayInterval"=>0,
+                "weekInterval"=>0,
+                "monthInterval"=>0,
+                "yearInterval"=>0,
+            );
+            excute_prodecure2($params_in,$sqlcommand);
+        }
+        function get_overal_report_tiny(){
+            $sqlcommand = "EXEC	[dbo].[spReport_tiny]
+            @date1 = ?,
+            @date2 = ?,
+            @option = ?";
+
+            $params_in = array(
+                "date1"=>"1",
+                "date2"=>"1",
+                "option"=>1
+            );
+            
+            excute_prodecure2($params_in,$sqlcommand);
+
+        }
         function get_overal_report(){
             $sqlcommand = "EXEC	[dbo].[spReport]
             @date1 = ?,
