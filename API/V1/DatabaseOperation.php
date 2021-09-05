@@ -3,7 +3,8 @@
 function get_connection()
 {
    
-    $database = "Assya-Treading";
+    // $database = "Assya-Treading";
+    $database = "IMS";
     $username = "assya";
     $password = "123"; 
     $serverName = "LAPTOP-LIUFT80F";
