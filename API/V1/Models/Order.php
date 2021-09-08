@@ -50,7 +50,7 @@
             $sqlcommand = "EXEC	[dbo].[spUpdateOrder]
             @CustomerId = ?,
             @OrderDate = ?,
-                 @OrderID = ?,
+            @OrderID = ?,
             @result = ?,
             @message = ?";
             excute_prodecure($array,$sqlcommand);

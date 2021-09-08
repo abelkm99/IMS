@@ -345,9 +345,8 @@ Ending Inventory (EI). The value of any unsold, on-hand inventory at the end of 
 [] make all tables printable
 [x] loading and unloading expences are togeather
 
-[] add both ethiopian date and gregorian at the top of dashboard
 
-[] pop up all the responses
+[x] pop up all the responses
 
 [] ship to store
     [] change ship to warehouse to ship to store
