@@ -4,22 +4,24 @@ require "./vendor/autoload.php";
 
 use Firebase\JWT\JWT;
 
-$secretKey  = 'bGS6lzFqvvSQ8ALbOxatm7/Vk7mLQyzqaS34Q4oR1ew='; 
+$secretKey  = 'bGS6lzFqvvSQ8ALbOxatm7/Vk7mLQyzqaS34Q4oR1ew=';
 
-function create_access_token($role){
+function create_access_token($data)
+{
     $payload = array(
-        "Role" => $role,
+        "data" => $data,
         "iss" => "http://example.org",
         "aud" => "http://example.com",
         "iat" => 1356999524,
         "nbf" => 1357000000,
-        "random"=>random_str(700),
-        "random2"=>random_str(700)
-        );
-    return JWT::encode($payload,$GLOBALS['secretKey']);
+        "random" => random_str(700),
+        "random2" => random_str(700)
+    );
+    return JWT::encode($payload, $GLOBALS['secretKey']);
 }
-function decode_access_token($jwt){
-     $decoded = JWT::decode($jwt, $GLOBALS['secretKey'], array('HS256'));
+function decode_access_token($jwt)
+{
+    $decoded = JWT::decode($jwt, $GLOBALS['secretKey'], array('HS256'));
     $decoded_array = (array) $decoded;
 
     return $decoded_array;
@@ -34,27 +36,39 @@ function random_str(
     $pieces = [];
     $max = mb_strlen($keyspace, '8bit') - 1;
     for ($i = 0; $i < $length; ++$i) {
-        $pieces []= $keyspace[random_int(0, $max)];
+        $pieces[] = $keyspace[random_int(0, $max)];
     }
     return implode('', $pieces);
 }
 
-function validate_accesstoken($roles){
-    if(isset($_COOKIE['access_token'])){
-        $decoded = decode_access_token($_COOKIE['access_token']);
-        if(in_array($decoded['Role'],$roles)){
-            return 1;
-        }   
-        else{
+function validate_accesstoken($roles)
+{
+    try{
+        $headers = Auth::getAuthorizationHeader();
+        
+        $separated = explode(' ',$headers);
+        if (count($separated)>1){
+
+            $bearer_token =$separated[1];
+            $decoded_role = decode_access_token($bearer_token)['data']->Role;
+            if (in_array($decoded_role, $roles)) {
+                return 1;
+            } else {
+                http_response_code(401);
+                echo json_encode(array("result" => 'unAuthorized person'));
+                return 0;
+            }
+        }else{
             http_response_code(401);
-            echo json_encode(array("result"=>'unAuthorized person'));
+            echo json_encode(array("result" => 'invalid accesstoken'));
             return 0;
         }
-    }else{
+
+      
+    }
+    catch(Exception $e){
         http_response_code(401);
-        echo json_encode(array("result"=>'unAuthorized person'));
+        echo json_encode(array("result" => 'invalid accesstoken'));
         return 0;
     }
 }
-
-?>
