@@ -28,7 +28,7 @@
             excute_select_operation($sqlcommand);
         }
         function getAllSalesOrders(){
-            $sqlcommand = "select * from [Order] left join Orderitems on Orderitems.OrderID = [Order].OrderID and OrderType = 2
+            $sqlcommand = "select * from [Order] left join Orderitems on Orderitems.OrderID = [Order].OrderID and OrderType = 2 ORDER BY [Order].OrderDate DESC
             for json auto";
             excute_select_operation($sqlcommand);
         }
@@ -51,9 +51,14 @@
             excute_prepared_statements($array,$sqlcommand);
         }
         function getItemStock($ItemID){
-            $params_in = array($ItemID);
-            $sqlcommand = "EXEC [dbo].[spItemStock] @ItemID = ?";
-            excute_prepared_statements($params_in,$sqlcommand);
+            // $params_in = array($ItemID);
+            // // $sqlcommand = "EXEC [dbo].[spItemStock] @ItemID = ?";
+            // $sqlcommand = "select * from STOCK WHERE ItemId  @ItemID = ? for json auto";
+            // excute_prepared_statements($params_in,$sqlcommand);
+            $sqlcommand = "select * from STOCK WHERE ItemId = ?
+            for json auto,INCLUDE_NULL_VALUES";
+            $array = array($ItemID);
+            excute_prepared_statements($array,$sqlcommand);
         }
         function getAllGRNSNOTDelivered(){
             $sqlcommand = "select * from GRN left join Purchase on GRN.GRNNO = Purchase.GRNNO where Delivered = 0 for json auto";

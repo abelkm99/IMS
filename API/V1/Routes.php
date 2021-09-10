@@ -84,7 +84,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         });
 
         $r->addGroup('/employee', function (FastRoute\RouteCollector $r) {
-            $r->get('/list_employees', ['Employee/ListAllEmployees']);
+            $r->get('/list_employees', ['Employee/ListAllEmployees', Section::PROTECTED]);
             $r->get('/list_employee_info/{EmployeeId:\d+}', ['Employee/getEmployeeInfromation', Section::PROTECTED]);
             $r->post('/add_employee', ['Employee/addEmployee', Section::PROTECTED]);
             $r->put('/update_employee', ['Employee/updateEmployee', Section::PROTECTED]);
