@@ -25,7 +25,7 @@ function cors()
 
         if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
             // may also be using PUT, PATCH, HEAD etc
-            header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+            header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 
         if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
             header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
@@ -40,7 +40,7 @@ require "packages.php";
 
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
 
-    $r->addGroup('/ims/api/v1', function (FastRoute\RouteCollector $r) {
+    $r->addGroup('/quasar_api/api/v1', function (FastRoute\RouteCollector $r) {
 
         $r->post('/login', 'Auth/Login');
 
@@ -282,7 +282,8 @@ switch ($routeInfo[0]) {
 
             //authenticate user 
 
-            if (validate_accesstoken($allowed_roles)){
+            if (true){
+            // if (validate_accesstoken($allowed_roles)){
                 
                 $handler = $routeInfo[1][0];
                 $vars    = $routeInfo[2];
