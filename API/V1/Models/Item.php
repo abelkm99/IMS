@@ -42,10 +42,8 @@ class Item
         );
         $sqlcommand = "EXEC	[dbo].[spUpdateItemPrice]
             @PPP = ?,
-            @ItemId = ?,
-            @result = ?,
-            @message = ?";
-        excute_prodecure($array, $sqlcommand);
+            @ItemId = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
     function updateItem()
     {
@@ -59,10 +57,8 @@ class Item
             @CategoryID = ?,
             @ItemCode = ?,
             @ItemType = ?,
-            @ItemId = ?,
-            @result = ?,
-            @message = ?";
-        excute_prodecure($array, $sqlcommand);
+            @ItemId = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
     function ItemInventory($ItemId)
     {
@@ -78,6 +74,6 @@ class Item
         $array = array(
             "ItemID" => 1
         );
-        excute_prodecure2($array, $sqlcommand);
+        excute_prodecure_status_code($array, $sqlcommand);
     }
 }

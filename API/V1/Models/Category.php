@@ -10,10 +10,8 @@
                 "CategoryName"=>1,
             );
             $sqlcommand = "EXEC	[dbo].[spAddCategory]
-            @CategoryName = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @CategoryName = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function updateCategory(){
             $array = array(
@@ -22,10 +20,8 @@
             );
             $sqlcommand = "EXEC	[dbo].[spUpdateCategory]
             @CategoryName = ?,
-            @CategoryId = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @CategoryId = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function deleteCategory(){
             $array_input = array(
@@ -33,6 +29,6 @@
             );
             $sqlcommand = "EXEC	[dbo].[spDeleteItemCategory]
             @CategoryId = ?";
-            excute_prodecure2($array_input,$sqlcommand);
+            excute_prodecure_status_code($array_input,$sqlcommand);
         }
     }
