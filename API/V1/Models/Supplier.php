@@ -2,9 +2,9 @@
 
     class Supplier{
         function ListAllSuppliers(){
-            $sqlcommand = "select * from Supplier as s
-                            left join SupplierBankAccounts as sb
-                            on s.SupplierID = sb.SupplierID
+            $sqlcommand = "select * from Supplier
+                            left join SupplierBankAccounts
+                            on Supplier.SupplierID = SupplierBankAccounts.SupplierID
                             for json auto
                             ";
            excute_select_operation($sqlcommand);
