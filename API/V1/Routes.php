@@ -101,7 +101,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
             $r->get('/list_customer_bankaccount/{CustomerId:\d+}', ['Customer/getCustomerBankAccount', Section::PROTECTED]);
             $r->post('/add_customer_bankaccount', ['Customer/addCustomerBankAccount', Section::PROTECTED]);
             $r->put('/update_customer_bankaccount', ['Customer/updateCustomerBankAccount', Section::PROTECTED]);
-            $r->delete('/delete_customer_bankaccount/{BankAcountId:\d+}', ['Customer/deleteCustomerBankAccount', Section::PROTECTED]);
+            $r->delete('/delete_customer_bankaccount', ['Customer/deleteCustomerBankAccount', Section::PROTECTED]);
             $r->delete('/delete_customer', ['Customer/deleteCustomer', Section::PROTECTED]);
         });
         $r->addGroup('/category', function (FastRoute\RouteCollector $r) {
@@ -269,7 +269,9 @@ $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
         // ... 404 Not Found
-        echo "<h1> 404 Invalid URL</h1>";
+        http_response_code(404);
+        $res = array('message'=>'404 Invalid URL');
+        print_r(json_encode($res));
         break;
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
         $allowedMethods = $routeInfo[1];

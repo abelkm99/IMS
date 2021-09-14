@@ -25,10 +25,8 @@
                             @SupplierTinNumber = ?,
                             @SupplierPhoneNumber = ?,
                             @BankAccountNumber = ?,
-                            @BankName = ?,
-                            @result = ?,
-                            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+                            @BankName = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         // function get only one supplier
         function getSupplierInformation($SupplierId){

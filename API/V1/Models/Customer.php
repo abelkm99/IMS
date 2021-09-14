@@ -24,20 +24,14 @@
                             @CustomerTinNumber = ?,
                             @CustomerPhoneNumber = ?,
                             @BankAccount = ?,
-                            @BankName = ?,
-                            @result = ?,
-                            @message = ?";
+                            @BankName = ?";
             
-            excute_prodecure($array,$sqlcommand);
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         // function get only one supplier
-        function getCustomerInformation($CustomerName){
-            $sqlcommand = "select * from Customer
-                            left join CustomerBankAccounts 
-                            on Customer.CustomerID = CustomerBankAccounts.CustomerID
-                            where CustomerName = ?
-                            for json auto";
-            $array = array($CustomerName);
+        function getCustomerInformation($CustomerID){
+            $sqlcommand = "SELECT * FROM Customer LEFT JOIN CustomerBankAccounts ON Customer.CustomerID = CustomerBankAccounts.CustomerID WHERE Customer.CustomerID = ? for json auto";
+            $array = array($CustomerID);
             excute_prepared_statements($array,$sqlcommand);
         }
         function updateCustomer(){
@@ -53,14 +47,12 @@
             @CustomerAddress = ?,
             @CustomerTinNumber = ?,
             @CustomerPhoneNumber = ?,
-            @CustomerID = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @CustomerID = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function getCustomerBankAccount($CustomerId){
             $param_in = array($CustomerId);
-            $sqlcommand = "select * from CustomerBankAccounts where CustomerID = 9 for json auto";
+            $sqlcommand = "select * from CustomerBankAccounts where CustomerID = ? for json auto";
             excute_prepared_statements($param_in,$sqlcommand);
         }
         function addCustomerBankAccount(){
@@ -72,10 +64,8 @@
             $sqlcommand = "EXEC	[dbo].[spAddCustomerBankAccount]
             @CustomerID = ?,
             @BankAccount = ?,
-            @BankName = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @BankName = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function updateCustomerBankAccount(){
             $array = array(
@@ -86,17 +76,16 @@
             $sqlcommand = "EXEC	[dbo].[spUpdateCustomerBankAccount]
             @BankAccountID = ?,
             @BankAccount = ?,
-            @BankName = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @BankName = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
-        function deleteCustomerBankAccount($BankAcountId){
+        function deleteCustomerBankAccount(){
+            $array = array(
+                "BankAccountID"=>1
+            );
             $sqlcommand = "EXEC	[dbo].[spDeleteCustomerBankAccount]
-            @BankAccountID = ?,
-            @result = ?,
-            @message = ?";
-            excute_delete_prodecure($BankAcountId,$sqlcommand);
+            @BankAccountID = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function deleteCustomer(){
             $array_input = array(
@@ -104,7 +93,7 @@
             );
             $sqlcommand = "EXEC [dbo].[spDeleteCustomer]
             @CustomerID = ?";
-            excute_prodecure2($array_input,$sqlcommand);
+            excute_prodecure_status_code($array_input,$sqlcommand);
         }
 
     }
