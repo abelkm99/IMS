@@ -16,11 +16,9 @@
             $sqlcommand = "EXEC	[dbo].[spAddDriver]
             @DriverName = ?,
             @DriverPhoneNumber = ?,
-            @DriverPlate = ?,
-            @result = ?,
-            @message = ?";
+            @DriverPlate = ?";
 
-            excute_prodecure($array,$sqlcommand);
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function getDriverInformation($DriverName){
             $sqlcommand = "select * from Driver
@@ -41,10 +39,8 @@
             @DriverName = ?,
             @DriverPhoneNumber = ?,
             @DriverPlate = ?,
-            @DriverID = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @DriverID = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function deleteDriver(){
             $input_array = array(
@@ -52,7 +48,7 @@
             );
             $sqlcommand = "EXEC	[dbo].[spDeleteDriver]
             @DriverID = ?";
-            excute_prodecure2($input_array,$sqlcommand);
+            excute_prodecure_status_code($input_array,$sqlcommand);
         }
 
     }
