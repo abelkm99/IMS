@@ -31,15 +31,12 @@
             excute_prodecure($array,$sqlcommand);
         }
         // function get only one supplier
-        function getSupplierInformation($SupplierName){
-            $sqlcommand = "select * from Supplier as s
-                            inner join SupplierBankAccounts as sb
-                            on s.SupplierID = sb.SupplierID
-                            WHERE SupplierName = ?
-                            for json auto
-                            ";
-            $array = array($SupplierName);
-            excute_prepared_statements($array,$sqlcommand);
+        function getSupplierInformation($SupplierId){
+            $param_in = array($SupplierId);
+            $sqlcommand = "select * from Supplier
+            left join SupplierBankAccounts
+            on Supplier.SupplierID = SupplierBankAccounts.SupplierID where Supplier.SupplierID = ? for json auto,include_null_values";
+            excute_prepared_statements($param_in,$sqlcommand);
         }
         function updateSupplier(){
             $array = array(
@@ -54,10 +51,8 @@
             @SupplierAddress = ?,
             @SupplierTinNumber = ?,
             @SupplierPhoneNumber = ?,
-            @SupplierID = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @SupplierID = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function getSupplierBankAccount($SupplierId){
             $param_in = array($SupplierId);
@@ -73,10 +68,8 @@
             $sqlcommand = "EXEC	[dbo].[spAddSupplierBankAccount]
             @SupplierID = ?,
             @BankAccount = ?,
-            @BankName = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @BankName = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function updateSupplierBankAccount(){
             $array = array(
@@ -87,17 +80,16 @@
             $sqlcommand = "EXEC	[dbo].[spUpdateSupplierBankAccount]
             @BankAccountID = ?,
             @BankAccountNumber = ?,
-            @BankName = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @BankName = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
-        function delteSupplierBankAccount($BankAcountId){
+        function delteSupplierBankAccount(){
+            $array = array(
+                "BankAccountID"=>1
+            );
             $sqlcommand = "EXEC	[dbo].[spDeleteSupplierBankAccount]
-            @BankAccountID = ?,
-            @result = ?,
-            @message = ?";
-            excute_delete_prodecure($BankAcountId,$sqlcommand);
+            @BankAccountID = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function deleteSupplier(){
             $array = array(
@@ -105,6 +97,6 @@
             );
             $sqlcommand = "EXEC	[dbo].[spDeleteSupplier]
             @SupplierID = ?";
-            excute_prodecure2($array,$sqlcommand);
+            excute_prodecure_status_code($array,$sqlcommand);
         }
     }

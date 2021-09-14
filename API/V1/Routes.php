@@ -71,7 +71,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
             $r->get('/list_supplier_bankaccount/{SupplierID:\d+}', ['supplier/getSupplierBankAccount', Section::PROTECTED]);
             $r->post('/add_supplier_bankaccount', ['supplier/addSupplierBankAccount', Section::PROTECTED]);
             $r->put('/update_supplier_bankaccount', ['supplier/updateSupplierBankAccount', Section::PROTECTED]);
-            $r->delete('/delete_supplier_bankaccount/{BankAcountId:\d+}', ['supplier/delteSupplierBankAccount', Section::PROTECTED]);
+            $r->delete('/delete_supplier_bankaccount', ['supplier/delteSupplierBankAccount', Section::PROTECTED]);
             $r->delete('/deleteSupplier', ['supplier/deleteSupplier', Section::PROTECTED]);
         });
 
