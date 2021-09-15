@@ -549,7 +549,7 @@ class Rent
 {
     function getRent()
     {
-        $sqlcommand = "select * from Rent for json auto";
+        $sqlcommand = "select * from Rent order by [Date] DESC for json path";
         excute_select_operation($sqlcommand);
     }
     function addRent()
@@ -563,7 +563,7 @@ class Rent
             @Date = ?,
             @RentType = ?,
             @payment = ?";
-        excute_prodecure2($params_in, $sqlcommand);
+        excute_prodecure_status_code($params_in, $sqlcommand);
     }
     function updateRent()
     {
@@ -578,7 +578,7 @@ class Rent
             @RentType = ?,
             @Date = ?,
             @Payment = ?";
-        excute_prodecure2($params_in, $sqlcommand);
+        excute_prodecure_status_code($params_in, $sqlcommand);
     }
     function deleteRent()
     {
@@ -587,6 +587,6 @@ class Rent
         );
         $sqlcommand = "EXEC	[dbo].[spDeleteRent]
             @RentID = ?";
-        excute_prodecure2($params_in, $sqlcommand);
+        excute_prodecure_status_code($params_in, $sqlcommand);
     }
 }
