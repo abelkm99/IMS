@@ -259,19 +259,18 @@ class PET
 
         $sqlcommand = "EXEC	[dbo].[spAddPersonalExpences]
             @PEType = ?,
-            @PEDescription = ?,
-            @result = ?,
-            @message = ?";
+            @PEDescription = ?";
 
-        excute_prodecure($array, $sqlcommand);
+        excute_prodecure_status_code($array, $sqlcommand);
     }
-    function deletePET($PEID)
+    function deletePET()
     {
+        $array = array(
+            "PEID" => 1,
+        );
         $sqlcommand = "EXEC    [dbo].[spDeletePersonalExpenceTypes]
-            @PEID = ?,
-            @result = ?,
-            @message = ?";
-        excute_delete_prodecure($PEID, $sqlcommand);
+            @PEID = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
     function updatePET()
     {
@@ -283,10 +282,8 @@ class PET
         $sqlcommand = "EXEC	[dbo].[spUpdatePersonalExpenceTypes]
             @PEType = ?,
             @PEDescription = ?,
-            @PEID = ?,
-            @result = ?,
-            @message = ?";
-        excute_prodecure($array, $sqlcommand);
+            @PEID = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
 }
 class BT
@@ -305,19 +302,18 @@ class BT
 
         $sqlcommand = "EXEC	[dbo].[spAddBillType]
             @BILLType = ?,
-            @BILLDescription = ?,
-            @result = ?,
-            @message = ?";
+            @BILLDescription = ?";
 
-        excute_prodecure($array, $sqlcommand);
+        excute_prodecure_status_code($array, $sqlcommand);
     }
-    function deleteBT($BID)
+    function deleteBT()
     {
+        $array = array(
+            "BID" => 1
+        );
         $sqlcommand = "EXEC	[dbo].[spDeleteBillExpenceTypes]
-            @BID = ?,
-            @result = ?,
-            @message = ?";
-        excute_delete_prodecure($BID, $sqlcommand);
+            @BID = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
     function updateBT()
     {
@@ -329,10 +325,8 @@ class BT
         $sqlcommand = "EXEC	[dbo].[spUpdateBillTypeExpence]
             @BILLType = ?,
             @BillDescription = ?,
-            @BID = ?,
-            @result = ?,
-            @message = ?";
-        excute_prodecure($array, $sqlcommand);
+            @BID = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
 }
 class OEL
@@ -384,9 +378,9 @@ class PEL
 {
     function getPEL()
     {
-        $sqlcommand = "select * from PersonalExpencesList inner join PersonalExpencesTypes
-            on PersonalExpencesList.PEID = PersonalExpencesTypes.PEID
-            for json auto";
+        $sqlcommand = "select PExpencesID,PersonalExpencesList.PEID,PEType,[Date],Cost from PersonalExpencesList
+        LEFT JOIN PersonalExpencesTypes ON PersonalExpencesTypes.PEID = PersonalExpencesList.PEID
+        ORDER BY [Date] DESC FOR JSON PATH,include_null_values";
         excute_select_operation($sqlcommand);
     }
     function addPEL()
@@ -399,18 +393,17 @@ class PEL
         $sqlcommand = "EXEC	[dbo].[spAddPesonalExpenseList]
            @PEID = ?,
            @Date = ?,
-           @Cost = ?,
-           @result = ?,
-           @message = ?";
-        excute_prodecure($array, $sqlcommand);
+           @Cost = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
-    function deletePEL($PExpencesID)
+    function deletePEL()
     {
+        $array = array(
+            "PExpencesID" => 1
+        );
         $sqlcommand = "EXEC	[dbo].[spDeletePersonalExpenceList]
-            @PExpencesID = ?,
-            @result = ?,
-            @message = ?";
-        excute_delete_prodecure($PExpencesID, $sqlcommand);
+            @PExpencesID = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
     function updatePEL()
     {
@@ -422,19 +415,17 @@ class PEL
         $sqlcommand = "EXEC	[dbo].[spUpdatePersonalExpenceList]
             @Date = ?,
             @Cost = ?,
-            @PExpencesID = ?,
-            @result = ?,
-            @message = ?";
-        excute_prodecure($array, $sqlcommand);
+            @PExpencesID = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
 }
 class BL
 {
     function getBL()
     {
-        $sqlcommand = "select * from BILLExpencesList inner join BillTypes
-            on BILLExpencesList.BID = BillTypes.BID
-            for json auto";
+        $sqlcommand = "select BILLEXPENCEID,BillTypes.BID,BillTypes.BILLType,[Date],Cost from BILLExpencesList 
+        LEFT JOIN BillTypes ON BillTypes.BID = BILLExpencesList.BID
+        ORDER BY [Date] DESC FOR JSON PATH,include_null_values";
         excute_select_operation($sqlcommand);
     }
     function addBL()
@@ -447,18 +438,17 @@ class BL
         $sqlcommand = "EXEC	[dbo].[spAddBillExpenseList]
             @BID = ?,
             @Date = ?,
-            @Cost = ?,
-            @result = ?,
-            @message = ?";
-        excute_prodecure($array, $sqlcommand);
+            @Cost = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
-    function deleteBL($BILLEXPENCEID)
+    function deleteBL()
     {
+        $array = array(
+            "BILLEXPENCEID" => 1
+        );
         $sqlcommand = "EXEC	[dbo].[spDeleteBillExpenceList]
-            @BILLEXPENCEID = ?,
-            @result = ?,
-            @message = ?";
-        excute_delete_prodecure($BILLEXPENCEID, $sqlcommand);
+            @BILLEXPENCEID = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
     function updateBL()
     {
@@ -470,10 +460,8 @@ class BL
         $sqlcommand = "EXEC	[dbo].[spUpdateBillExpenceList]
             @Date = ?,
             @Cost = ?,
-            @BILLEXPENCEID = ?,
-            @result = ?,
-            @message = ?";
-        excute_prodecure($array, $sqlcommand);
+            @BILLEXPENCEID = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
 }
 

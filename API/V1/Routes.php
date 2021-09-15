@@ -204,13 +204,13 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
             $r->addGroup('/PET', function (FastRoute\RouteCollector $r) {
                 $r->get('/get_PET', ['PET/getPET', Section::PROTECTED]);
                 $r->post('/add_PET', ['PET/addPET', Section::PROTECTED]);
-                $r->delete('/delete_PET/{PEID:\d+}', ['PET/deletePET', Section::PROTECTED]);
+                $r->delete('/delete_PET', ['PET/deletePET', Section::PROTECTED]);
                 $r->put('/update_PET', ['PET/updatePET', Section::PROTECTED]);
             });
             $r->addGroup('/BT', function (FastRoute\RouteCollector $r) {
                 $r->get('/get_BT', ['BT/getBT', Section::PROTECTED]);
                 $r->post('/add_BT', ['BT/addBT', Section::PROTECTED]);
-                $r->delete('/delete_BT/{BID:\d+}', ['BT/deleteBT', Section::PROTECTED]);
+                $r->delete('/delete_BT', ['BT/deleteBT', Section::PROTECTED]);
                 $r->put('/update_BT', ['BT/updateBT', Section::PROTECTED]);
             });
             $r->addGroup('/OEL', function (FastRoute\RouteCollector $r) {
@@ -222,13 +222,13 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
             $r->addGroup('/PEL', function (FastRoute\RouteCollector $r) {
                 $r->get('/get_PEL', ['PEL/getPEL', Section::PROTECTED]);
                 $r->post('/add_PEL', ['PEL/addPEL', Section::PROTECTED]);
-                $r->delete('/delete_PEL/{PExpencesID:\d+}', ['PEL/deletePEL', Section::PROTECTED]);
+                $r->delete('/delete_PEL', ['PEL/deletePEL', Section::PROTECTED]);
                 $r->put('/update_PEL', ['PEL/updatePEL', Section::PROTECTED]);
             });
             $r->addGroup('/BL', function (FastRoute\RouteCollector $r) {
                 $r->get('/get_BL', ['BL/getBL', Section::PROTECTED]);
                 $r->post('/add_BL', ['BL/addBL', Section::PROTECTED]);
-                $r->delete('/delete_BL/{BILLEXPENCEID:\d+}', ['BL/deleteBL', Section::PROTECTED]);
+                $r->delete('/delete_BL', ['BL/deleteBL', Section::PROTECTED]);
                 $r->put('/update_BL', ['BL/updateBL', Section::PROTECTED]);
             });
         });
