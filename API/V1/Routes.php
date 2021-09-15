@@ -216,7 +216,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
             $r->addGroup('/OEL', function (FastRoute\RouteCollector $r) {
                 $r->get('/get_OEL', ['OEL/getOEL', Section::PROTECTED]);
                 $r->post('/add_OEL', ['OEL/addOEL', Section::PROTECTED]);
-                $r->delete('/delete_OEL/{OExpencesID:\d+}', ['OEL/deleteOEL', Section::PROTECTED]);
+                $r->delete('/delete_OEL', ['OEL/deleteOEL', Section::PROTECTED]);
                 $r->put('/update_OEL', ['OEL/updateOEL', Section::PROTECTED]);
             });
             $r->addGroup('/PEL', function (FastRoute\RouteCollector $r) {
