@@ -22,10 +22,8 @@
             @EmployeePassword = ?,
             @EmployeePhoneNumber = ?,
             @EmployeeAddress = ?,
-            @EmployeeUserName = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($params_in,$sqlcommand);
+            @EmployeeUserName = ?";
+            excute_prodecure_status_code($params_in,$sqlcommand);
         }
         function updateEmployee(){
             $params_in = array(
@@ -38,11 +36,9 @@
             @EmployeeName = ?,
             @EmployeePhoneNumber = ?,
             @EmployeeAddress = ?,
-            @EmployeeId = ?,
-            @result = ?,
-            @message = ?";
+            @EmployeeId = ?";
 
-            excute_prodecure($params_in,$sqlcommand);
+            excute_prodecure_status_code($params_in,$sqlcommand);
         }
         function updateEmployeeAuthentication(){
             $params_in = array(
@@ -57,32 +53,26 @@
             @EmployeePassword = ?,
             @OldEmployeeUserName = ?,
             @OldEmployeePassword = ?,
-            @EmployeeId = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($params_in,$sqlcommand);
+            @EmployeeId = ?";
+            excute_prodecure_status_code($params_in,$sqlcommand);
 
         }
         function activateEmployee(){
             $params_in = array("EmployeeId"=>1);
             $sqlcommand = "EXEC	[dbo].[spActivateEmployee]
-            @EmployeeId = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($params_in,$sqlcommand);
+            @EmployeeId = ?";
+            excute_prodecure_status_code($params_in,$sqlcommand);
         }
         function deactivateEmployee(){
             $params_in = array("EmployeeId"=>1);
             $sqlcommand = "EXEC [dbo].[spDeActivateEmployee]
-            @EmployeeId = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($params_in,$sqlcommand);
+            @EmployeeId = ?";
+            excute_prodecure_status_code($params_in,$sqlcommand);
         }
         function deleteEmployee(){
             $params_in = array("EmployeeId"=>1);
             $sqlcommand = "EXEC [dbo].[spDeleteEmployee]
             @EmployeeID = ?";
-            excute_prodecure2($params_in,$sqlcommand);
+            excute_prodecure_status_code($params_in,$sqlcommand);
         }
     }
