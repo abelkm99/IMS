@@ -1,8 +1,8 @@
 <?php
     class Salary{
         function getSalaryExpence(){
-            $sqlcommand = "select * from SallaryExpences
-            for json auto";
+                $sqlcommand = "select SalaryID,[Date],Cost,Employee.EmployeeID,EmployeeName from SallaryExpences
+                LEFT JOIN Employee ON SallaryExpences.EmployeeID = Employee.EmployeeID ORDER BY [Date] DESC for json path";
             excute_select_operation($sqlcommand);
         }
         function addSalaryExpence(){
@@ -14,18 +14,17 @@
             $sqlcommand = "EXEC	[dbo].[spAddSalaryExpense]
                                         @Date = ?,
                                         @Cost = ?,
-                                        @EmployeeID = ?,
-                                        @result = ?,
-                                        @message = ?";
-            excute_prodecure($array,$sqlcommand);                             
+                                        @EmployeeID = ?";
+            excute_prodecure_status_code($array,$sqlcommand);                             
         }
-        function deleteSalaryExpence($SalaryId){
+        function deleteSalaryExpence(){
 
+            $array = array(
+                "SalaryID"=>1
+            );
             $sqlcommand = "EXEC	[dbo].[spDeleteSalaryExpence]
-            @SalaryID = ?,
-            @result = ?,
-            @message = ?";
-            excute_delete_prodecure($SalaryId,$sqlcommand);
+            @SalaryID = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
 
         }
         function updateSalaryExpence(){
@@ -34,16 +33,14 @@
                                         @Date = ?,
                                         @Cost = ?,
                                         @EmployeeID = ?,
-                                        @SalaryID = ?,
-                                        @result = ?,
-                                        @message = ?";
+                                        @SalaryID = ?";
             $array = array(
                 "Date"=>1,
                 "Cost"=>0,
                 "EmployeeID"=>0,
                 "SalaryID"=>1
             );
-            excute_prodecure($array,$sqlcommand);
+            excute_prodecure_status_code($array,$sqlcommand);
         }
     }
 
@@ -198,17 +195,16 @@
 
             $sqlcommand = "EXEC	[dbo].[spAddOtherExpences]
             @OEType = ?,
-            @OEDescription = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @OEDescription = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
-        function deleteOET($OEID){
+        function deleteOET(){
+            $array = array(
+                "OEID"=>1
+            );
             $sqlcommand = "EXEC	[dbo].[spDeleteOtherExpenceTypes]
-            @OEID = ?,
-            @result = ?,
-            @message = ?";
-            excute_delete_prodecure($OEID,$sqlcommand);
+            @OEID = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function updateOET(){
             $array = array(
@@ -219,10 +215,8 @@
             $sqlcommand = "EXEC	[dbo].[spUpdateOtherExpenceTypes]
             @OEType = ?,
             @OEDescription = ?,
-            @OEID = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @OEID = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
     }
     class PET{

@@ -192,13 +192,13 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
             $r->addGroup('/salary', function (FastRoute\RouteCollector $r) {
                 $r->get('/get_salary_expense', ['Salary/getSalaryExpence', Section::PROTECTED]);
                 $r->post('/add_salary_expence', ['Salary/addSalaryExpence', Section::PROTECTED]);
-                $r->delete('/delete_salary_expence/{SalaryId:\d+}', ['Salary/deleteSalaryExpence', Section::PROTECTED]);
+                $r->delete('/delete_salary_expence', ['Salary/deleteSalaryExpence', Section::PROTECTED]);
                 $r->put('/update_salary_expence', ['Salary/updateSalaryExpence', Section::PROTECTED]);
             });
             $r->addGroup('/OET', function (FastRoute\RouteCollector $r) {
                 $r->get('/get_OET', ['OET/getOET', Section::PROTECTED]);
                 $r->post('/add_OET', ['OET/addOET', Section::PROTECTED]);
-                $r->delete('/delete_OET/{OEID:\d+}', ['OET/deleteOET', Section::PROTECTED]);
+                $r->delete('/delete_OET', ['OET/deleteOET', Section::PROTECTED]);
                 $r->put('/update_OET', ['OET/updateOET', Section::PROTECTED]);
             });
             $r->addGroup('/PET', function (FastRoute\RouteCollector $r) {
