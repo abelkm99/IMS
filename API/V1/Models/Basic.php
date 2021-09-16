@@ -14,7 +14,13 @@
             excute_select_operation($sqlcommand);
         }
         function getALLGRN(){
-            $sqlcommand = "select * from GRN left join Purchase on GRN.GRNNO = Purchase.GRNNO ORDER BY GRN.PurchsedDate DESC for json auto";
+            $sqlcommand = "select GRN.GRNNO,convert(varchar, PurchsedDate, 20) as PurchsedDate,
+            convert(varchar, DeliverdDate, 20) as DeliverdDate,SupplierName,TransactionType,DriverName,
+            (select SUM(Total) FROM Purchase WHERE Purchase.GRNNO = GRN.GRNNO ) as Total from GRN
+            LEFT JOIN Supplier on GRN.SupplierID = Supplier.SupplierID  
+            LEFT JOIN TransactionType on GRN.TransactionID = TransactionType.TransactionID
+            LEFT JOIN Driver on GRN.DriverID = Driver.DriverID
+            ORDER BY PurchsedDate DESC,DeliverdDate DESC FOR JSON PATH,INCLUDE_NULL_VALUES";
             excute_select_operation($sqlcommand);
         }
         function getAllReferences(){
@@ -32,9 +38,23 @@
             for json auto";
             excute_select_operation($sqlcommand);
         }
-        function getGRN($GRNO){
-            $sqlcommand = "select * from GRN left join Purchase on GRN.GRNNO = Purchase.GRNNO where GRN.GRNNO = ?
-            for json auto";
+        function getGRNDetail($GRNO){
+            $sqlcommand = "select PurchaseID,GRNNO,ItemType,ItemCode,Purchase.PPP,Quantity,Total,Remainder,Extra 
+            from Purchase INNER JOIN Item on Item.ItemID = Purchase.ItemID
+            WHERE GRNNO = ?
+            FOR JSON PATH,INCLUDE_NULL_VALUES";
+            $array = array($GRNO);
+            excute_prepared_statements($array,$sqlcommand);
+        }
+        function getONEGRN($GRNO){
+            $sqlcommand = "select GRN.GRNNO,Delivered,convert(varchar, PurchsedDate, 20) as PurchsedDate,
+            convert(varchar, DeliverdDate, 20) as DeliverdDate,SupplierName,TransactionType,DriverName,
+            (select SUM(Total) FROM Purchase WHERE Purchase.GRNNO = GRN.GRNNO ) as Total from GRN
+            LEFT JOIN Supplier on GRN.SupplierID = Supplier.SupplierID  
+            LEFT JOIN TransactionType on GRN.TransactionID = TransactionType.TransactionID
+            LEFT JOIN Driver on GRN.DriverID = Driver.DriverID
+            WHERE GRN.GRNNO = ?
+            FOR JSON PATH,INCLUDE_NULL_VALUES,WITHOUT_ARRAY_WRAPPER";
             $array = array($GRNO);
             excute_prepared_statements($array,$sqlcommand);
         }
@@ -61,7 +81,14 @@
             excute_prepared_statements($array,$sqlcommand);
         }
         function getAllGRNSNOTDelivered(){
-            $sqlcommand = "select * from GRN left join Purchase on GRN.GRNNO = Purchase.GRNNO where Delivered = 0 for json auto";
+            $sqlcommand = "select GRN.GRNNO,Delivered,convert(varchar, PurchsedDate, 20) as PurchsedDate,
+            convert(varchar, DeliverdDate, 20) as DeliverdDate,SupplierName,TransactionType,DriverName,
+            (select SUM(Total) FROM Purchase WHERE Purchase.GRNNO = GRN.GRNNO ) as Total from GRN
+            LEFT JOIN Supplier on GRN.SupplierID = Supplier.SupplierID  
+            LEFT JOIN TransactionType on GRN.TransactionID = TransactionType.TransactionID
+            LEFT JOIN Driver on GRN.DriverID = Driver.DriverID
+            WHERE Delivered = 0
+            ORDER BY PurchsedDate DESC,DeliverdDate DESC FOR JSON PATH,INCLUDE_NULL_VALUES";
             excute_select_operation($sqlcommand);
         }
         function getAllTransferedInfo(){

@@ -106,10 +106,8 @@
             @SupplierID = ?,
             @TransactionID = ?,
             @DriverID = ?,
-            @PurchaseString = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);                                                                                        
+            @PurchaseString = ?";
+            excute_prodecure_status_code($array,$sqlcommand);                                                                                        
         }
         function updatePurchase(){
             $array = array(
@@ -126,10 +124,8 @@
             @Remainder = ?,
             @Extra = ?,
             @PurchaseID = ?,
-            @GRNNO = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @GRNNO = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function deletePurchase(){
             $array = array(
@@ -138,10 +134,8 @@
             );
             $sqlcommand = "EXEC	[dbo].[spDeletePurchase]
             @PurchaseID = ?,
-            @GRNNO = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @GRNNO = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function updateGRN(){
             $array = array(
@@ -156,10 +150,8 @@
             @DeliverdDate = ?,
             @SupplierID = ?,
             @DriverID = ?,
-            @GRNNO = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @GRNNO = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function updateREF(){
             $array = array(
@@ -210,10 +202,8 @@
                 "GRNNO"=>1
             );
             $sqlcommand = "EXEC	[dbo].[spDeleteGRN]
-            @GRNNO = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @GRNNO = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function deleteREF(){
             $array = array(
