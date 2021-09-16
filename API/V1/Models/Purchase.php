@@ -54,9 +54,7 @@
                     @Cost = ?,
                     @DriverId = ?,
                     @json = ?,
-                    @Date = ?,
-                    @result = ?,
-                    @message = ?";
+                    @Date = ?";
                     excute_prodecure_json($params,$sqlcommand);
                 }
             }
@@ -88,10 +86,8 @@
             $sqlcommand = "EXEC	[dbo].[spShipPurchases]
             @DeliverdDate = ?,
             @GRNNO = ?,
-            @ShipmentInfo = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @ShipmentInfo = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function makePurchase(){
             $array = array(

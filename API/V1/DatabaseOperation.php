@@ -187,28 +187,30 @@ function excute_prodecure_json($params, $sqlcommand)
         echo json_encode($resMessage);
     }
     if (true) {
-        $result = 0;
-        $message = "";
-
-        array_push($params, array(&$result, SQLSRV_PARAM_OUT));
-        array_push($params, array(&$message, SQLSRV_PARAM_OUT));
-
+        
         $stmt = sqlsrv_query($conn, $sqlcommand, $params);
-        if ($stmt === false) {
-            $resMessage = sqlsrv_errors();
-            http_response_code(500);
-            echo json_encode($resMessage);
-        } else {
-            if ($result) {
-                $resMessage = array("result" => $result, "message" => $message);
-                http_response_code(200);
-                echo json_encode($resMessage);
+
+            $result = array();
+
+            // Get return value
+            do {
+                while ($row = sqlsrv_fetch_array($stmt)) {
+                    // Loop through each result set and add to result array
+                    $result[] = $row;
+                }
+            } while (sqlsrv_next_result($stmt));
+
+            if (count($result) > 0) {
+
+                $jsonString = concatranteJson($result);
+                $decoded_response = json_decode($jsonString);
+                http_response_code($decoded_response->status_code);
+                print_r($jsonString);
             } else {
-                $resMessage = array("result" => $result, "message" => $message);
-                http_response_code(400);
+                $resMessage = array("message" => "no result found");
+                http_response_code(404);
                 echo json_encode($resMessage);
             }
-        }
     } else {
         $resMessage = array("message" => "invalid input on validation");
         http_response_code(400);

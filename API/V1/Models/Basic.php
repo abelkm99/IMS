@@ -38,6 +38,14 @@
             for json auto";
             excute_select_operation($sqlcommand);
         }
+        function getGRNDetaitNotShiped($GRNO){
+            $sqlcommand = "select PurchaseID,Purchase.GRNNO,ItemType,ItemCode,Purchase.PPP,Quantity,Total,ISNULL(Remainder,0) as Remainder,ISNULL(Extra,0) as Extra
+            from Purchase INNER JOIN Item on Item.ItemID = Purchase.ItemID Inner JOIN GRN on GRN.GRNNO = Purchase.GRNNO
+            WHERE Purchase.GRNNO = ? AND GRN.Delivered = 0
+            FOR JSON PATH,INCLUDE_NULL_VALUES";
+            $array = array($GRNO);
+            excute_prepared_statements($array,$sqlcommand);
+        }
         function getGRNDetail($GRNO){
             $sqlcommand = "select PurchaseID,GRNNO,ItemType,ItemCode,Purchase.PPP,Quantity,Total,Remainder,Extra 
             from Purchase INNER JOIN Item on Item.ItemID = Purchase.ItemID

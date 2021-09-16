@@ -47,6 +47,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         $r->get('/get_transaction_type', ['BasicApi/getTransactionType', Section::PROTECTED]);
         $r->get('/get_item_stock/{ItemID:\d+}', ['BasicApi/getItemStock', Section::PROTECTED]);
         $r->get('/get_grn_detail/{GRNNO:\d+}', ['BasicApi/getGRNDetail', Section::PROTECTED]);
+        $r->get('/get_grn_detail_notshiped/{GRNNO:\d+}', ['BasicApi/getGRNDetaitNotShiped', Section::PROTECTED]);
         $r->get('/get_grn_one/{GRNNO:\d+}', ['BasicApi/getONEGRN', Section::PROTECTED]);
         $r->get('/get_ref/{REFNO:\d+}', ['BasicApi/getREF', Section::PROTECTED]);
         $r->get('/get_order/{OrderID:\d+}', ['BasicApi/getOrder,Section::PROTECTED']);
