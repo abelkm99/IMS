@@ -52,7 +52,7 @@ class Masatefiya
 {
     function getMasatefiyaExpence()
     {
-        $sqlcommand = "select * from Masatefiya
+        $sqlcommand = "select * from Masatefiya ORDER BY [Date] DESC
                             for json auto";
         excute_select_operation($sqlcommand);
     }
@@ -67,19 +67,18 @@ class Masatefiya
         $sqlcommand = "EXEC	[dbo].[spAddMasatefiya]
                                         @REFNO = ?,
                                         @Date = ?,
-                                        @Cost = ?,
-                                        @result = ?,
-                                        @message = ?";
+                                        @Cost = ?";
 
-        excute_prodecure($array, $sqlcommand);
+        excute_prodecure_status_code($array, $sqlcommand);
     }
-    function deleteMasatefiyaExpence($MID)
+    function deleteMasatefiyaExpence()
     {
+        $array = array(
+            "MID" => 1,
+        );
         $sqlcommand = "EXEC	[dbo].[spDeleteMasatefiyaExpence]
-                                @MID = ?,
-                                @result = ?,
-                                @message = ?";
-        excute_delete_prodecure($MID, $sqlcommand);
+                                @MID = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
     function updateMasatefiyaExpence()
     {
@@ -93,10 +92,8 @@ class Masatefiya
                                         @Date = ?,
                                         @Cost = ?,
                                         @REFNO = ?,
-                                        @MID = ?,
-                                        @result = ?,
-                                        @message = ?";
-        excute_prodecure($array, $sqlcommand);
+                                        @MID = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
 }
 

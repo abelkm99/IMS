@@ -193,7 +193,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
             $r->addGroup('/masatefiya', function (FastRoute\RouteCollector $r) {
                 $r->get('/get_masatefiya_expense', ['Masatefiya/getMasatefiyaExpence', Section::PROTECTED]);
                 $r->post('/add_masatefiya_expence', ['Masatefiya/addMasatefiyaExpence', Section::PROTECTED]);
-                $r->delete('/delete_masatefiya_expence/{MID:\d+}', ['Masatefiya/deleteMasatefiyaExpence', Section::PROTECTED]);
+                $r->delete('/delete_masatefiya_expence', ['Masatefiya/deleteMasatefiyaExpence', Section::PROTECTED]);
                 $r->put('/update_masatefiya_expence', ['Masatefiya/updateMasatefiyaExpence', Section::PROTECTED]);
             });
             $r->addGroup('/salary', function (FastRoute\RouteCollector $r) {
