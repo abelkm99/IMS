@@ -30,8 +30,12 @@ class BasicApi
     }
     function getAllReferences()
     {
-        $sqlcommand = "select * from Reference left join Sales on Reference.REFNO = Sales.REFNO ORDER BY Reference.Date DESC
-            for json auto";
+        $sqlcommand = "select Reference.REFNO,convert(varchar,[Reference].[Date], 20) as SalesDate, CustomerName,TransactionType,DriverName,
+        (select SUM(Total) FROM Sales WHERE Sales.REFNO = Reference.REFNO) as Total from Reference
+        LEFT JOIN Customer on Reference.CutomerID = Customer.CustomerID  
+        LEFT JOIN TransactionType on Reference.TransactionID = TransactionType.TransactionID
+        LEFT JOIN Driver on Reference.DriverID = Driver.DriverID
+        ORDER BY [Reference].[Date] DESC FOR JSON PATH,INCLUDE_NULL_VALUES";
         excute_select_operation($sqlcommand);
     }
     function getAllPurchaseOrders()

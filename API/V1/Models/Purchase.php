@@ -4,22 +4,20 @@
         function makeSales(){
             $array = array(
                 "Date"=>1,
-                "CutomerID"=>1,
+                "CustomerID"=>1,
                 "TransactionID"=>1,
-                "EmployeeId"=>1,
-                "DriverId"=>0,
+                "EmployeeID"=>1,
+                "DriverID"=>0,
                 "SalesInformation"=>1,
             );
             $sqlcommand = "EXEC	[dbo].[spMakeSales]
             @Date = ?,
-            @CutomerID = ?,
+            @CustomerID = ?,
             @TransactionID = ?,
             @EmployeeId = ?,
             @DriverId = ?,
-            @SalesInformation = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);             
+            @SalesInformation = ?";
+            excute_prodecure_status_code($array,$sqlcommand);             
         }
         function warehouseToStoreJson(){
 
