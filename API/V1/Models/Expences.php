@@ -134,25 +134,22 @@ class LoadUnLoadExpences
                                 @Date = ?,
                                 @Cost = ?,
                                 @GRNNO = ?,
-                                @UnLoadID = ?,
-                                @result = ?,
-                                @message = ?";
-        excute_prodecure($array, $sqlcommand);
+                                @UnLoadID = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
-    function deleteUnloadingExpence($UnloadId)
+    function deleteUnloadingExpence()
     {
+        $array = array(
+            "UnLoadID" => 1
+        );
         $sqlcommand = "EXEC	[dbo].[spDeleteUnloadingExpence]
-                                @UNLoadId = ?,
-                                @result = ?,
-                                @message = ?";
-        excute_delete_prodecure($UnloadId, $sqlcommand);
+                                @UNLoadId = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
     function deleteloadingExpence($loadId)
     {
         $sqlcommand = "EXEC	[dbo].[spDeleteloadingExpence]
-                                    @LoadID = ?,
-                                    @result = ?,
-                                    @message = ?";
+                                    @LoadID = ?";
         excute_delete_prodecure($loadId, $sqlcommand);
     }
     function addUnloadingExpence()
@@ -165,10 +162,8 @@ class LoadUnLoadExpences
         $sqlcommand = "EXEC	[dbo].[spAddUnloadingExpence]
             @GRNNO = ?,
             @Date = ?,
-            @Cost = ?,
-            @result = ?,
-            @message = ?";
-        excute_prodecure($array, $sqlcommand);
+            @Cost = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
 
     function addloadingExpence()
@@ -189,7 +184,7 @@ class LoadUnLoadExpences
 
     function getUnloadingExpences()
     {
-        $sqlcommand = "select * from UNLoadingExpence
+        $sqlcommand = "select * from UNLoadingExpence ORDER BY [Date] DESC
                                 for json auto";
         excute_select_operation($sqlcommand);
     }

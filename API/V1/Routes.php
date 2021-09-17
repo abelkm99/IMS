@@ -181,7 +181,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
             $r->addGroup('/unloadingExpence', function (FastRoute\RouteCollector $r) {
                 $r->get('/get_unloading_expence', ['LoadUnLoadExpences/getUnloadingExpences', Section::PROTECTED]);
                 $r->post('/add_unloading_expence', ['LoadUnLoadExpences/addUnloadingExpence', Section::PROTECTED]);
-                $r->delete('/delete_unloading_expence/{UnloadId:\d+}', ['LoadUnLoadExpences/deleteUnloadingExpence', Section::PROTECTED]);
+                $r->delete('/delete_unloading_expence', ['LoadUnLoadExpences/deleteUnloadingExpence', Section::PROTECTED]);
                 $r->put('/update_unloading_expence', ['LoadUnLoadExpences/updateUnloadingExpence', Section::PROTECTED]);
             });
             $r->addGroup('/loadingExpence', function (FastRoute\RouteCollector $r) {
