@@ -50,6 +50,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         $r->get('/get_grn_detail_notshiped/{GRNNO:\d+}', ['BasicApi/getGRNDetaitNotShiped', Section::PROTECTED]);
         $r->get('/get_grn_one/{GRNNO:\d+}', ['BasicApi/getONEGRN', Section::PROTECTED]);
         $r->get('/get_ref/{REFNO:\d+}', ['BasicApi/getREF', Section::PROTECTED]);
+        $r->get('/get_ref_detail/{REFNO:\d+}', ['BasicApi/getREFDetail', Section::PROTECTED]);
         $r->get('/get_order/{OrderID:\d+}', ['BasicApi/getOrder,Section::PROTECTED']);
         $r->get('/get_grns', ['BasicApi/getALLGRN', Section::PROTECTED]);
         $r->get('/get_refs', ['BasicApi/getAllReferences', Section::PROTECTED]);

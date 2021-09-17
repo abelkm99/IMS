@@ -150,18 +150,16 @@
         function updateREF(){
             $array = array(
                 "SoldDate"=>0,
-                "CutomerID"=>0,
+                "CustomerID"=>0,
                 "DriverID"=>0,
                 "REFNO"=>1
             );
             $sqlcommand = "EXEC	[dbo].[spUpdateREF]
             @SoldDate = ?,
-            @CutomerID = ?,
+            @CustomerID = ?,
             @DriverID = ?,
-            @REFNO = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @REFNO = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function updateSales(){
             $array = array(
@@ -174,10 +172,8 @@
             @PPP = ?,
             @Quantity = ?,
             @SalesID = ?,
-            @REFNO = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @REFNO = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function deleteSales(){
             $array = array(
@@ -186,10 +182,8 @@
             );
             $sqlcommand = "EXEC	[dbo].[spDeleteSales]
             @SalesID = ?,
-            @REFNO = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @REFNO = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function deleteGRN(){
             $array = array(
@@ -204,10 +198,8 @@
                 "REFNO"=>1
             );
             $sqlcommand = "EXEC	[dbo].[spDeleteREF]
-            @REFNO = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @REFNO = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function PurchaseFromOrder(){
             $array = array(

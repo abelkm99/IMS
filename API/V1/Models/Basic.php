@@ -83,8 +83,14 @@ class BasicApi
     }
     function getREF($REFNO)
     {
-        $sqlcommand = "select * from Reference left join Sales on Reference.REFNO = Sales.REFNO WHERE Reference.REFNO = ?
-            for json auto";
+        $sqlcommand = "select Reference.REFNO,convert(varchar, Reference.[Date], 20) as SalesDate,
+        CustomerName,TransactionType,DriverName,
+        (select SUM(Total) FROM Sales WHERE Sales.REFNO = Reference.REFNO ) as Total from Reference
+        LEFT JOIN Customer on Reference.CutomerID = Customer.CustomerID  
+        LEFT JOIN TransactionType on Reference.TransactionID = TransactionType.TransactionID
+        LEFT JOIN Driver on Reference.DriverID = Driver.DriverID
+        WHERE Reference.REFNO = ?
+        FOR JSON PATH,INCLUDE_NULL_VALUES,WITHOUT_ARRAY_WRAPPER";
         $array = array($REFNO);
         excute_prepared_statements($array, $sqlcommand);
     }
@@ -143,11 +149,21 @@ class BasicApi
         $array = array($TEID);
         excute_prepared_statements($array, $sqlcommand);
     }
-    function getItemTransferHistory($ItemID){
+    function getItemTransferHistory($ItemID)
+    {
         $sqlcommand = "select Item.ItemID,ItemCode,ItemType,[Date],INCount,TEID,WSID from [Warehouse-Store]
         LEFT JOIN Item ON Item.ItemID = [Warehouse-Store].ItemID
         WHERE Item.ItemID = ?
         ORDER BY [Date] DESC FOR JSON PATH,INCLUDE_NULL_VALUES";
         $array = array($ItemID);
-        excute_prepared_statements($array, $sqlcommand);    }
+        excute_prepared_statements($array, $sqlcommand);
+    }
+    function getREFDetail($REFNO){
+        $sqlcommand = "select SalesId,REFNO,ItemType,ItemCode,Sales.PPP,Quantity,Total
+        from Sales INNER JOIN Item on Item.ItemID = Sales.ItemID
+        WHERE REFNO= ?
+        FOR JSON PATH,INCLUDE_NULL_VALUES";
+        $array = array($REFNO);
+        excute_prepared_statements($array, $sqlcommand);
+    }
 }
