@@ -56,8 +56,12 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         $r->get('/get_purchase_orders', ['BasicApi/getAllPurchaseOrders', Section::PROTECTED]);
         $r->get('/get_sales_orders', ['BasicApi/getAllSalesOrders', Section::PROTECTED]);
         $r->get('/grn_not_delivered', ['BasicApi/getAllGRNSNOTDelivered', Section::PROTECTED]);
-        $r->get('/transfered_Items_List', ['BasicApi/getAllTransferedInfo', Section::PROTECTED]);
+        $r->get('/transfered_items', ['BasicApi/getAllTransferedInfo', Section::PROTECTED]);
+        $r->get('/transfered_item/{TEID:\d+}', ['BasicApi/getOneTransferedInfo', Section::PROTECTED]);
+        $r->get('/transfered_items_list/{TEID:\d+}', ['BasicApi/getAllTransferedDetail', Section::PROTECTED]);
         $r->get('/get_all_inventory', ['BasicApi/getAllItemInventory', Section::PROTECTED]);
+        $r->get('/item_transfer_history/{ItemID:\d+}', ['BasicApi/getItemTransferHistory', Section::PROTECTED]);
+
 
         $r->addGroup('/report', function (FastRoute\RouteCollector $r) {
             $r->post('/get_all_report', ['Report/get_overal_report', Section::PROTECTED]);

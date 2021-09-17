@@ -245,15 +245,15 @@
             );
             $sqlcommand = "EXEC	[dbo].[spDeleteTransferedItem]
             @WSID = ?";
-            excute_prodecure2($params_in,$sqlcommand);
+            excute_prodecure_status_code($params_in,$sqlcommand);
         }
         function deleteTEID(){
             $params_in = array(
                 "TEID"=>1
             );
-            $sqlcommand = "EXEC	[dbo].[spDeleteAllTransferedItems]
+            $sqlcommand = "EXEC	[dbo].[spDeleteTransferExpence]
             @TEID = ?";
-            excute_prodecure2($params_in,$sqlcommand);
+            excute_prodecure_status_code($params_in,$sqlcommand);
         }
         function updateTransferCount(){
             $sqlcommand = "EXEC	[dbo].[spUpdateTransferedItem]
@@ -263,7 +263,7 @@
                 "WSID"=>1,
                 "newtransferdCount"=>1
             );
-            excute_prodecure2($params_in,$sqlcommand);
+            excute_prodecure_status_code($params_in,$sqlcommand);
 
         }
         function updateTEID(){
@@ -278,6 +278,6 @@
                 "Cost"=>0,
                 "DriverID"=>0
             );
-            excute_prodecure2($params_in,$sqlcommand);
+            excute_prodecure_status_code($params_in,$sqlcommand);
         }
     }
