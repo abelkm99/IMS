@@ -99,8 +99,8 @@ class REFCreditSettlemnt
     {
         $sqlcommand = "SELECT Reference.REFNO,convert(varchar, [Date], 20) as SalesDate,Customer.CustomerName,Driver.DriverName,
         [dbo].GetREFCSRemainder(Reference.REFNO)as Remainder,
-        [dbo].GetGRNPaid(Reference.REFNO) as Paid,
-        [dbo].GetGRNTotal(Reference.REFNO) as Total
+        [dbo].GetREFPaid(Reference.REFNO) as Paid,
+        [dbo].GetREFTotal(Reference.REFNO) as Total
         from Reference 
         LEFT JOIN Customer ON Customer.CustomerID= Reference.CutomerID
         LEFT JOIN Driver ON Driver.DriverID = Reference.DriverID
