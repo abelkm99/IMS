@@ -466,7 +466,7 @@ class Bank
     }
     function getOneBank($PBID)
     {
-        $sqlcommand = "select * from PersonalBankAccount WHERE PBID = ? for json auto";
+        $sqlcommand = "select * from PersonalBankAccount WHERE PBID = ? for json auto,without_array_wrapper";
         excute_prepared_statements(array($PBID), $sqlcommand);
     }
     function addNewAccount()

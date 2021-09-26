@@ -244,14 +244,16 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         $r->addGroup('/creaditSettlemnt', function (FastRoute\RouteCollector $r) {
             $r->addGroup('/GRN', function (FastRoute\RouteCollector $r) {
                 $r->get('/list_all_credit_settlements', ['GRNCreditSettlemnt/ListAllCreditSettlemts', Section::PROTECTED]);
-                $r->get('/list_credit_settlement/{CSID:\d+}', ['GRNCreditSettlemnt/GetCreditSettlment', Section::PROTECTED]);
+                $r->get('/get_credit_settlements/{GRNNO:\d+}', ['GRNCreditSettlemnt/ListOneCreditSettlemts', Section::PROTECTED]);
+                $r->get('/list_credit_settlement/{GRNNO:\d+}', ['GRNCreditSettlemnt/GetCreditSettlment', Section::PROTECTED]);
                 $r->post('/add_credit_settlemnts', ['GRNCreditSettlemnt/addCreditSettlemt', Section::PROTECTED]);
                 $r->delete('/delete_credit_settlemnts', ['GRNCreditSettlemnt/deleteCreditSettlment', Section::PROTECTED]);
                 $r->put('/update_credit_settlemt', ['GRNCreditSettlemnt/updateCreditSettlment', Section::PROTECTED]);
             });
             $r->addGroup('/REF', function (FastRoute\RouteCollector $r) {
                 $r->get('/list_all_credit_settlements', ['REFCreditSettlemnt/ListAllCreditSettlemts', Section::PROTECTED]);
-                $r->get('/list_credit_settlement/{CSID:\d+}', ['REFCreditSettlemnt/GetCreditSettlment', Section::PROTECTED]);
+                $r->get('/get_credit_settlements/{REFNO:\d+}', ['REFCreditSettlemnt/ListOneCreditSettlemts', Section::PROTECTED]);
+                $r->get('/list_credit_settlement/{REFNO:\d+}', ['REFCreditSettlemnt/GetCreditSettlment', Section::PROTECTED]);
                 $r->post('/add_credit_settlemnts', ['REFCreditSettlemnt/addCreditSettlemt', Section::PROTECTED]);
                 $r->delete('/delete_credit_settlemnts', ['REFCreditSettlemnt/deleteCreditSettlment', Section::PROTECTED]);
                 $r->put('/update_credit_settlemt', ['REFCreditSettlemnt/updateCreditSettlment', Section::PROTECTED]);
