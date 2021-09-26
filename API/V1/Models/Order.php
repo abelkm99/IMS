@@ -1,81 +1,98 @@
 <?php
-    class Order{
-        function getOrder($OrderId){
-            $sqlcommand = "select * from [dbo].[Order]
-                           inner join [dbo].[Orderitems]
-                           on [dbo].[Order].OrderID= [dbo].[Orderitems].OrderID
-                           where [dbo].[Order].OrderID = ?
-                           for json auto";
-            $params_in = array($OrderId);
-            excute_prepared_statements($params_in,$sqlcommand);
-        }
-        function ListAllOrders(){
-            
-            $sqlcommand = "select * from [dbo].[Order], Orderitems
+class Order
+{
+    function ListAllOrders()
+    {
+
+        $sqlcommand = "select * from [dbo].[Order], Orderitems
                             where  [dbo].[Order].OrderID =  [dbo].[Orderitems].OrderID
                             for json auto";
-            excute_select_operation($sqlcommand);
-        }
-        function makeNewOrder(){
-            $array = array(
-                "OrderType"=>1,
-                "SupplierID"=>0,
-                "CutomerID"=>0,
-                "OrderDate"=>1,
-                "OrderInformation"=>1
-            );
-            $sqlcommand = "EXEC	[dbo].[spOrderItems]
+        excute_select_operation($sqlcommand);
+    }
+    function getOrder($OrderId)
+    {
+        $sqlcommand = "Select OrderID,convert(varchar,OrderDate, 20) as OrderDate,CustomerName,SupplierName,
+        (select sum(Total) from Orderitems WHERE OrderID = [Order].OrderID) as Total 
+        from [Order] 
+		LEFT JOIN Customer on Customer.CustomerID = [Order].[CutomerID]
+		LEFT JOIN Supplier on Supplier.SupplierID = [Order].[SupplierID]
+		WHERE [OrderID] = ?
+        ORDER BY [OrderDate] DESC FOR JSON PATH,WITHOUT_ARRAY_WRAPPER";
+        $params_in = array($OrderId);
+        excute_prepared_statements($params_in, $sqlcommand);
+    }
+    function getOrderedItems($OrderID){
+        $sqlcommand = "select OrderditemID,OrderID,Item.ItemID,Item.ItemType,Orderitems.PPP,Quantity,Total from Orderitems
+        INNER JOIN Item on Item.ItemID = Orderitems.ItemID
+        WHERE OrderID = ?
+        FOR JSON PATH,INCLUDE_NULL_VALUES";
+        excute_prepared_statements(array($OrderID),$sqlcommand);
+    }
+    function makeNewOrder()
+    {
+        $array = array(
+            "OrderType" => 1,
+            "SupplierID" => 0,
+            "CutomerID" => 0,
+            "OrderDate" => 1,
+            "OrderInformation" => 1
+        );
+        $sqlcommand = "EXEC	[dbo].[spOrderItems]
             @OrderType = ?,
             @SupplierID = ?,
             @CutomerID = ?,
             @OrderDate = ?,
-            @OrderInformation = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
-        }
-        function deleteOrder($OrderId){
-            $sqlcommand = "EXEC	[dbo].[spDeleteOrder]
-                            @OrderId = ?,
-                            @result = ?,
-                            @message =?";
-            excute_delete_prodecure($OrderId,$sqlcommand);
-        }
-        function updateOrder(){
-            $array = array(
-                "CustomerId"=>0,
-                "OrderDate"=>0,
-                "OrderID"=>1,
-            );
-            $sqlcommand = "EXEC	[dbo].[spUpdateOrder]
-            @CustomerId = ?,
-            @OrderDate = ?,
-            @OrderID = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
-        }
-        function updateOrderList(){
-            $array = array(
-                "PPP"=>0,
-                "Quantity"=>0,
-                "OrderditemID"=>1,
-            );
-            $sqlcommand = "EXEC	[dbo].[spUpdateOrderItem]
-            @PPP = ?,
-            @Quantity = ?,
-            @OrderditemID = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
-        }
-
-        function DelteOrderItem($OrderdItemId){
-            $sqlcommand = "EXEC	[dbo].[spDeleteOrderItems]
-            @OrderditemID = ?,
-            @result = ?,
-            @message = ?";
-            excute_delete_prodecure($OrderdItemId,$sqlcommand);
-        }
-        
+            @OrderInformation = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
+    function deleteOrder()
+    {
+        $array = array(
+            "OrderID" => 1,
+        );
+        $sqlcommand = "EXEC	[dbo].[spDeleteOrder]
+		@OrderId = ?";
+
+        excute_prodecure_status_code($array, $sqlcommand);
+    }
+    function updateOrder()
+    {
+        $array = array(
+            "CustomerId" => 0,
+            "SupplierId" => 0,
+            "OrderDate" => 0,
+            "OrderID" => 1,
+        );
+        $sqlcommand = "EXEC	[dbo].[spUpdateOrder]
+		@CustomerId = ?,
+		@SupplierId = ?,
+		@OrderDate = ?,
+		@OrderID = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
+    }
+    function updateOrderList()
+    {
+        $array = array(
+            "PPP" => 0,
+            "Quantity" => 0,
+            "OrderditemID" => 1,
+        );
+        $sqlcommand = "EXEC	[dbo].[spUpdateOrderItem]
+		@PPP = ?,
+		@Quantity = ?,
+		@OrderditemID = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
+    }
+
+    function DelteOrderItem()
+    {
+        $array = array(
+            "OrderditemID" => 1,
+            "OrderID" => 1
+        );
+        $sqlcommand = "EXEC	[dbo].[spDeleteOrderItems]
+		@OrderditemID = ?,
+		@OrderID = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
+    }
+}

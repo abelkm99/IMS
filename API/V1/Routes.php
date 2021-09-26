@@ -150,11 +150,12 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         $r->addGroup('/order', function (FastRoute\RouteCollector $r) {
             $r->get('/list_orders', ['Order/ListAllOrders', Section::PROTECTED]);
             $r->get('/list_order/{orderId:\d+}', ['Order/getOrder', Section::PROTECTED]);
+            $r->get('/list_orderd_items/{orderId:\d+}', ['Order/getOrderedItems', Section::PROTECTED]);
             $r->post('/make_order', ['Order/makeNewOrder', Section::PROTECTED]);
-            $r->delete('/delete_order/{orderId:\d+}', ['Order/deleteOrder', Section::PROTECTED]);
+            $r->delete('/delete_order', ['Order/deleteOrder', Section::PROTECTED]);
             $r->put('/update_order', ['Order/updateOrder', Section::PROTECTED]);
             $r->put('/update_order_list', ['Order/updateOrderList', Section::PROTECTED]);
-            $r->delete('/delete_order_list/{OrderdItemId:\d+}', ['Order/DelteOrderItem', Section::PROTECTED]);
+            $r->delete('/delete_order_list', ['Order/DelteOrderItem', Section::PROTECTED]);
         });
         $r->addGroup('/personalBankAccount', function (FastRoute\RouteCollector $r) {
             $r->get('/Accounts', ['Bank/getAllBanks', Section::PROTECTED]);

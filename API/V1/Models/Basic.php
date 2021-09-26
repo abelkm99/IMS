@@ -40,14 +40,20 @@ class BasicApi
     }
     function getAllPurchaseOrders()
     {
-        $sqlcommand = "select * from [Order] left join Orderitems on Orderitems.OrderID = [Order].OrderID and OrderType = 1
-            for json auto";
+        $sqlcommand = "select OrderID,convert(varchar,OrderDate, 20) as OrderDate,OrderType,SupplierName,
+        (select sum(Total) from Orderitems WHERE OrderID = [Order].OrderID) as Total 
+        from [Order] LEFT JOIN Supplier on Supplier.SupplierID = [Order].[SupplierID]
+        WHERE OrderType = 1
+        ORDER BY [OrderDate] DESC FOR JSON PATH,INCLUDE_NULL_VALUES";
         excute_select_operation($sqlcommand);
     }
     function getAllSalesOrders()
     {
-        $sqlcommand = "select * from [Order] left join Orderitems on Orderitems.OrderID = [Order].OrderID and OrderType = 2 ORDER BY [Order].OrderDate DESC
-            for json auto";
+        $sqlcommand = "select OrderID,convert(varchar,OrderDate, 20) as OrderDate,OrderType,CustomerName,
+        (select sum(Total) from Orderitems WHERE OrderID = [Order].OrderID) as Total 
+        from [Order] LEFT JOIN Customer on Customer.CustomerID = [Order].[CutomerID]
+        WHERE OrderType = 2
+        ORDER BY [OrderDate] DESC FOR JSON PATH,INCLUDE_NULL_VALUES";
         excute_select_operation($sqlcommand);
     }
     function getGRNDetaitNotShiped($GRNO)
@@ -158,7 +164,8 @@ class BasicApi
         $array = array($ItemID);
         excute_prepared_statements($array, $sqlcommand);
     }
-    function getREFDetail($REFNO){
+    function getREFDetail($REFNO)
+    {
         $sqlcommand = "select SalesId,REFNO,ItemType,ItemCode,Sales.PPP,Quantity,Total
         from Sales INNER JOIN Item on Item.ItemID = Sales.ItemID
         WHERE REFNO= ?
