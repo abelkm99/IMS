@@ -534,10 +534,7 @@ class Bank
     }
     function getTransaction($PBID)
     {
-        $sqlcommand = "select *,
-            (ISNULL(SUM([TransactionIN]) OVER(ORDER BY [DATE] ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW ),0) 
-            - ISNULL( SUM([TransactionOUT]) OVER(ORDER BY [DATE] ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW ), 0))
-             as balance from BankTransaction where PBID = ? for json auto,include_null_values";
+        $sqlcommand = "select * from BankTransaction WHERE PBID = ? ORDER BY [Date] DESC FOR JSON AUTO,INCLUDE_NULL_VALUES";
         excute_prepared_statements(array($PBID), $sqlcommand);
     }
 }
