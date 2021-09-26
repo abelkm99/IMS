@@ -461,9 +461,13 @@ class Bank
 {
     function getAllBanks()
     {
-        $sqlcommand = "select * from PersonalBankAccount left join 
-            BankTransaction on PersonalBankAccount.PBID = BankTransaction.PBID for json auto";
+        $sqlcommand = "select * from PersonalBankAccount for json auto";
         excute_select_operation($sqlcommand);
+    }
+    function getOneBank($PBID)
+    {
+        $sqlcommand = "select * from PersonalBankAccount WHERE PBID = ? for json auto";
+        excute_prepared_statements(array($PBID), $sqlcommand);
     }
     function addNewAccount()
     {
@@ -474,7 +478,7 @@ class Bank
         $sqlcommand = "EXEC	[dbo].[spAddPersonalBankAccount]
             @AccountNumber = ?,
             @BankName = ?";
-        excute_prodecure2($array, $sqlcommand);
+        excute_prodecure_status_code($array, $sqlcommand);
     }
     function updateBankAccount()
     {
@@ -487,7 +491,7 @@ class Bank
             @PBID = ?,
             @AccountNumber = ?,
             @BankName = ?";
-        excute_prodecure2($input_array, $sqlcommand);
+        excute_prodecure_status_code($input_array, $sqlcommand);
     }
     function deleteBankAccount()
     {
@@ -498,7 +502,7 @@ class Bank
 
         $sqlcommand = "EXEC	[dbo].[spDeletePersonalBankAccount]
             @PBID = ?";
-        excute_prodecure2($input_array, $sqlcommand);
+        excute_prodecure_status_code($input_array, $sqlcommand);
     }
     function addTransaction()
     {
@@ -517,7 +521,7 @@ class Bank
             @Desciption = ?,
             @Date = ?";
 
-        excute_prodecure2($input_array, $sqlcommand);
+        excute_prodecure_status_code($input_array, $sqlcommand);
     }
     function deleteTransaction()
     {
@@ -526,14 +530,14 @@ class Bank
         );
         $sqlcommand = "EXEC	[dbo].[spDeleteBankTransaction]
             @BTID = ?";
-        excute_prodecure2($input_array, $sqlcommand);
+        excute_prodecure_status_code($input_array, $sqlcommand);
     }
     function getTransaction($PBID)
     {
         $sqlcommand = "select *,
             (ISNULL(SUM([TransactionIN]) OVER(ORDER BY [DATE] ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW ),0) 
             - ISNULL( SUM([TransactionOUT]) OVER(ORDER BY [DATE] ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW ), 0))
-             as balance from BankTransaction where PBID = ? for json auto";
+             as balance from BankTransaction where PBID = ? for json auto,include_null_values";
         excute_prepared_statements(array($PBID), $sqlcommand);
     }
 }

@@ -158,6 +158,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         });
         $r->addGroup('/personalBankAccount', function (FastRoute\RouteCollector $r) {
             $r->get('/Accounts', ['Bank/getAllBanks', Section::PROTECTED]);
+            $r->get('/one_account/{PBID:\d+}', ['Bank/getOneBank', Section::PROTECTED]);
             $r->post('/add_bank_account', ['Bank/addNewAccount', Section::PROTECTED]);
             $r->put('/update_bank_account', ['Bank/updateBankAccount', Section::PROTECTED]);
             $r->delete('/delete_bank_account', ['Bank/deleteBankAccount', Section::PROTECTED]);
