@@ -1,6 +1,7 @@
 <?php
 class Order
 {
+    
     function ListAllOrders()
     {
 
@@ -22,7 +23,7 @@ class Order
         excute_prepared_statements($params_in, $sqlcommand);
     }
     function getOrderedItems($OrderID){
-        $sqlcommand = "select OrderditemID,OrderID,Item.ItemID,Item.ItemType,Orderitems.PPP,Quantity,Total from Orderitems
+        $sqlcommand = "select OrderditemID,OrderID,Item.ItemID as ItemID,Item.ItemType,Orderitems.PPP,Quantity,Total from Orderitems
         INNER JOIN Item on Item.ItemID = Orderitems.ItemID
         WHERE OrderID = ?
         FOR JSON PATH,INCLUDE_NULL_VALUES";
