@@ -11,8 +11,8 @@ class Order
     }
     function getOrder($OrderId)
     {
-        $sqlcommand = "Select OrderID,convert(varchar,OrderDate, 20) as OrderDate,CustomerName,SupplierName,
-        (select sum(Total) from Orderitems WHERE OrderID = [Order].OrderID) as Total 
+        $sqlcommand = "Select OrderID,convert(varchar,OrderDate, 20) as OrderDate,CustomerName,SupplierName,Supplier.SupplierID,Customer.CustomerID,
+        (select sum(Total) from Orderitems WHERE OrderID = [Order].OrderID) as [Total Orders] 
         from [Order] 
 		LEFT JOIN Customer on Customer.CustomerID = [Order].[CutomerID]
 		LEFT JOIN Supplier on Supplier.SupplierID = [Order].[SupplierID]

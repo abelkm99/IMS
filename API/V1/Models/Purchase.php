@@ -205,15 +205,17 @@
             $array = array(
                 "OrderID"=>1,
                 "TransactionID"=>1,
-                "DriverId"=>0
+                "DriverId"=>0,
+                "PurchaseDate"=>1,
+                "SupplierID"=>1
             );
             $sqlcommand = "EXEC	[dbo].[spOrderToGRN]
             @OrderID = ?,
             @TransactionID = ?,
             @DriverId = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @PurchaseDate = ?,
+            @SupplierID = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function updateMovedData(){
             $array = array(
