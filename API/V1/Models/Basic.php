@@ -113,7 +113,7 @@ class BasicApi
         // // $sqlcommand = "EXEC [dbo].[spItemStock] @ItemID = ?";
         // $sqlcommand = "select * from STOCK WHERE ItemId  @ItemID = ? for json auto";
         // excute_prepared_statements($params_in,$sqlcommand);
-        $sqlcommand = "select * from STOCK WHERE ItemId = ?
+        $sqlcommand = "SELECT * FROM STOCKVIEW WHERE ItemId = ? ORDER BY [Date] DESC
             for json auto,INCLUDE_NULL_VALUES";
         $array = array($ItemID);
         excute_prepared_statements($array, $sqlcommand);
