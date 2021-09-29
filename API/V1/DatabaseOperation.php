@@ -327,7 +327,11 @@ function excute_prodecure_status_code($inputs, $sqlcommand)
 
                 $jsonString = concatranteJson($result);
                 $decoded_response = json_decode($jsonString);
-                http_response_code($decoded_response->status_code);
+                if( array_key_exists("status_code",$decoded_response)){
+                    http_response_code($decoded_response->status_code);
+                }else{
+                    http_response_code(200);
+                }
                 print_r($jsonString);
             } else {
                 $resMessage = array("message" => "no result found");

@@ -47,7 +47,7 @@
                 "option"=>1
             );
             
-            excute_prodecure2($params_in,$sqlcommand);
+            excute_prodecure_status_code($params_in,$sqlcommand);
             // $conn = get_connection();
             // if ($conn) {
             // } else {

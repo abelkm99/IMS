@@ -1,7 +1,7 @@
 <?php
     class Income{
         function getAllIncomes(){
-            $sqlcommand = "select * from Income for json auto";
+            $sqlcommand = "select * from Income for json path,include_null_values";
             excute_select_operation($sqlcommand);
         }
         function addNewIncome() {
@@ -14,7 +14,7 @@
             @Description = ?,
             @Amount = ?,
             @Date = ?";
-            excute_prodecure2($params_in,$sqlcommand);
+            excute_prodecure_status_code($params_in,$sqlcommand);
         }
         function deleteIncome(){
             $sqlcommand = "EXEC	[dbo].[spDeleteIncome]
@@ -22,7 +22,7 @@
             $params_in = array(
                 "IncomeID"=>1
             );
-            excute_prodecure2($params_in,$sqlcommand);
+            excute_prodecure_status_code($params_in,$sqlcommand);
         }
         function updateIncome(){
             $params_in = array(
@@ -36,6 +36,6 @@
             @Description = ?,
             @Amount = ?,
             @Date = ?";
-            excute_prodecure2($params_in,$sqlcommand);
+            excute_prodecure_status_code($params_in,$sqlcommand);
         }
     }
