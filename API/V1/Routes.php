@@ -295,8 +295,8 @@ switch ($routeInfo[0]) {
 
             //authenticate user 
 
-            if (true){
-            // if (validate_accesstoken($allowed_roles)){
+            // if (false){
+            if (validate_accesstoken($allowed_roles)){
                 
                 $handler = $routeInfo[1][0];
                 $vars    = $routeInfo[2];
