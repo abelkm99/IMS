@@ -112,7 +112,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
             $r->delete('/delete_customer', ['Customer/deleteCustomer', Section::PROTECTED]);
         });
         $r->addGroup('/category', function (FastRoute\RouteCollector $r) {
-            $r->get('/getcategories', ['Category/getAllCategories', Section::PROTECTED]);
+            $r->post('/getcategories', ['Category/getAllCategories', Section::PROTECTED]);
             $r->post('/addcategory', ['Category/addCategory', Section::PROTECTED]);
             $r->put('/update_category', ['Category/updateCategory', Section::PROTECTED]);
             $r->delete('/delete_category', ['Category/deleteCategory', Section::PROTECTED]);
