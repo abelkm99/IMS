@@ -53,13 +53,26 @@ class BasicApi
     }
     function getAllReferences()
     {
-        $sqlcommand = "select Reference.REFNO,convert(varchar,[Reference].[Date], 20) as SalesDate, CustomerName,TransactionType,DriverName,
-        (select SUM(Total) FROM Sales WHERE Sales.REFNO = Reference.REFNO) as Total from Reference
-        LEFT JOIN Customer on Reference.CutomerID = Customer.CustomerID  
-        LEFT JOIN TransactionType on Reference.TransactionID = TransactionType.TransactionID
-        LEFT JOIN Driver on Reference.DriverID = Driver.DriverID
-        ORDER BY [Reference].[Date] DESC FOR JSON PATH,INCLUDE_NULL_VALUES";
-        excute_select_operation($sqlcommand);
+        $params_in = array(
+            "PageNumber" => 1,
+            "REFNO" => 0,
+            "D1" => 0,
+            "D2" => 0,
+            "CustomerName" => 0,
+            "TransactionType" => 0,
+            "DriverName" => 0,
+            "order" => 1,
+        );   
+        $sqlcommand = "EXEC	[dbo].[spGetALLREFS]
+		@PageNumber = ?,
+		@REFNO = ?,
+		@D1 = ?,
+		@D2 = ?,
+		@CustomerName = ?,
+		@TransactionType = ?,
+		@DriverName = ?,
+		@order = ?";
+        excute_prodecure_status_code($params_in, $sqlcommand);
     }
     function getAllPurchaseOrders()
     {
@@ -80,12 +93,20 @@ class BasicApi
     }
     function getAllSalesOrders()
     {
-        $sqlcommand = "select OrderID,convert(varchar,OrderDate, 20) as OrderDate,OrderType,CustomerName,
-        (select sum(Total) from Orderitems WHERE OrderID = [Order].OrderID) as Total 
-        from [Order] LEFT JOIN Customer on Customer.CustomerID = [Order].[CutomerID]
-        WHERE OrderType = 2
-        ORDER BY [OrderDate] DESC FOR JSON PATH,INCLUDE_NULL_VALUES";
-        excute_select_operation($sqlcommand);
+        $params_in = array(
+            "PageNumber" => 1,
+            "D1"=>0,
+            "D2"=>0,
+            "CustomerName"=>0,
+            "order" => 1,
+        );
+        $sqlcommand = "EXEC	[dbo].[spGetALLSalesOrder]
+		@PageNumber = ?,
+		@D1 = ?,
+		@D2 = ?,
+		@CustomerName = ?,
+		@order = ?";
+        excute_prodecure_status_code($params_in, $sqlcommand);
     }
     function getGRNDetaitNotShiped($GRNO)
     {

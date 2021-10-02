@@ -4,20 +4,12 @@ class Item
 {
     function getAllItems()
     {
-        $pre = "declare @var varchar(max)  = (";
-        $suf = ")select @var as result";
-        $sqlcommand = "select Item.ItemID,
-        ItemCode,ItemType,PPP,
-        Store.ItemCount as StoreBalance,
-        WareHouse.ItemCount as WareHouseBalance,
-        Item.CategoryID as CategoryID,
-        CategoryName as CategoryName
- from Item
- LEFT JOIN ItemCategory on ItemCategory.CategoryId = Item.CategoryID
- LEFT JOIN WareHouse on WareHouse.ItemID = Item.ItemID
- LEFT JOIN Store on Store.ItemID = Item.ItemID 
- for json path,INCLUDE_NULL_VALUES";
-        excute_select_operation($sqlcommand);
+        $params_in = array(
+            "PageNumber" => 1
+        );
+        $sqlcommand = "EXEC	[dbo].[spGetALLItems]
+		@PageNumber = ?";
+        excute_prodecure_status_code($params_in, $sqlcommand);
     }
     function addNewItem()
     {
