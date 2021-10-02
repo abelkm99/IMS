@@ -52,11 +52,11 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         $r->get('/get_ref/{REFNO:\d+}', ['BasicApi/getREF', Section::PROTECTED]);
         $r->get('/get_ref_detail/{REFNO:\d+}', ['BasicApi/getREFDetail', Section::PROTECTED]);
         $r->get('/get_order/{OrderID:\d+}', ['BasicApi/getOrder,Section::PROTECTED']);
-        $r->get('/get_grns', ['BasicApi/getALLGRN', Section::PROTECTED]);
+        $r->post('/get_grns', ['BasicApi/getALLGRN', Section::PROTECTED]);
         $r->get('/get_refs', ['BasicApi/getAllReferences', Section::PROTECTED]);
-        $r->get('/get_purchase_orders', ['BasicApi/getAllPurchaseOrders', Section::PROTECTED]);
+        $r->post('/get_purchase_orders', ['BasicApi/getAllPurchaseOrders', Section::PROTECTED]);
         $r->get('/get_sales_orders', ['BasicApi/getAllSalesOrders', Section::PROTECTED]);
-        $r->get('/grn_not_delivered', ['BasicApi/getAllGRNSNOTDelivered', Section::PROTECTED]);
+        $r->post('/grn_not_delivered', ['BasicApi/getAllGRNSNOTDelivered', Section::PROTECTED]);
         $r->get('/transfered_items', ['BasicApi/getAllTransferedInfo', Section::PROTECTED]);
         $r->get('/transfered_item/{TEID:\d+}', ['BasicApi/getOneTransferedInfo', Section::PROTECTED]);
         $r->get('/transfered_items_list/{TEID:\d+}', ['BasicApi/getAllTransferedDetail', Section::PROTECTED]);

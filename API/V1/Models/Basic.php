@@ -19,14 +19,37 @@ class BasicApi
     }
     function getALLGRN()
     {
-        $sqlcommand = "select GRN.GRNNO,convert(varchar, PurchsedDate, 20) as PurchsedDate,
-            convert(varchar, DeliverdDate, 20) as DeliverdDate,SupplierName,TransactionType,DriverName,
-            (select SUM(Total) FROM Purchase WHERE Purchase.GRNNO = GRN.GRNNO ) as Total from GRN
-            LEFT JOIN Supplier on GRN.SupplierID = Supplier.SupplierID  
-            LEFT JOIN TransactionType on GRN.TransactionID = TransactionType.TransactionID
-            LEFT JOIN Driver on GRN.DriverID = Driver.DriverID
-            ORDER BY PurchsedDate DESC,DeliverdDate DESC FOR JSON PATH,INCLUDE_NULL_VALUES";
-        excute_select_operation($sqlcommand);
+        $params_in = array(
+            "PageNumber" => 1,
+            "GRNNO" => 0,
+            "D1" => 0,
+            "D2" => 0,
+            "SupplierName" => 0,
+            "TransactionType" => 0,
+            "DriverName" => 0,
+            "order" => 1,
+        );
+        $sqlcommand = "EXEC	[dbo].[spGetAllGRN]
+		@PageNumber = ?,
+		@GRNNO = ?,
+		@D1 = ?,
+		@D2 = ?,
+		@SupplierName = ?,
+		@TransactionType = ?,
+		@DriverName = ?,
+		@order = ?";
+        excute_prodecure_status_code($params_in, $sqlcommand);
+    }
+    function getAllGRNSNOTDelivered()
+    {
+        $params_in = array(
+            "PageNumber" => 1,
+            "order" => 1,
+        );
+        $sqlcommand = "EXEC	[dbo].[spGetALLGRNNotDelivered]
+		@PageNumber = ?,
+		@order = ?";
+        excute_prodecure_status_code($params_in, $sqlcommand);
     }
     function getAllReferences()
     {
@@ -40,12 +63,20 @@ class BasicApi
     }
     function getAllPurchaseOrders()
     {
-        $sqlcommand = "select OrderID,convert(varchar,OrderDate, 20) as OrderDate,OrderType,SupplierName,
-        (select sum(Total) from Orderitems WHERE OrderID = [Order].OrderID) as Total 
-        from [Order] LEFT JOIN Supplier on Supplier.SupplierID = [Order].[SupplierID]
-        WHERE OrderType = 1
-        ORDER BY [OrderDate] DESC FOR JSON PATH,INCLUDE_NULL_VALUES";
-        excute_select_operation($sqlcommand);
+        $params_in = array(
+            "PageNumber" => 1,
+            "D1"=>0,
+            "D2"=>0,
+            "SupplierName"=>0,
+            "order" => 1,
+        );
+        $sqlcommand = "EXEC	[dbo].[spGetALLPurchaseOrder]
+		@PageNumber = ?,
+		@D1 = ?,
+		@D2 = ?,
+		@SupplierName = ?,
+		@order = ?";
+        excute_prodecure_status_code($params_in, $sqlcommand);
     }
     function getAllSalesOrders()
     {
@@ -109,26 +140,10 @@ class BasicApi
     }
     function getItemStock($ItemID)
     {
-        // $params_in = array($ItemID);
-        // // $sqlcommand = "EXEC [dbo].[spItemStock] @ItemID = ?";
-        // $sqlcommand = "select * from STOCK WHERE ItemId  @ItemID = ? for json auto";
-        // excute_prepared_statements($params_in,$sqlcommand);
         $sqlcommand = "SELECT * FROM STOCKVIEW WHERE ItemId = ? ORDER BY [Date] DESC
             for json auto,INCLUDE_NULL_VALUES";
         $array = array($ItemID);
         excute_prepared_statements($array, $sqlcommand);
-    }
-    function getAllGRNSNOTDelivered()
-    {
-        $sqlcommand = "select GRN.GRNNO,Delivered,convert(varchar, PurchsedDate, 20) as PurchsedDate,
-            convert(varchar, DeliverdDate, 20) as DeliverdDate,SupplierName,TransactionType,DriverName,
-            (select SUM(Total) FROM Purchase WHERE Purchase.GRNNO = GRN.GRNNO ) as Total from GRN
-            LEFT JOIN Supplier on GRN.SupplierID = Supplier.SupplierID  
-            LEFT JOIN TransactionType on GRN.TransactionID = TransactionType.TransactionID
-            LEFT JOIN Driver on GRN.DriverID = Driver.DriverID
-            WHERE Delivered = 0
-            ORDER BY PurchsedDate DESC,DeliverdDate DESC FOR JSON PATH,INCLUDE_NULL_VALUES";
-        excute_select_operation($sqlcommand);
     }
     function getAllTransferedInfo()
     {
