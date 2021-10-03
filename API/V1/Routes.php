@@ -71,6 +71,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         });
 
         $r->addGroup('/supplier', function (FastRoute\RouteCollector $r) {
+            $r->post('/listSuppliers_pagination', ['Supplier/getAllSupplierPagination', Section::PROTECTED]);
             $r->get('/listSuppliers', ['Supplier/ListAllSuppliers', Section::PROTECTED]);
             $r->get('/listSupplier/{Suppliername}', ['supplier/getSupplierInformation', Section::PROTECTED]);
             $r->post('/addSupplier', ['supplier/addSupplier', Section::PROTECTED]);
@@ -91,6 +92,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         });
 
         $r->addGroup('/employee', function (FastRoute\RouteCollector $r) {
+            $r->post('/list_employees_pagination', ['Employee/getEmployeePagination', Section::PROTECTED]);
             $r->get('/list_employees', ['Employee/ListAllEmployees', Section::PROTECTED]);
             $r->get('/list_employee_info/{EmployeeId:\d+}', ['Employee/getEmployeeInfromation', Section::PROTECTED]);
             $r->post('/add_employee', ['Employee/addEmployee', Section::PROTECTED]);
@@ -101,6 +103,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
             $r->delete('/delete_employee', ['Employee/deleteEmployee', Section::PROTECTED]);
         });
         $r->addGroup('/customer', function (FastRoute\RouteCollector $r) {
+            $r->post('/list_customers_pagination', ['Customer/getCustomer_pagination', Section::PROTECTED]);
             $r->get('/list_customers', ['Customer/ListAllCustomers', Section::PROTECTED]);
             $r->get('/list_customer/{CustomerName}', ['Customer/getCustomerInformation', Section::PROTECTED]);
             $r->post('/add_customer', ['Customer/addCustomer', Section::PROTECTED]);
@@ -283,7 +286,7 @@ switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
         // ... 404 Not Found
         http_response_code(404);
-        $res = array('message'=>'404 Invalid URL');
+        $res = array('message' => '404 Invalid URL');
         print_r(json_encode($res));
         break;
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
@@ -298,16 +301,13 @@ switch ($routeInfo[0]) {
             //authenticate user 
 
             // if (false){
-            if (validate_accesstoken($allowed_roles)){
-                
+            if (validate_accesstoken($allowed_roles)) {
+
                 $handler = $routeInfo[1][0];
                 $vars    = $routeInfo[2];
-
-            }else{
+            } else {
                 return;
             }
-
-
         } else {
             $handler = $routeInfo[1];
             $vars    = $routeInfo[2];
