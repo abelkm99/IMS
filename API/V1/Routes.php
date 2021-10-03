@@ -84,6 +84,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         });
 
         $r->addGroup('/driver', function (FastRoute\RouteCollector $r) {
+            $r->post('/list_drivers_pagination', ['Driver/ListAllDriversPagination', Section::PROTECTED]);
             $r->get('/list_drivers', ['Driver/ListAllDrivers', Section::PROTECTED]);
             $r->get('/list_driver/{Drivername}', ['Driver/getDriverInformation', Section::PROTECTED]);
             $r->post('/add_driver', ['Driver/addDriver', Section::PROTECTED]);
