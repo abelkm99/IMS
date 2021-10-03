@@ -43,6 +43,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->addGroup('/quasar_api/api/v1', function (FastRoute\RouteCollector $r) {
 
         $r->post('/login', 'Auth/Login');
+        $r->get('/check_database_connection', 'Auth/DatabaseTest');
 
         $r->get('/get_transaction_type', ['BasicApi/getTransactionType', Section::PROTECTED]);
         $r->post('/get_item_stock', ['BasicApi/getItemStock', Section::PROTECTED]);
@@ -187,7 +188,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
                 $r->put('/update_rent', ['Rent/updateRent', Section::PROTECTED]);
             });
             $r->addGroup('/unloadingExpence', function (FastRoute\RouteCollector $r) {
-                $r->get('/get_unloading_expence', ['LoadUnLoadExpences/getUnloadingExpences', Section::PROTECTED]);
+                $r->post('/get_unloading_expence', ['LoadUnLoadExpences/getUnloadingExpences', Section::PROTECTED]);
                 $r->post('/add_unloading_expence', ['LoadUnLoadExpences/addUnloadingExpence', Section::PROTECTED]);
                 $r->delete('/delete_unloading_expence', ['LoadUnLoadExpences/deleteUnloadingExpence', Section::PROTECTED]);
                 $r->put('/update_unloading_expence', ['LoadUnLoadExpences/updateUnloadingExpence', Section::PROTECTED]);
@@ -199,18 +200,19 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
                 $r->put('/update_loading_expence', ['LoadUnLoadExpences/updateloadingExpence', Section::PROTECTED]);
             });
             $r->addGroup('/masatefiya', function (FastRoute\RouteCollector $r) {
-                $r->get('/get_masatefiya_expense', ['Masatefiya/getMasatefiyaExpence', Section::PROTECTED]);
+                $r->post('/get_masatefiya_expense', ['Masatefiya/getMasatefiyaExpence', Section::PROTECTED]);
                 $r->post('/add_masatefiya_expence', ['Masatefiya/addMasatefiyaExpence', Section::PROTECTED]);
                 $r->delete('/delete_masatefiya_expence', ['Masatefiya/deleteMasatefiyaExpence', Section::PROTECTED]);
                 $r->put('/update_masatefiya_expence', ['Masatefiya/updateMasatefiyaExpence', Section::PROTECTED]);
             });
             $r->addGroup('/salary', function (FastRoute\RouteCollector $r) {
-                $r->get('/get_salary_expense', ['Salary/getSalaryExpence', Section::PROTECTED]);
+                $r->post('/get_salary_expense', ['Salary/getSalaryExpence', Section::PROTECTED]);
                 $r->post('/add_salary_expence', ['Salary/addSalaryExpence', Section::PROTECTED]);
                 $r->delete('/delete_salary_expence', ['Salary/deleteSalaryExpence', Section::PROTECTED]);
                 $r->put('/update_salary_expence', ['Salary/updateSalaryExpence', Section::PROTECTED]);
             });
             $r->addGroup('/OET', function (FastRoute\RouteCollector $r) {
+                $r->post('/get_OET_pagination', ['OET/getOET_Pagination', Section::PROTECTED]);
                 $r->get('/get_OET', ['OET/getOET', Section::PROTECTED]);
                 $r->post('/add_OET', ['OET/addOET', Section::PROTECTED]);
                 $r->delete('/delete_OET', ['OET/deleteOET', Section::PROTECTED]);
@@ -229,7 +231,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
                 $r->put('/update_BT', ['BT/updateBT', Section::PROTECTED]);
             });
             $r->addGroup('/OEL', function (FastRoute\RouteCollector $r) {
-                $r->get('/get_OEL', ['OEL/getOEL', Section::PROTECTED]);
+                $r->post('/get_OEL', ['OEL/getOEL', Section::PROTECTED]);
                 $r->post('/add_OEL', ['OEL/addOEL', Section::PROTECTED]);
                 $r->delete('/delete_OEL', ['OEL/deleteOEL', Section::PROTECTED]);
                 $r->put('/update_OEL', ['OEL/updateOEL', Section::PROTECTED]);

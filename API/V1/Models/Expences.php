@@ -3,21 +3,34 @@ class Salary
 {
     function getSalaryExpence()
     {
-        $sqlcommand = "select SalaryID,[Date],Cost,Employee.EmployeeID,EmployeeName from SallaryExpences
-                LEFT JOIN Employee ON SallaryExpences.EmployeeID = Employee.EmployeeID ORDER BY [Date] DESC for json path";
-        excute_select_operation($sqlcommand);
+        $array = array(
+            "PageNumber" => 1,
+            "EmployeeName" => 0,
+            "D1" => 0,
+            "D2" => 0,
+            "order" => 0,
+        );
+        $sqlcommand = "EXEC	[dbo].[spGetSallaryExpence]
+		@PageNumber = ?,
+		@EmployeeName = ?,
+		@D1 = ?,
+		@D2 = ?,
+		@order = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
     function addSalaryExpence()
     {
         $array = array(
             "Date" => 1,
             "Cost" => 1,
-            "EmployeeID" => 1
+            "EmployeeID" => 1,
+            "Description" => 0,
         );
         $sqlcommand = "EXEC	[dbo].[spAddSalaryExpense]
-                                        @Date = ?,
-                                        @Cost = ?,
-                                        @EmployeeID = ?";
+		@Date = ?,
+		@Cost = ?,
+		@EmployeeID = ?,
+		@Description = ?";
         excute_prodecure_status_code($array, $sqlcommand);
     }
     function deleteSalaryExpence()
@@ -34,15 +47,17 @@ class Salary
     {
 
         $sqlcommand = "EXEC	[dbo].[spUpdateSalaryExpence]
-                                        @Date = ?,
-                                        @Cost = ?,
-                                        @EmployeeID = ?,
-                                        @SalaryID = ?";
+		@Date = ?,
+		@Cost = ?,
+		@EmployeeID = ?,
+		@SalaryID = ?,
+		@Description = ?";
         $array = array(
             "Date" => 1,
             "Cost" => 0,
             "EmployeeID" => 0,
-            "SalaryID" => 1
+            "SalaryID" => 1,
+            "Description" => 1
         );
         excute_prodecure_status_code($array, $sqlcommand);
     }
@@ -52,9 +67,20 @@ class Masatefiya
 {
     function getMasatefiyaExpence()
     {
-        $sqlcommand = "select * from Masatefiya ORDER BY [Date] DESC
-                            for json auto";
-        excute_select_operation($sqlcommand);
+        $array = array(
+            "PageNumber" => 1,
+            "REFNO" => 0,
+            "D1" => 0,
+            "D2" => 0,
+            "order" => 0
+        );
+        $sqlcommand = "EXEC	[dbo].[spGetMasatefiyaExpence]
+		@PageNumber = ?,
+		@REFNO = ?,
+		@D1 = ?,
+		@D2 = ?,
+		@order = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
     function addMasatefiyaExpence()
     {
@@ -62,12 +88,14 @@ class Masatefiya
         $array = array(
             "REFNO" => 1,
             "Date" => 1,
-            "Cost" => 1
+            "Cost" => 1,
+            "Description" => 0
         );
         $sqlcommand = "EXEC	[dbo].[spAddMasatefiya]
-                                        @REFNO = ?,
-                                        @Date = ?,
-                                        @Cost = ?";
+		@REFNO = ?,
+		@Date = ?,
+		@Cost = ?,
+		@Description = ?";
 
         excute_prodecure_status_code($array, $sqlcommand);
     }
@@ -86,13 +114,15 @@ class Masatefiya
             "Date" => 0,
             "Cost" => 0,
             "REFNO" => 0,
-            "MID" => 1
+            "MID" => 1,
+            "Description" => 0
         );
         $sqlcommand = "EXEC	[dbo].[spUpdateMasatefiyaExpence]
-                                        @Date = ?,
-                                        @Cost = ?,
-                                        @REFNO = ?,
-                                        @MID = ?";
+		@Date = ?,
+		@Cost = ?,
+		@REFNO = ?,
+		@MID = ?,
+		@Description = ?";
         excute_prodecure_status_code($array, $sqlcommand);
     }
 }
@@ -125,13 +155,15 @@ class LoadUnLoadExpences
             "Date" => 0,
             "Cost" => 0,
             "GRNNO" => 0,
-            "UnLoadID" => 1
+            "UnLoadID" => 1,
+            "Description" => 0,
         );
         $sqlcommand = "EXEC	[dbo].[spUpdateUnloadingExpence]
-                                @Date = ?,
-                                @Cost = ?,
-                                @GRNNO = ?,
-                                @UnLoadID = ?";
+		@Date = ?,
+		@Cost = ?,
+		@GRNNO = ?,
+		@UnLoadID = ?,
+		@Description = ?";
         excute_prodecure_status_code($array, $sqlcommand);
     }
     function deleteUnloadingExpence()
@@ -154,12 +186,14 @@ class LoadUnLoadExpences
         $array = array(
             "GRNNO" => 1,
             "Date" => 1,
-            "Cost" => 1
+            "Cost" => 1,
+            "Description" => 0,
         );
         $sqlcommand = "EXEC	[dbo].[spAddUnloadingExpence]
-            @GRNNO = ?,
-            @Date = ?,
-            @Cost = ?";
+		@GRNNO = ?,
+		@Date = ?,
+		@Cost = ?,
+		@Description = ?";
         excute_prodecure_status_code($array, $sqlcommand);
     }
 
@@ -181,9 +215,20 @@ class LoadUnLoadExpences
 
     function getUnloadingExpences()
     {
-        $sqlcommand = "select * from UNLoadingExpence ORDER BY [Date] DESC
-                                for json auto";
-        excute_select_operation($sqlcommand);
+        $array = array(
+            "PageNumber" => 1,
+            "GRNNO" => 0,
+            "D1" => 0,
+            "D2" => 0,
+            "order" => 0,
+        );
+        $sqlcommand = "EXEC	[dbo].[spGetUnloadingExpence]
+		@PageNumber = ?,
+		@GRNNO = ?,
+		@D1 = ?,
+		@D2 = ?,
+		@order = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
     function getloadingExpences()
     {
@@ -194,6 +239,15 @@ class LoadUnLoadExpences
 }
 class OET
 {
+    function getOET_Pagination()
+    {
+        $array = array(
+            "PageNumber" => 1
+        );
+        $sqlcommand = "EXEC	[dbo].[spGetOET]
+		@PageNumber = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
+    }
     function getOET()
     {
         $sqlcommand = "select * from OtherExpencesTypes for json auto";
@@ -325,21 +379,34 @@ class OEL
 {
     function getOEL()
     {
-        $sqlcommand = "select OExpencesID,OtherExpencesList.OEID,[Date],Cost,OEType from OtherExpencesList 
-            LEFT JOIN OtherExpencesTypes ON OtherExpencesTypes.OEID = OtherExpencesList.OEID ORDER BY [Date] DESC for json path";
-        excute_select_operation($sqlcommand);
+        $array = array(
+            "PageNumber" => 1,
+            "OEType" => 0,
+            "D1" => 0,
+            "D2" => 0,
+            "order" => 0,
+        );
+        $sqlcommand = "EXEC	[dbo].[spGetOtherExpenceList]
+		@PageNumber = ?,
+		@OEType = ?,
+		@D1 = ?,
+		@D2 = ?,
+		@order = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
     function addOEL()
     {
         $array = array(
             "OEID" => 1,
             "Date" => 1,
-            "Cost" => 1
+            "Cost" => 1,
+            "Description" => 1
         );
         $sqlcommand = "EXEC	[dbo].[spAddOtherExpenseList]
-            @OEID = ?,
-            @Date = ?,
-            @Cost = ?";
+		@OEID = ?,
+		@Date = ?,
+		@Cost = ?,
+		@Description = ?";
 
         excute_prodecure_status_code($array, $sqlcommand);
     }
@@ -357,12 +424,14 @@ class OEL
         $array = array(
             "Date" => 0,
             "Cost" => 0,
-            "OExpencesID" => 1
+            "OExpencesID" => 1,
+            "Description" => 1,
         );
         $sqlcommand = "EXEC	[dbo].[spUpdateOtherExpenceList]
-            @Date = ?,
-            @Cost = ?,
-            @OExpencesID = ?";
+		@Date = ?,
+		@Cost = ?,
+		@OExpencesID = ?,
+		@Description = ?";
         excute_prodecure_status_code($array, $sqlcommand);
     }
 }

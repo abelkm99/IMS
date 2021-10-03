@@ -2,6 +2,20 @@
 class Auth
 {
     public static $header;
+    function DatabaseTest()
+    {
+        $conn = get_connection();
+        if ($conn) {
+            http_response_code(200);
+
+            $response = array("message" => "connection_established");
+            print_r(json_encode($response));
+        } else {            
+            http_response_code(500);
+            print_r(json_encode(sqlsrv_errors()));
+            return;
+        }
+    }
     function Login()
     {
         $conn = get_connection();
@@ -95,7 +109,7 @@ class Auth
                 $headers = trim($requestHeaders['Authorization']);
             }
         }
-       
+
         return $headers;
     }
     /**
