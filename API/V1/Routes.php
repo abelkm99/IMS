@@ -45,7 +45,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         $r->post('/login', 'Auth/Login');
 
         $r->get('/get_transaction_type', ['BasicApi/getTransactionType', Section::PROTECTED]);
-        $r->get('/get_item_stock/{ItemID:\d+}', ['BasicApi/getItemStock', Section::PROTECTED]);
+        $r->post('/get_item_stock', ['BasicApi/getItemStock', Section::PROTECTED]);
         $r->get('/get_grn_detail/{GRNNO:\d+}', ['BasicApi/getGRNDetail', Section::PROTECTED]);
         $r->get('/get_grn_detail_notshiped/{GRNNO:\d+}', ['BasicApi/getGRNDetaitNotShiped', Section::PROTECTED]);
         $r->get('/get_grn_one/{GRNNO:\d+}', ['BasicApi/getONEGRN', Section::PROTECTED]);
@@ -112,12 +112,14 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
             $r->delete('/delete_customer', ['Customer/deleteCustomer', Section::PROTECTED]);
         });
         $r->addGroup('/category', function (FastRoute\RouteCollector $r) {
+            $r->get('/getcategories_nopagination', ['Category/getAllCategoriesNoPagination', Section::PROTECTED]);
             $r->post('/getcategories', ['Category/getAllCategories', Section::PROTECTED]);
             $r->post('/addcategory', ['Category/addCategory', Section::PROTECTED]);
             $r->put('/update_category', ['Category/updateCategory', Section::PROTECTED]);
             $r->delete('/delete_category', ['Category/deleteCategory', Section::PROTECTED]);
         });
         $r->addGroup('/item', function (FastRoute\RouteCollector $r) {
+            $r->get('/get_items_nopagination', ['Item/getAllItemsNoPagination', Section::PROTECTED]);
             $r->post('/get_items', ['Item/getAllItems', Section::PROTECTED]);
             $r->post('/add_new_item', ['Item/addNewItem', Section::PROTECTED]);
             $r->put('/update_item', ['Item/updateItem', Section::PROTECTED]);

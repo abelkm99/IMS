@@ -1,6 +1,11 @@
 <?php
 class Category
-{
+{   
+    function getAllCategoriesNoPagination(){
+        $sqlcommand = "SELECT * FROM ItemCategory FOR JSON PATH";
+        excute_select_operation($sqlcommand);
+
+    }
     function getAllCategories()
     {
         $array = array(

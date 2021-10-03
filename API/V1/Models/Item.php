@@ -2,6 +2,10 @@
 
 class Item
 {
+    function getAllItemsNoPagination(){
+        $sqlcommand = "SELECT * FROM Item FOR JSON PATH";
+        excute_select_operation($sqlcommand);
+    }
     function getAllItems()
     {
         $params_in = array(

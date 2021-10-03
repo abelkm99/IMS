@@ -62,7 +62,7 @@ class BasicApi
             "TransactionType" => 0,
             "DriverName" => 0,
             "order" => 1,
-        );   
+        );
         $sqlcommand = "EXEC	[dbo].[spGetALLREFS]
 		@PageNumber = ?,
 		@REFNO = ?,
@@ -78,9 +78,9 @@ class BasicApi
     {
         $params_in = array(
             "PageNumber" => 1,
-            "D1"=>0,
-            "D2"=>0,
-            "SupplierName"=>0,
+            "D1" => 0,
+            "D2" => 0,
+            "SupplierName" => 0,
             "order" => 1,
         );
         $sqlcommand = "EXEC	[dbo].[spGetALLPurchaseOrder]
@@ -95,9 +95,9 @@ class BasicApi
     {
         $params_in = array(
             "PageNumber" => 1,
-            "D1"=>0,
-            "D2"=>0,
-            "CustomerName"=>0,
+            "D1" => 0,
+            "D2" => 0,
+            "CustomerName" => 0,
             "order" => 1,
         );
         $sqlcommand = "EXEC	[dbo].[spGetALLSalesOrder]
@@ -159,12 +159,26 @@ class BasicApi
         $array = array($OrderID);
         excute_prepared_statements($array, $sqlcommand);
     }
-    function getItemStock($ItemID)
+    function getItemStock()
     {
-        $sqlcommand = "SELECT * FROM STOCKVIEW WHERE ItemId = ? ORDER BY [Date] DESC
-            for json auto,INCLUDE_NULL_VALUES";
-        $array = array($ItemID);
-        excute_prepared_statements($array, $sqlcommand);
+        $params_in = array(
+            "PageNumber" => 1,
+            "GRNNO" => 0,
+            "REFNO" => 0,
+            "D1" => 0,
+            "D2" => 0,
+            "ItemType" => 0,
+            "order" => 1,
+        );
+        $sqlcommand = "EXEC	[dbo].[spGetItemStockHistory]
+		@PageNumber = ?,
+		@GRNNO = ?,
+		@REFNO = ?,
+		@D1 = ?,
+		@D2 = ?,
+		@ItemType = ?,
+		@order = ?";
+        excute_prodecure_status_code($params_in, $sqlcommand);
     }
     function getAllTransferedInfo()
     {
