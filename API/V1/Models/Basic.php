@@ -182,10 +182,20 @@ class BasicApi
     }
     function getAllTransferedInfo()
     {
-        $sqlcommand = "select TEID,[Date],Cost,DriverName,Driver.DriverID from [Transfer-Expence] 
-            LEFT JOIN Driver on Driver.DriverID = [Transfer-Expence].DriverID
-            ORDER BY [Date] DESC FOR JSON PATH,INCLUDE_NULL_VALUES ";
-        excute_select_operation($sqlcommand);
+        $params_in = array(
+            "PageNumber" => 1,
+            "D1" => 0,
+            "D2" => 0,
+            "DriverName" => 0,
+            "order" => 0,
+        );
+        $sqlcommand = "EXEC	[dbo].[spGetAllTransfers]
+		@PageNumber = ?,
+		@D1 = ?,
+		@D2 = ?,
+		@DriverName = ?,
+		@order = ?";
+        excute_prodecure_status_code($params_in, $sqlcommand);
     }
     function getOneTransferedInfo($TEID)
     {

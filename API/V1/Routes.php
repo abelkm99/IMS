@@ -58,7 +58,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         $r->post('/get_purchase_orders', ['BasicApi/getAllPurchaseOrders', Section::PROTECTED]);
         $r->post('/get_sales_orders', ['BasicApi/getAllSalesOrders', Section::PROTECTED]);
         $r->post('/grn_not_delivered', ['BasicApi/getAllGRNSNOTDelivered', Section::PROTECTED]);
-        $r->get('/transfered_items', ['BasicApi/getAllTransferedInfo', Section::PROTECTED]);
+        $r->post('/transfered_items', ['BasicApi/getAllTransferedInfo', Section::PROTECTED]);
         $r->get('/transfered_item/{TEID:\d+}', ['BasicApi/getOneTransferedInfo', Section::PROTECTED]);
         $r->get('/transfered_items_list/{TEID:\d+}', ['BasicApi/getAllTransferedDetail', Section::PROTECTED]);
         $r->get('/get_all_inventory', ['BasicApi/getAllItemInventory', Section::PROTECTED]);
@@ -219,12 +219,14 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
                 $r->put('/update_OET', ['OET/updateOET', Section::PROTECTED]);
             });
             $r->addGroup('/PET', function (FastRoute\RouteCollector $r) {
+                $r->post('/get_PET_pagination', ['PET/getPET_Pagination', Section::PROTECTED]);
                 $r->get('/get_PET', ['PET/getPET', Section::PROTECTED]);
                 $r->post('/add_PET', ['PET/addPET', Section::PROTECTED]);
                 $r->delete('/delete_PET', ['PET/deletePET', Section::PROTECTED]);
                 $r->put('/update_PET', ['PET/updatePET', Section::PROTECTED]);
             });
             $r->addGroup('/BT', function (FastRoute\RouteCollector $r) {
+                $r->post('/get_BT_pagination', ['BT/getBTPagination', Section::PROTECTED]);
                 $r->get('/get_BT', ['BT/getBT', Section::PROTECTED]);
                 $r->post('/add_BT', ['BT/addBT', Section::PROTECTED]);
                 $r->delete('/delete_BT', ['BT/deleteBT', Section::PROTECTED]);
@@ -237,13 +239,13 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
                 $r->put('/update_OEL', ['OEL/updateOEL', Section::PROTECTED]);
             });
             $r->addGroup('/PEL', function (FastRoute\RouteCollector $r) {
-                $r->get('/get_PEL', ['PEL/getPEL', Section::PROTECTED]);
+                $r->post('/get_PEL', ['PEL/getPEL', Section::PROTECTED]);
                 $r->post('/add_PEL', ['PEL/addPEL', Section::PROTECTED]);
                 $r->delete('/delete_PEL', ['PEL/deletePEL', Section::PROTECTED]);
                 $r->put('/update_PEL', ['PEL/updatePEL', Section::PROTECTED]);
             });
             $r->addGroup('/BL', function (FastRoute\RouteCollector $r) {
-                $r->get('/get_BL', ['BL/getBL', Section::PROTECTED]);
+                $r->post('/get_BL', ['BL/getBL', Section::PROTECTED]);
                 $r->post('/add_BL', ['BL/addBL', Section::PROTECTED]);
                 $r->delete('/delete_BL', ['BL/deleteBL', Section::PROTECTED]);
                 $r->put('/update_BL', ['BL/updateBL', Section::PROTECTED]);

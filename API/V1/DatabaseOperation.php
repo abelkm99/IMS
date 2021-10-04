@@ -52,6 +52,7 @@ function excute_select_operation($sqlcommand)
         http_response_code(404);
         echo json_encode($resMessage);
     }
+    sqlsrv_close($conn);
 }
 function excute_delete_prodecure($valueId, $sqlcommand)
 {
@@ -87,6 +88,7 @@ function excute_delete_prodecure($valueId, $sqlcommand)
             echo json_encode($resMessage);
         }
     }
+    sqlsrv_close($conn);
 }
 function excute_prodecure($inputs, $sqlcommand)
 {
@@ -145,6 +147,7 @@ function excute_prodecure($inputs, $sqlcommand)
             echo json_encode($resMessage);
         }
     }
+    sqlsrv_close($conn);
 }
 function excute_prepared_statements($inputs, $sqlcommand)
 {
@@ -175,6 +178,7 @@ function excute_prepared_statements($inputs, $sqlcommand)
         http_response_code(404);
         echo json_encode($resMessage);
     }
+    sqlsrv_close($conn);
 }
 
 function excute_prodecure_json($params, $sqlcommand)
@@ -187,35 +191,36 @@ function excute_prodecure_json($params, $sqlcommand)
         echo json_encode($resMessage);
     }
     if (true) {
-        
+
         $stmt = sqlsrv_query($conn, $sqlcommand, $params);
 
-            $result = array();
+        $result = array();
 
-            // Get return value
-            do {
-                while ($row = sqlsrv_fetch_array($stmt)) {
-                    // Loop through each result set and add to result array
-                    $result[] = $row;
-                }
-            } while (sqlsrv_next_result($stmt));
-
-            if (count($result) > 0) {
-
-                $jsonString = concatranteJson($result);
-                $decoded_response = json_decode($jsonString);
-                http_response_code($decoded_response->status_code);
-                print_r($jsonString);
-            } else {
-                $resMessage = array("message" => "no result found");
-                http_response_code(404);
-                echo json_encode($resMessage);
+        // Get return value
+        do {
+            while ($row = sqlsrv_fetch_array($stmt)) {
+                // Loop through each result set and add to result array
+                $result[] = $row;
             }
+        } while (sqlsrv_next_result($stmt));
+
+        if (count($result) > 0) {
+
+            $jsonString = concatranteJson($result);
+            $decoded_response = json_decode($jsonString);
+            http_response_code($decoded_response->status_code);
+            print_r($jsonString);
+        } else {
+            $resMessage = array("message" => "no result found");
+            http_response_code(404);
+            echo json_encode($resMessage);
+        }
     } else {
         $resMessage = array("message" => "invalid input on validation");
         http_response_code(400);
         echo json_encode($resMessage);
     }
+    sqlsrv_close($conn);
 }
 
 
@@ -278,6 +283,7 @@ function excute_prodecure2($inputs, $sqlcommand)
             echo json_encode($resMessage);
         }
     }
+    sqlsrv_close($conn);
 }
 function excute_prodecure_status_code($inputs, $sqlcommand)
 {
@@ -327,9 +333,9 @@ function excute_prodecure_status_code($inputs, $sqlcommand)
 
                 $jsonString = concatranteJson($result);
                 $decoded_response = json_decode($jsonString);
-                if( array_key_exists("status_code",$decoded_response)){
+                if (array_key_exists("status_code", $decoded_response)) {
                     http_response_code($decoded_response->status_code);
-                }else{
+                } else {
                     http_response_code(200);
                 }
                 print_r($jsonString);
@@ -344,4 +350,5 @@ function excute_prodecure_status_code($inputs, $sqlcommand)
             echo json_encode($resMessage);
         }
     }
+    sqlsrv_close($conn);
 }

@@ -290,6 +290,15 @@ class OET
 }
 class PET
 {
+    function getPET_Pagination()
+    {
+        $array = array(
+            "PageNumber" => 1
+        );
+        $sqlcommand = "EXEC	[dbo].[spGetPET]
+		@PageNumber = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
+    }
     function getPET()
     {
         $sqlcommand = "select * from PersonalExpencesTypes for json auto";
@@ -334,6 +343,16 @@ class PET
 }
 class BT
 {
+    function getBTPagination()
+    {
+        $array = array(
+            "PageNumber" => 1
+        );
+        $sqlcommand = "EXEC	[dbo].[spGetBET]
+		@PageNumber = ?";
+
+        excute_prodecure_status_code($array, $sqlcommand);
+    }
     function getBT()
     {
         $sqlcommand = "select * from BillTypes for json auto";
@@ -439,22 +458,34 @@ class PEL
 {
     function getPEL()
     {
-        $sqlcommand = "select PExpencesID,PersonalExpencesList.PEID,PEType,[Date],Cost from PersonalExpencesList
-        LEFT JOIN PersonalExpencesTypes ON PersonalExpencesTypes.PEID = PersonalExpencesList.PEID
-        ORDER BY [Date] DESC FOR JSON PATH,include_null_values";
-        excute_select_operation($sqlcommand);
+        $array = array(
+            "PageNumber" => 1,
+            "PEType" => 0,
+            "D1" => 0,
+            "D2" => 0,
+            "order" => 0,
+        );
+        $sqlcommand = "EXEC	[dbo].[spGetPersonalExpenceList]
+		@PageNumber = ?,
+		@PEType = ?,
+		@D1 = ?,
+		@D2 = ?,
+		@order = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
     function addPEL()
     {
         $array = array(
             "PEID" => 1,
             "Date" => 1,
-            "Cost" => 1
+            "Cost" => 1,
+            "Description" => 0
         );
         $sqlcommand = "EXEC	[dbo].[spAddPesonalExpenseList]
-           @PEID = ?,
-           @Date = ?,
-           @Cost = ?";
+		@PEID = ?,
+		@Date = ?,
+		@Cost = ?,
+		@Description = ?";
         excute_prodecure_status_code($array, $sqlcommand);
     }
     function deletePEL()
@@ -471,12 +502,14 @@ class PEL
         $array = array(
             "Date" => 0,
             "Cost" => 0,
-            "PExpencesID" => 1
+            "PExpencesID" => 1,
+            "Description" => 0
         );
         $sqlcommand = "EXEC	[dbo].[spUpdatePersonalExpenceList]
-            @Date = ?,
-            @Cost = ?,
-            @PExpencesID = ?";
+		@Date = ?,
+		@Cost = ?,
+		@PExpencesID = ?,
+		@Description = ?";
         excute_prodecure_status_code($array, $sqlcommand);
     }
 }
@@ -484,22 +517,34 @@ class BL
 {
     function getBL()
     {
-        $sqlcommand = "select BILLEXPENCEID,BillTypes.BID,BillTypes.BILLType,[Date],Cost from BILLExpencesList 
-        LEFT JOIN BillTypes ON BillTypes.BID = BILLExpencesList.BID
-        ORDER BY [Date] DESC FOR JSON PATH,include_null_values";
-        excute_select_operation($sqlcommand);
+        $array = array(
+            "PageNumber" => 1,
+            "BILLType" => 0,
+            "D1" => 0,
+            "D2" => 0,
+            "order" => 0,
+        );
+        $sqlcommand = "EXEC	[dbo].[spGetBillExpenseList]
+		@PageNumber = ?,
+		@BILLType = ?,
+		@D1 = ?,
+		@D2 = ?,
+		@order = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
     function addBL()
     {
         $array = array(
             "BID" => 1,
             "Date" => 1,
-            "Cost" => 1
+            "Cost" => 1,
+            "Description" => 0
         );
         $sqlcommand = "EXEC	[dbo].[spAddBillExpenseList]
-            @BID = ?,
-            @Date = ?,
-            @Cost = ?";
+		@BID = ?,
+		@Date = ?,
+		@Cost = ?,
+		@Description = ?";
         excute_prodecure_status_code($array, $sqlcommand);
     }
     function deleteBL()
@@ -516,12 +561,14 @@ class BL
         $array = array(
             "Date" => 0,
             "Cost" => 0,
-            "BILLEXPENCEID" => 1
+            "BILLEXPENCEID" => 1,
+            "Description" => 0
         );
         $sqlcommand = "EXEC	[dbo].[spUpdateBillExpenceList]
-            @Date = ?,
-            @Cost = ?,
-            @BILLEXPENCEID = ?";
+		@Date = ?,
+		@Cost = ?,
+		@BILLEXPENCEID = ?,
+		@Description = ?";
         excute_prodecure_status_code($array, $sqlcommand);
     }
 }
