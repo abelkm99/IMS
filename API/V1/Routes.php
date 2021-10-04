@@ -175,14 +175,14 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
             $r->get('/getBankAccount_transactions/{PBID:\d+}', ['Bank/getTransaction', Section::PROTECTED]);
         });
         $r->addGroup('/income', function (FastRoute\RouteCollector $r) {
-            $r->get('/get_incomes', ['Income/getAllIncomes', Section::PROTECTED]);
+            $r->post('/get_incomes', ['Income/getAllIncomes', Section::PROTECTED]);
             $r->post('/add_new_income', ['Income/addNewIncome', Section::PROTECTED]);
             $r->put('/update_income', ['Income/updateIncome', Section::PROTECTED]);
             $r->delete('/delete_income', ['Income/deleteIncome', Section::PROTECTED]);
         });
         $r->addGroup('/expence', function (FastRoute\RouteCollector $r) {
             $r->addGroup('/rent', function (FastRoute\RouteCollector $r) {
-                $r->get('/get_rents', ['Rent/getRent', Section::PROTECTED]);
+                $r->post('/get_rents', ['Rent/getRent', Section::PROTECTED]);
                 $r->post('/add_rent', ['Rent/addRent', Section::PROTECTED]);
                 $r->delete('/delete_rent', ['Rent/deleteRent', Section::PROTECTED]);
                 $r->put('/update_rent', ['Rent/updateRent', Section::PROTECTED]);

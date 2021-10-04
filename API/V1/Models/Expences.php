@@ -658,8 +658,20 @@ class Rent
 {
     function getRent()
     {
-        $sqlcommand = "select * from Rent order by [Date] DESC for json path";
-        excute_select_operation($sqlcommand);
+        $params_in = array(
+            "PageNumber" => 1,
+            "RentType" => 0,
+            "D1" => 0,
+            "D2" => 0,
+            "order" => 0
+        );
+        $sqlcommand = "EXEC	[dbo].[spGetRent]
+		@PageNumber = ?,
+		@RentType = ?,
+		@D1 = ?,
+		@D2 = ?,
+		@order = ?";
+        excute_prodecure_status_code($params_in, $sqlcommand);
     }
     function addRent()
     {
