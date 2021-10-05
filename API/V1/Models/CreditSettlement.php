@@ -3,16 +3,24 @@ class GRNCreditSettlemnt
 {
     function ListAllCreditSettlemts()
     {
-        $sqlcommand = "SELECT GRN.GRNNO,convert(varchar, PurchsedDate, 20) as PurchsedDate,Supplier.SupplierName,Driver.DriverName,
-                [dbo].GetGRNCSRemainder(GRN.GRNNO)as Remainder,
-                [dbo].GetGRNPaid(GRN.GRNNO) as Paid,
-                [dbo].GetGRNTotal(GRN.GRNNO) as Total
-                from GRN 
-                LEFT JOIN Supplier ON Supplier.SupplierID = GRN.SupplierID
-                LEFT JOIN Driver ON Driver.DriverID = GRN.DriverID
-                WHERE GRN.TransactionID = 2
-                ORDER BY [PurchsedDate] DESC FOR JSON PATH,INCLUDE_NULL_VALUES";
-        excute_select_operation($sqlcommand);
+        $array = array(
+            "PageNumber" => 1,
+            "GRNNO" => 0,
+            "D1" => 0,
+            "D2" => 0,
+            "SupplierName" => 0,
+            "DriverName" => 0,
+            "order" => 0,
+        );
+        $sqlcommand = "EXEC	[dbo].[spGetAllGRNCS]
+		@PageNumber = ?,
+		@GRNNO = ?,
+		@D1 = ?,
+		@D2 = ?,
+		@SupplierName = ?,
+		@DriverName = ?,
+		@order = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
     function ListOneCreditSettlemts($GRNNO)
     {
@@ -84,16 +92,24 @@ class REFCreditSettlemnt
 {
     function ListAllCreditSettlemts()
     {
-        $sqlcommand = "SELECT Reference.REFNO,convert(varchar, [Date], 20) as SalesDate,Customer.CustomerName,Driver.DriverName,
-        [dbo].GetREFCSRemainder(Reference.REFNO)as Remainder,
-        [dbo].GetREFPaid(Reference.REFNO) as Paid,
-        [dbo].GetREFTotal(Reference.REFNO) as Total
-        from Reference 
-        LEFT JOIN Customer ON Customer.CustomerID= Reference.CutomerID
-        LEFT JOIN Driver ON Driver.DriverID = Reference.DriverID
-        WHERE Reference.TransactionID = 2
-        ORDER BY [SalesDate] DESC FOR JSON PATH,INCLUDE_NULL_VALUES";
-        excute_select_operation($sqlcommand);
+        $array = array(
+            "PageNumber" => 1,
+            "REFNO" => 0,
+            "D1" => 0,
+            "D2" => 0,
+            "CustomerName" => 0,
+            "DriverName" => 0,
+            "order" => 0,
+        );
+        $sqlcommand = "EXEC	[dbo].[spGetAllREFCS]
+		@PageNumber = ?,
+		@REFNO = ?,
+		@D1 = ?,
+		@D2 = ?,
+		@CustomerName = ?,
+		@DriverName = ?,
+		@order = ?";
+        excute_prodecure_status_code($array, $sqlcommand);
     }
     function ListOneCreditSettlemts($REFNO)
     {

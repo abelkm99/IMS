@@ -577,8 +577,16 @@ class Bank
 {
     function getAllBanks()
     {
-        $sqlcommand = "select * from PersonalBankAccount for json auto";
-        excute_select_operation($sqlcommand);
+        $input_array = array(
+            "PageNumber" => 1,
+            "BankName" => 0,
+            "order" => 0
+        );
+        $sqlcommand = "EXEC	[dbo].[spGetBankAccounts]
+		@PageNumber = ?,
+		@BankName = ?,
+		@order = ?";
+        excute_prodecure_status_code($input_array, $sqlcommand);
     }
     function getOneBank($PBID)
     {
@@ -648,10 +656,24 @@ class Bank
             @BTID = ?";
         excute_prodecure_status_code($input_array, $sqlcommand);
     }
-    function getTransaction($PBID)
+    function getTransaction()
     {
-        $sqlcommand = "select * from BankTransaction WHERE PBID = ? ORDER BY [Date] DESC FOR JSON AUTO,INCLUDE_NULL_VALUES";
-        excute_prepared_statements(array($PBID), $sqlcommand);
+        $params_in = array(
+            "PageNumber" => 1,
+            "PBID" => 0,
+            "TransactionType"=>0,
+            "D1" => 0,
+            "D2" => 0,
+            "order" => 0
+        );
+        $sqlcommand = "EXEC	[dbo].[spGetBankTransaction]
+		@PageNumber = ?,
+		@PBID = ?,
+		@TransactionType = ?,
+		@D1 = ?,
+		@D2 = ?,
+		@order = ?";
+        excute_prodecure_status_code($params_in, $sqlcommand);
     }
 }
 class Rent

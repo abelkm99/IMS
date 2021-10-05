@@ -165,14 +165,14 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
             $r->delete('/delete_order_list', ['Order/DelteOrderItem', Section::PROTECTED]);
         });
         $r->addGroup('/personalBankAccount', function (FastRoute\RouteCollector $r) {
-            $r->get('/Accounts', ['Bank/getAllBanks', Section::PROTECTED]);
+            $r->post('/Accounts', ['Bank/getAllBanks', Section::PROTECTED]);
             $r->get('/one_account/{PBID:\d+}', ['Bank/getOneBank', Section::PROTECTED]);
             $r->post('/add_bank_account', ['Bank/addNewAccount', Section::PROTECTED]);
             $r->put('/update_bank_account', ['Bank/updateBankAccount', Section::PROTECTED]);
             $r->delete('/delete_bank_account', ['Bank/deleteBankAccount', Section::PROTECTED]);
             $r->post('/add_transaction', ['Bank/addTransaction', Section::PROTECTED]);
             $r->delete('/delete_transaction', ['Bank/deleteTransaction', Section::PROTECTED]);
-            $r->get('/getBankAccount_transactions/{PBID:\d+}', ['Bank/getTransaction', Section::PROTECTED]);
+            $r->post('/getBankAccount_transactions', ['Bank/getTransaction', Section::PROTECTED]);
         });
         $r->addGroup('/income', function (FastRoute\RouteCollector $r) {
             $r->post('/get_incomes', ['Income/getAllIncomes', Section::PROTECTED]);
@@ -254,7 +254,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
 
         $r->addGroup('/creaditSettlemnt', function (FastRoute\RouteCollector $r) {
             $r->addGroup('/GRN', function (FastRoute\RouteCollector $r) {
-                $r->get('/list_all_credit_settlements', ['GRNCreditSettlemnt/ListAllCreditSettlemts', Section::PROTECTED]);
+                $r->post('/list_all_credit_settlements', ['GRNCreditSettlemnt/ListAllCreditSettlemts', Section::PROTECTED]);
                 $r->get('/get_credit_settlements/{GRNNO:\d+}', ['GRNCreditSettlemnt/ListOneCreditSettlemts', Section::PROTECTED]);
                 $r->get('/list_credit_settlement/{GRNNO:\d+}', ['GRNCreditSettlemnt/GetCreditSettlment', Section::PROTECTED]);
                 $r->post('/add_credit_settlemnts', ['GRNCreditSettlemnt/addCreditSettlemt', Section::PROTECTED]);
@@ -262,7 +262,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
                 $r->put('/update_credit_settlemt', ['GRNCreditSettlemnt/updateCreditSettlment', Section::PROTECTED]);
             });
             $r->addGroup('/REF', function (FastRoute\RouteCollector $r) {
-                $r->get('/list_all_credit_settlements', ['REFCreditSettlemnt/ListAllCreditSettlemts', Section::PROTECTED]);
+                $r->post('/list_all_credit_settlements', ['REFCreditSettlemnt/ListAllCreditSettlemts', Section::PROTECTED]);
                 $r->get('/get_credit_settlements/{REFNO:\d+}', ['REFCreditSettlemnt/ListOneCreditSettlemts', Section::PROTECTED]);
                 $r->get('/list_credit_settlement/{REFNO:\d+}', ['REFCreditSettlemnt/GetCreditSettlment', Section::PROTECTED]);
                 $r->post('/add_credit_settlemnts', ['REFCreditSettlemnt/addCreditSettlemt', Section::PROTECTED]);
