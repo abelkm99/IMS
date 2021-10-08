@@ -234,3 +234,38 @@ class BasicApi
         excute_prepared_statements($array, $sqlcommand);
     }
 }
+
+class Profile
+{
+    function UpdateAdminProfile()
+    {
+        $params_in = array(
+            "AdminID" => 1,
+            "AdminUsername" => 1,
+            "AdminCurrentPassword" => 1,
+            "AdminNewPassword" => 0,
+        );
+        $sqlcommand = "EXEC	[dbo].[spUpdateAdminProfile]
+		@AdminID = ?,
+		@AdminUsername = ?,
+		@AdminCurrentPassword = ?,
+		@AdminNewPassword = ?";
+
+        excute_prodecure_status_code($params_in, $sqlcommand);
+    }
+    function UpdateEmployeeProfile()
+    {
+        $params_in = array(
+            "EmployeeID" => 1,
+            "EmployeeUsename" => 1,
+            "EmployeeCurrentPassword" => 1,
+            "EmployeeNewPassword" => 0,
+        );
+        $sqlcommand = "EXEC	[dbo].[spUpdateEmployeeProfile]
+		@EmployeeID = ?,
+		@EmployeeUsename = ?,
+		@EmployeeCurrentPassword = ?,
+		@EmployeeNewPassword = ?";
+        excute_prodecure_status_code($params_in, $sqlcommand);
+    }
+}

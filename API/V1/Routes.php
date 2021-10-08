@@ -63,6 +63,11 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         $r->get('/transfered_items_list/{TEID:\d+}', ['BasicApi/getAllTransferedDetail', Section::PROTECTED]);
         $r->get('/get_all_inventory', ['BasicApi/getAllItemInventory', Section::PROTECTED]);
         $r->get('/item_transfer_history/{ItemID:\d+}', ['BasicApi/getItemTransferHistory', Section::PROTECTED]);
+        
+        
+        $r->post('/admin/update_profile', ['Profile/UpdateAdminProfile', Section::PROTECTED]);
+        $r->post('/employee/update_profile', ['Profile/UpdateEmployeeProfile', Section::PROTECTED]);
+
 
 
         $r->addGroup('/report', function (FastRoute\RouteCollector $r) {
