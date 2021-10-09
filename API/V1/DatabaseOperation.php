@@ -5,14 +5,14 @@ function get_connection()
 
     // $database = "Assya-Treading";
     $database = "IMSQuasar";
-    $username = "assya";
-    $password = "123";
-    $serverName = "LAPTOP-LIUFT80F";
+    // $username = "assya";
+    // $password = "123";
+    // $serverName = "LAPTOP-LIUFT80F";
 
     // $database = "Assya-Treading";
-    // $username = "abel";
-    // $password = "ABC123!@#";
-    // $serverName = "assya.database.windows.net";
+    $username = "abel";
+    $password = "ABC123!@#";
+    $serverName = "assya.database.windows.net";
 
     $connectionInfo = array("Database" => $database, "UID" => $username, "PWD" => $password);
     $conn = sqlsrv_connect($serverName, $connectionInfo);
