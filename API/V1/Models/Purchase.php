@@ -4,22 +4,20 @@
         function makeSales(){
             $array = array(
                 "Date"=>1,
-                "CutomerID"=>1,
+                "CustomerID"=>1,
                 "TransactionID"=>1,
-                "EmployeeId"=>1,
-                "DriverId"=>0,
+                "EmployeeID"=>1,
+                "DriverID"=>0,
                 "SalesInformation"=>1,
             );
             $sqlcommand = "EXEC	[dbo].[spMakeSales]
             @Date = ?,
-            @CutomerID = ?,
+            @CustomerID = ?,
             @TransactionID = ?,
             @EmployeeId = ?,
             @DriverId = ?,
-            @SalesInformation = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);             
+            @SalesInformation = ?";
+            excute_prodecure_status_code($array,$sqlcommand);             
         }
         function warehouseToStoreJson(){
 
@@ -54,9 +52,7 @@
                     @Cost = ?,
                     @DriverId = ?,
                     @json = ?,
-                    @Date = ?,
-                    @result = ?,
-                    @message = ?";
+                    @Date = ?";
                     excute_prodecure_json($params,$sqlcommand);
                 }
             }
@@ -88,10 +84,8 @@
             $sqlcommand = "EXEC	[dbo].[spShipPurchases]
             @DeliverdDate = ?,
             @GRNNO = ?,
-            @ShipmentInfo = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @ShipmentInfo = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function makePurchase(){
             $array = array(
@@ -106,10 +100,8 @@
             @SupplierID = ?,
             @TransactionID = ?,
             @DriverID = ?,
-            @PurchaseString = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);                                                                                        
+            @PurchaseString = ?";
+            excute_prodecure_status_code($array,$sqlcommand);                                                                                        
         }
         function updatePurchase(){
             $array = array(
@@ -126,10 +118,8 @@
             @Remainder = ?,
             @Extra = ?,
             @PurchaseID = ?,
-            @GRNNO = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @GRNNO = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function deletePurchase(){
             $array = array(
@@ -138,10 +128,8 @@
             );
             $sqlcommand = "EXEC	[dbo].[spDeletePurchase]
             @PurchaseID = ?,
-            @GRNNO = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @GRNNO = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function updateGRN(){
             $array = array(
@@ -156,26 +144,22 @@
             @DeliverdDate = ?,
             @SupplierID = ?,
             @DriverID = ?,
-            @GRNNO = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @GRNNO = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function updateREF(){
             $array = array(
                 "SoldDate"=>0,
-                "CutomerID"=>0,
+                "CustomerID"=>0,
                 "DriverID"=>0,
                 "REFNO"=>1
             );
             $sqlcommand = "EXEC	[dbo].[spUpdateREF]
             @SoldDate = ?,
-            @CutomerID = ?,
+            @CustomerID = ?,
             @DriverID = ?,
-            @REFNO = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @REFNO = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function updateSales(){
             $array = array(
@@ -188,10 +172,8 @@
             @PPP = ?,
             @Quantity = ?,
             @SalesID = ?,
-            @REFNO = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @REFNO = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function deleteSales(){
             $array = array(
@@ -200,44 +182,40 @@
             );
             $sqlcommand = "EXEC	[dbo].[spDeleteSales]
             @SalesID = ?,
-            @REFNO = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @REFNO = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function deleteGRN(){
             $array = array(
                 "GRNNO"=>1
             );
             $sqlcommand = "EXEC	[dbo].[spDeleteGRN]
-            @GRNNO = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @GRNNO = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function deleteREF(){
             $array = array(
                 "REFNO"=>1
             );
             $sqlcommand = "EXEC	[dbo].[spDeleteREF]
-            @REFNO = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @REFNO = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function PurchaseFromOrder(){
             $array = array(
                 "OrderID"=>1,
                 "TransactionID"=>1,
-                "DriverId"=>0
+                "DriverId"=>0,
+                "PurchaseDate"=>1,
+                "SupplierID"=>1
             );
             $sqlcommand = "EXEC	[dbo].[spOrderToGRN]
             @OrderID = ?,
             @TransactionID = ?,
             @DriverId = ?,
-            @result = ?,
-            @message = ?";
-            excute_prodecure($array,$sqlcommand);
+            @PurchaseDate = ?,
+            @SupplierID = ?";
+            excute_prodecure_status_code($array,$sqlcommand);
         }
         function updateMovedData(){
             $array = array(
@@ -259,15 +237,15 @@
             );
             $sqlcommand = "EXEC	[dbo].[spDeleteTransferedItem]
             @WSID = ?";
-            excute_prodecure2($params_in,$sqlcommand);
+            excute_prodecure_status_code($params_in,$sqlcommand);
         }
         function deleteTEID(){
             $params_in = array(
                 "TEID"=>1
             );
-            $sqlcommand = "EXEC	[dbo].[spDeleteAllTransferedItems]
+            $sqlcommand = "EXEC	[dbo].[spDeleteTransferExpence]
             @TEID = ?";
-            excute_prodecure2($params_in,$sqlcommand);
+            excute_prodecure_status_code($params_in,$sqlcommand);
         }
         function updateTransferCount(){
             $sqlcommand = "EXEC	[dbo].[spUpdateTransferedItem]
@@ -277,7 +255,7 @@
                 "WSID"=>1,
                 "newtransferdCount"=>1
             );
-            excute_prodecure2($params_in,$sqlcommand);
+            excute_prodecure_status_code($params_in,$sqlcommand);
 
         }
         function updateTEID(){
@@ -292,6 +270,6 @@
                 "Cost"=>0,
                 "DriverID"=>0
             );
-            excute_prodecure2($params_in,$sqlcommand);
+            excute_prodecure_status_code($params_in,$sqlcommand);
         }
     }

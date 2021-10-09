@@ -2,6 +2,20 @@
 class Auth
 {
     public static $header;
+    function DatabaseTest()
+    {
+        $conn = get_connection();
+        if ($conn) {
+            http_response_code(200);
+
+            $response = array("message" => "connection_established");
+            print_r(json_encode($response));
+        } else {            
+            http_response_code(500);
+            print_r(json_encode(sqlsrv_errors()));
+            return;
+        }
+    }
     function Login()
     {
         $conn = get_connection();
@@ -52,7 +66,7 @@ class Auth
 
         // check if the user is an employee
 
-        $sql = "SELECT * FROM [Employee] WHERE [EmployeeUserName] = ? AND [EmployeePassword] = ?";
+        $sql = "SELECT * FROM [Employee] WHERE [EmployeeUserName] = ? AND [EmployeePassword] = ? AND [Activated] = 1";
         $stmt = sqlsrv_query($conn, $sql, array(&$username, &$password));
 
         if ($stmt === false) {
@@ -68,7 +82,7 @@ class Auth
             return;
         }
         http_response_code(401);
-        $response = array("Role" => "Unknown", "Message" => "invalid username or password");
+        $response = array("Role" => "Unknown", "message" => "invalid username or password");
         print_r(json_encode($response));
         sqlsrv_free_stmt($stmt);
 
@@ -95,7 +109,7 @@ class Auth
                 $headers = trim($requestHeaders['Authorization']);
             }
         }
-       
+
         return $headers;
     }
     /**

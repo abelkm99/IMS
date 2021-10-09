@@ -25,7 +25,7 @@ function cors()
 
         if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
             // may also be using PUT, PATCH, HEAD etc
-            header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+            header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 
         if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
             header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
@@ -40,22 +40,35 @@ require "packages.php";
 
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
 
-    $r->addGroup('/ims/api/v1', function (FastRoute\RouteCollector $r) {
+    $r->addGroup('/quasar_api/api/v1', function (FastRoute\RouteCollector $r) {
 
         $r->post('/login', 'Auth/Login');
+        $r->get('/check_database_connection', 'Auth/DatabaseTest');
 
         $r->get('/get_transaction_type', ['BasicApi/getTransactionType', Section::PROTECTED]);
-        $r->get('/get_item_stock/{ItemID:\d+}', ['BasicApi/getItemStock', Section::PROTECTED]);
-        $r->get('/get_grn/{GRNNO:\d+}', ['BasicApi/getGRN', Section::PROTECTED]);
+        $r->post('/get_item_stock', ['BasicApi/getItemStock', Section::PROTECTED]);
+        $r->get('/get_grn_detail/{GRNNO:\d+}', ['BasicApi/getGRNDetail', Section::PROTECTED]);
+        $r->get('/get_grn_detail_notshiped/{GRNNO:\d+}', ['BasicApi/getGRNDetaitNotShiped', Section::PROTECTED]);
+        $r->get('/get_grn_one/{GRNNO:\d+}', ['BasicApi/getONEGRN', Section::PROTECTED]);
         $r->get('/get_ref/{REFNO:\d+}', ['BasicApi/getREF', Section::PROTECTED]);
+        $r->get('/get_ref_detail/{REFNO:\d+}', ['BasicApi/getREFDetail', Section::PROTECTED]);
         $r->get('/get_order/{OrderID:\d+}', ['BasicApi/getOrder,Section::PROTECTED']);
-        $r->get('/get_grns', ['BasicApi/getALLGRN', Section::PROTECTED]);
-        $r->get('/get_refs', ['BasicApi/getAllReferences', Section::PROTECTED]);
-        $r->get('/get_purchase_orders', ['BasicApi/getAllPurchaseOrders', Section::PROTECTED]);
-        $r->get('/get_sales_orders', ['BasicApi/getAllSalesOrders', Section::PROTECTED]);
-        $r->get('/grn_not_delivered', ['BasicApi/getAllGRNSNOTDelivered', Section::PROTECTED]);
-        $r->get('/transfered_Items_List', ['BasicApi/getAllTransferedInfo', Section::PROTECTED]);
+        $r->post('/get_grns', ['BasicApi/getALLGRN', Section::PROTECTED]);
+        $r->post('/get_refs', ['BasicApi/getAllReferences', Section::PROTECTED]);
+        $r->post('/get_purchase_orders', ['BasicApi/getAllPurchaseOrders', Section::PROTECTED]);
+        $r->post('/get_sales_orders', ['BasicApi/getAllSalesOrders', Section::PROTECTED]);
+        $r->post('/grn_not_delivered', ['BasicApi/getAllGRNSNOTDelivered', Section::PROTECTED]);
+        $r->post('/transfered_items', ['BasicApi/getAllTransferedInfo', Section::PROTECTED]);
+        $r->get('/transfered_item/{TEID:\d+}', ['BasicApi/getOneTransferedInfo', Section::PROTECTED]);
+        $r->get('/transfered_items_list/{TEID:\d+}', ['BasicApi/getAllTransferedDetail', Section::PROTECTED]);
         $r->get('/get_all_inventory', ['BasicApi/getAllItemInventory', Section::PROTECTED]);
+        $r->get('/item_transfer_history/{ItemID:\d+}', ['BasicApi/getItemTransferHistory', Section::PROTECTED]);
+        
+        
+        $r->post('/admin/update_profile', ['Profile/UpdateAdminProfile', Section::PROTECTED]);
+        $r->post('/employee/update_profile', ['Profile/UpdateEmployeeProfile', Section::PROTECTED]);
+
+
 
         $r->addGroup('/report', function (FastRoute\RouteCollector $r) {
             $r->post('/get_all_report', ['Report/get_overal_report', Section::PROTECTED]);
@@ -64,6 +77,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         });
 
         $r->addGroup('/supplier', function (FastRoute\RouteCollector $r) {
+            $r->post('/listSuppliers_pagination', ['Supplier/getAllSupplierPagination', Section::PROTECTED]);
             $r->get('/listSuppliers', ['Supplier/ListAllSuppliers', Section::PROTECTED]);
             $r->get('/listSupplier/{Suppliername}', ['supplier/getSupplierInformation', Section::PROTECTED]);
             $r->post('/addSupplier', ['supplier/addSupplier', Section::PROTECTED]);
@@ -71,11 +85,12 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
             $r->get('/list_supplier_bankaccount/{SupplierID:\d+}', ['supplier/getSupplierBankAccount', Section::PROTECTED]);
             $r->post('/add_supplier_bankaccount', ['supplier/addSupplierBankAccount', Section::PROTECTED]);
             $r->put('/update_supplier_bankaccount', ['supplier/updateSupplierBankAccount', Section::PROTECTED]);
-            $r->delete('/delete_supplier_bankaccount/{BankAcountId:\d+}', ['supplier/delteSupplierBankAccount', Section::PROTECTED]);
+            $r->delete('/delete_supplier_bankaccount', ['supplier/delteSupplierBankAccount', Section::PROTECTED]);
             $r->delete('/deleteSupplier', ['supplier/deleteSupplier', Section::PROTECTED]);
         });
 
         $r->addGroup('/driver', function (FastRoute\RouteCollector $r) {
+            $r->post('/list_drivers_pagination', ['Driver/ListAllDriversPagination', Section::PROTECTED]);
             $r->get('/list_drivers', ['Driver/ListAllDrivers', Section::PROTECTED]);
             $r->get('/list_driver/{Drivername}', ['Driver/getDriverInformation', Section::PROTECTED]);
             $r->post('/add_driver', ['Driver/addDriver', Section::PROTECTED]);
@@ -84,7 +99,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         });
 
         $r->addGroup('/employee', function (FastRoute\RouteCollector $r) {
-            $r->get('/list_employees', ['Employee/ListAllEmployees']);
+            $r->post('/list_employees_pagination', ['Employee/getEmployeePagination', Section::PROTECTED]);
+            $r->get('/list_employees', ['Employee/ListAllEmployees', Section::PROTECTED]);
             $r->get('/list_employee_info/{EmployeeId:\d+}', ['Employee/getEmployeeInfromation', Section::PROTECTED]);
             $r->post('/add_employee', ['Employee/addEmployee', Section::PROTECTED]);
             $r->put('/update_employee', ['Employee/updateEmployee', Section::PROTECTED]);
@@ -94,6 +110,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
             $r->delete('/delete_employee', ['Employee/deleteEmployee', Section::PROTECTED]);
         });
         $r->addGroup('/customer', function (FastRoute\RouteCollector $r) {
+            $r->post('/list_customers_pagination', ['Customer/getCustomer_pagination', Section::PROTECTED]);
             $r->get('/list_customers', ['Customer/ListAllCustomers', Section::PROTECTED]);
             $r->get('/list_customer/{CustomerName}', ['Customer/getCustomerInformation', Section::PROTECTED]);
             $r->post('/add_customer', ['Customer/addCustomer', Section::PROTECTED]);
@@ -101,17 +118,19 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
             $r->get('/list_customer_bankaccount/{CustomerId:\d+}', ['Customer/getCustomerBankAccount', Section::PROTECTED]);
             $r->post('/add_customer_bankaccount', ['Customer/addCustomerBankAccount', Section::PROTECTED]);
             $r->put('/update_customer_bankaccount', ['Customer/updateCustomerBankAccount', Section::PROTECTED]);
-            $r->delete('/delete_customer_bankaccount/{BankAcountId:\d+}', ['Customer/deleteCustomerBankAccount', Section::PROTECTED]);
+            $r->delete('/delete_customer_bankaccount', ['Customer/deleteCustomerBankAccount', Section::PROTECTED]);
             $r->delete('/delete_customer', ['Customer/deleteCustomer', Section::PROTECTED]);
         });
         $r->addGroup('/category', function (FastRoute\RouteCollector $r) {
-            $r->get('/getcategories', ['Category/getAllCategories', Section::PROTECTED]);
+            $r->get('/getcategories_nopagination', ['Category/getAllCategoriesNoPagination', Section::PROTECTED]);
+            $r->post('/getcategories', ['Category/getAllCategories', Section::PROTECTED]);
             $r->post('/addcategory', ['Category/addCategory', Section::PROTECTED]);
             $r->put('/update_category', ['Category/updateCategory', Section::PROTECTED]);
             $r->delete('/delete_category', ['Category/deleteCategory', Section::PROTECTED]);
         });
         $r->addGroup('/item', function (FastRoute\RouteCollector $r) {
-            $r->get('/get_items', ['Item/getAllItems', Section::PROTECTED]);
+            $r->get('/get_items_nopagination', ['Item/getAllItemsNoPagination', Section::PROTECTED]);
+            $r->post('/get_items', ['Item/getAllItems', Section::PROTECTED]);
             $r->post('/add_new_item', ['Item/addNewItem', Section::PROTECTED]);
             $r->put('/update_item', ['Item/updateItem', Section::PROTECTED]);
             $r->put('/update_item_price', ['Item/updateItemPrice', Section::PROTECTED]);
@@ -143,38 +162,40 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         $r->addGroup('/order', function (FastRoute\RouteCollector $r) {
             $r->get('/list_orders', ['Order/ListAllOrders', Section::PROTECTED]);
             $r->get('/list_order/{orderId:\d+}', ['Order/getOrder', Section::PROTECTED]);
+            $r->get('/list_orderd_items/{orderId:\d+}', ['Order/getOrderedItems', Section::PROTECTED]);
             $r->post('/make_order', ['Order/makeNewOrder', Section::PROTECTED]);
-            $r->delete('/delete_order/{orderId:\d+}', ['Order/deleteOrder', Section::PROTECTED]);
+            $r->delete('/delete_order', ['Order/deleteOrder', Section::PROTECTED]);
             $r->put('/update_order', ['Order/updateOrder', Section::PROTECTED]);
             $r->put('/update_order_list', ['Order/updateOrderList', Section::PROTECTED]);
-            $r->delete('/delete_order_list/{OrderdItemId:\d+}', ['Order/DelteOrderItem', Section::PROTECTED]);
+            $r->delete('/delete_order_list', ['Order/DelteOrderItem', Section::PROTECTED]);
         });
         $r->addGroup('/personalBankAccount', function (FastRoute\RouteCollector $r) {
-            $r->get('/Accounts', ['Bank/getAllBanks', Section::PROTECTED]);
+            $r->post('/Accounts', ['Bank/getAllBanks', Section::PROTECTED]);
+            $r->get('/one_account/{PBID:\d+}', ['Bank/getOneBank', Section::PROTECTED]);
             $r->post('/add_bank_account', ['Bank/addNewAccount', Section::PROTECTED]);
             $r->put('/update_bank_account', ['Bank/updateBankAccount', Section::PROTECTED]);
             $r->delete('/delete_bank_account', ['Bank/deleteBankAccount', Section::PROTECTED]);
             $r->post('/add_transaction', ['Bank/addTransaction', Section::PROTECTED]);
             $r->delete('/delete_transaction', ['Bank/deleteTransaction', Section::PROTECTED]);
-            $r->get('/getBankAccount_transactions/{PBID:\d+}', ['Bank/getTransaction', Section::PROTECTED]);
+            $r->post('/getBankAccount_transactions', ['Bank/getTransaction', Section::PROTECTED]);
         });
         $r->addGroup('/income', function (FastRoute\RouteCollector $r) {
-            $r->get('/get_incomes', ['Income/getAllIncomes', Section::PROTECTED]);
+            $r->post('/get_incomes', ['Income/getAllIncomes', Section::PROTECTED]);
             $r->post('/add_new_income', ['Income/addNewIncome', Section::PROTECTED]);
             $r->put('/update_income', ['Income/updateIncome', Section::PROTECTED]);
             $r->delete('/delete_income', ['Income/deleteIncome', Section::PROTECTED]);
         });
         $r->addGroup('/expence', function (FastRoute\RouteCollector $r) {
             $r->addGroup('/rent', function (FastRoute\RouteCollector $r) {
-                $r->get('/get_rents', ['Rent/getRent', Section::PROTECTED]);
+                $r->post('/get_rents', ['Rent/getRent', Section::PROTECTED]);
                 $r->post('/add_rent', ['Rent/addRent', Section::PROTECTED]);
                 $r->delete('/delete_rent', ['Rent/deleteRent', Section::PROTECTED]);
                 $r->put('/update_rent', ['Rent/updateRent', Section::PROTECTED]);
             });
             $r->addGroup('/unloadingExpence', function (FastRoute\RouteCollector $r) {
-                $r->get('/get_unloading_expence', ['LoadUnLoadExpences/getUnloadingExpences', Section::PROTECTED]);
+                $r->post('/get_unloading_expence', ['LoadUnLoadExpences/getUnloadingExpences', Section::PROTECTED]);
                 $r->post('/add_unloading_expence', ['LoadUnLoadExpences/addUnloadingExpence', Section::PROTECTED]);
-                $r->delete('/delete_unloading_expence/{UnloadId:\d+}', ['LoadUnLoadExpences/deleteUnloadingExpence', Section::PROTECTED]);
+                $r->delete('/delete_unloading_expence', ['LoadUnLoadExpences/deleteUnloadingExpence', Section::PROTECTED]);
                 $r->put('/update_unloading_expence', ['LoadUnLoadExpences/updateUnloadingExpence', Section::PROTECTED]);
             });
             $r->addGroup('/loadingExpence', function (FastRoute\RouteCollector $r) {
@@ -184,66 +205,71 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
                 $r->put('/update_loading_expence', ['LoadUnLoadExpences/updateloadingExpence', Section::PROTECTED]);
             });
             $r->addGroup('/masatefiya', function (FastRoute\RouteCollector $r) {
-                $r->get('/get_masatefiya_expense', ['Masatefiya/getMasatefiyaExpence', Section::PROTECTED]);
+                $r->post('/get_masatefiya_expense', ['Masatefiya/getMasatefiyaExpence', Section::PROTECTED]);
                 $r->post('/add_masatefiya_expence', ['Masatefiya/addMasatefiyaExpence', Section::PROTECTED]);
-                $r->delete('/delete_masatefiya_expence/{MID:\d+}', ['Masatefiya/deleteMasatefiyaExpence', Section::PROTECTED]);
+                $r->delete('/delete_masatefiya_expence', ['Masatefiya/deleteMasatefiyaExpence', Section::PROTECTED]);
                 $r->put('/update_masatefiya_expence', ['Masatefiya/updateMasatefiyaExpence', Section::PROTECTED]);
             });
             $r->addGroup('/salary', function (FastRoute\RouteCollector $r) {
-                $r->get('/get_salary_expense', ['Salary/getSalaryExpence', Section::PROTECTED]);
+                $r->post('/get_salary_expense', ['Salary/getSalaryExpence', Section::PROTECTED]);
                 $r->post('/add_salary_expence', ['Salary/addSalaryExpence', Section::PROTECTED]);
-                $r->delete('/delete_salary_expence/{SalaryId:\d+}', ['Salary/deleteSalaryExpence', Section::PROTECTED]);
+                $r->delete('/delete_salary_expence', ['Salary/deleteSalaryExpence', Section::PROTECTED]);
                 $r->put('/update_salary_expence', ['Salary/updateSalaryExpence', Section::PROTECTED]);
             });
             $r->addGroup('/OET', function (FastRoute\RouteCollector $r) {
+                $r->post('/get_OET_pagination', ['OET/getOET_Pagination', Section::PROTECTED]);
                 $r->get('/get_OET', ['OET/getOET', Section::PROTECTED]);
                 $r->post('/add_OET', ['OET/addOET', Section::PROTECTED]);
-                $r->delete('/delete_OET/{OEID:\d+}', ['OET/deleteOET', Section::PROTECTED]);
+                $r->delete('/delete_OET', ['OET/deleteOET', Section::PROTECTED]);
                 $r->put('/update_OET', ['OET/updateOET', Section::PROTECTED]);
             });
             $r->addGroup('/PET', function (FastRoute\RouteCollector $r) {
+                $r->post('/get_PET_pagination', ['PET/getPET_Pagination', Section::PROTECTED]);
                 $r->get('/get_PET', ['PET/getPET', Section::PROTECTED]);
                 $r->post('/add_PET', ['PET/addPET', Section::PROTECTED]);
-                $r->delete('/delete_PET/{PEID:\d+}', ['PET/deletePET', Section::PROTECTED]);
+                $r->delete('/delete_PET', ['PET/deletePET', Section::PROTECTED]);
                 $r->put('/update_PET', ['PET/updatePET', Section::PROTECTED]);
             });
             $r->addGroup('/BT', function (FastRoute\RouteCollector $r) {
+                $r->post('/get_BT_pagination', ['BT/getBTPagination', Section::PROTECTED]);
                 $r->get('/get_BT', ['BT/getBT', Section::PROTECTED]);
                 $r->post('/add_BT', ['BT/addBT', Section::PROTECTED]);
-                $r->delete('/delete_BT/{BID:\d+}', ['BT/deleteBT', Section::PROTECTED]);
+                $r->delete('/delete_BT', ['BT/deleteBT', Section::PROTECTED]);
                 $r->put('/update_BT', ['BT/updateBT', Section::PROTECTED]);
             });
             $r->addGroup('/OEL', function (FastRoute\RouteCollector $r) {
-                $r->get('/get_OEL', ['OEL/getOEL', Section::PROTECTED]);
+                $r->post('/get_OEL', ['OEL/getOEL', Section::PROTECTED]);
                 $r->post('/add_OEL', ['OEL/addOEL', Section::PROTECTED]);
-                $r->delete('/delete_OEL/{OExpencesID:\d+}', ['OEL/deleteOEL', Section::PROTECTED]);
+                $r->delete('/delete_OEL', ['OEL/deleteOEL', Section::PROTECTED]);
                 $r->put('/update_OEL', ['OEL/updateOEL', Section::PROTECTED]);
             });
             $r->addGroup('/PEL', function (FastRoute\RouteCollector $r) {
-                $r->get('/get_PEL', ['PEL/getPEL', Section::PROTECTED]);
+                $r->post('/get_PEL', ['PEL/getPEL', Section::PROTECTED]);
                 $r->post('/add_PEL', ['PEL/addPEL', Section::PROTECTED]);
-                $r->delete('/delete_PEL/{PExpencesID:\d+}', ['PEL/deletePEL', Section::PROTECTED]);
+                $r->delete('/delete_PEL', ['PEL/deletePEL', Section::PROTECTED]);
                 $r->put('/update_PEL', ['PEL/updatePEL', Section::PROTECTED]);
             });
             $r->addGroup('/BL', function (FastRoute\RouteCollector $r) {
-                $r->get('/get_BL', ['BL/getBL', Section::PROTECTED]);
+                $r->post('/get_BL', ['BL/getBL', Section::PROTECTED]);
                 $r->post('/add_BL', ['BL/addBL', Section::PROTECTED]);
-                $r->delete('/delete_BL/{BILLEXPENCEID:\d+}', ['BL/deleteBL', Section::PROTECTED]);
+                $r->delete('/delete_BL', ['BL/deleteBL', Section::PROTECTED]);
                 $r->put('/update_BL', ['BL/updateBL', Section::PROTECTED]);
             });
         });
 
         $r->addGroup('/creaditSettlemnt', function (FastRoute\RouteCollector $r) {
             $r->addGroup('/GRN', function (FastRoute\RouteCollector $r) {
-                $r->get('/list_all_credit_settlements', ['GRNCreditSettlemnt/ListAllCreditSettlemts', Section::PROTECTED]);
-                $r->get('/list_credit_settlement/{CSID:\d+}', ['GRNCreditSettlemnt/GetCreditSettlment', Section::PROTECTED]);
+                $r->post('/list_all_credit_settlements', ['GRNCreditSettlemnt/ListAllCreditSettlemts', Section::PROTECTED]);
+                $r->get('/get_credit_settlements/{GRNNO:\d+}', ['GRNCreditSettlemnt/ListOneCreditSettlemts', Section::PROTECTED]);
+                $r->get('/list_credit_settlement/{GRNNO:\d+}', ['GRNCreditSettlemnt/GetCreditSettlment', Section::PROTECTED]);
                 $r->post('/add_credit_settlemnts', ['GRNCreditSettlemnt/addCreditSettlemt', Section::PROTECTED]);
                 $r->delete('/delete_credit_settlemnts', ['GRNCreditSettlemnt/deleteCreditSettlment', Section::PROTECTED]);
                 $r->put('/update_credit_settlemt', ['GRNCreditSettlemnt/updateCreditSettlment', Section::PROTECTED]);
             });
             $r->addGroup('/REF', function (FastRoute\RouteCollector $r) {
-                $r->get('/list_all_credit_settlements', ['REFCreditSettlemnt/ListAllCreditSettlemts', Section::PROTECTED]);
-                $r->get('/list_credit_settlement/{CSID:\d+}', ['REFCreditSettlemnt/GetCreditSettlment', Section::PROTECTED]);
+                $r->post('/list_all_credit_settlements', ['REFCreditSettlemnt/ListAllCreditSettlemts', Section::PROTECTED]);
+                $r->get('/get_credit_settlements/{REFNO:\d+}', ['REFCreditSettlemnt/ListOneCreditSettlemts', Section::PROTECTED]);
+                $r->get('/list_credit_settlement/{REFNO:\d+}', ['REFCreditSettlemnt/GetCreditSettlment', Section::PROTECTED]);
                 $r->post('/add_credit_settlemnts', ['REFCreditSettlemnt/addCreditSettlemt', Section::PROTECTED]);
                 $r->delete('/delete_credit_settlemnts', ['REFCreditSettlemnt/deleteCreditSettlment', Section::PROTECTED]);
                 $r->put('/update_credit_settlemt', ['REFCreditSettlemnt/updateCreditSettlment', Section::PROTECTED]);
@@ -269,7 +295,9 @@ $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
         // ... 404 Not Found
-        echo "<h1> 404 Invalid URL</h1>";
+        http_response_code(404);
+        $res = array('message' => '404 Invalid URL');
+        print_r(json_encode($res));
         break;
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
         $allowedMethods = $routeInfo[1];
@@ -282,16 +310,14 @@ switch ($routeInfo[0]) {
 
             //authenticate user 
 
-            if (validate_accesstoken($allowed_roles)){
-                
+            // if (false){
+            if (validate_accesstoken($allowed_roles)) {
+
                 $handler = $routeInfo[1][0];
                 $vars    = $routeInfo[2];
-
-            }else{
+            } else {
                 return;
             }
-
-
         } else {
             $handler = $routeInfo[1];
             $vars    = $routeInfo[2];
