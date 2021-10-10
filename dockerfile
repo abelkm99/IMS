@@ -66,7 +66,9 @@ RUN apt-get install nano git -y
 RUN git clone https://github.com/abelkm99/IMS.git
 RUN mv IMS quasar_api
 WORKDIR /var/www/html/quasar_api
+RUN ls
 RUN composer install 
+RUN cp -r ./docker_resource/spa/* ../
 RUN cp ./docker_resource/apache2.conf /etc/apache2/
 RUN cp ./docker_resource/.htaccess ../  
 RUN a2enmod rewrite
