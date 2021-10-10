@@ -4,6 +4,7 @@ class Auth
     public static $header;
     function DatabaseTest()
     {
+        print_r(getenv());
         $conn = get_connection();
         if ($conn) {
             http_response_code(200);

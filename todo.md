@@ -416,5 +416,11 @@ Ending Inventory (EI). The value of any unsold, on-hand inventory at the end of 
 [] Get All other Expence List
 [] Get All BILLEXPENCE LIST
 [] Rent
+    
+# Deploy the web app on docker
+docker run --name quasar -t -d -p 80:80 -v C:\xampp\htdocs\quasar_api:/var/www/html/quasar_api abelkm/php_server
+
+docker exec -it quasar /bin/bash
+
 
 

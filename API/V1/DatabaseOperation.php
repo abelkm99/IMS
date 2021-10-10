@@ -333,7 +333,7 @@ function excute_prodecure_status_code($inputs, $sqlcommand)
 
                 $jsonString = concatranteJson($result);
                 $decoded_response = json_decode($jsonString);
-                if (array_key_exists("status_code", $decoded_response)) {
+                if (array_key_exists("status_code", get_object_vars($decoded_response))) {
                     http_response_code($decoded_response->status_code);
                 } else {
                     http_response_code(200);

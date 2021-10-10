@@ -2,9 +2,10 @@
 
 function key_value_Validator($array,$json){
     $check = true;
+    return true;
     foreach($array as $key => $value){
-        if(array_key_exists($key,$json)){
-            $data = $json->$key;
+        if(array_key_exists($key,get_object_vars($json))){
+            $data = $json[$key];
             if(1==$value && $data==null){
                 $check = false;
                 break;
