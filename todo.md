@@ -418,7 +418,7 @@ Ending Inventory (EI). The value of any unsold, on-hand inventory at the end of 
 [] Rent
     
 # Deploy the web app on docker
-docker run --name quasar -t -d -p 80:80 -v C:\xampp\htdocs\quasar_api:/var/www/html/quasar_api abelkm/php_server
+docker run --name quasar2 -t -d -p 80:80 -v C:\xampp\htdocs\quasar_api:/var/www/html/quasar_api abelkm/ims
 
 docker exec -it quasar /bin/bash
 

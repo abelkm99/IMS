@@ -108,25 +108,25 @@ class BasicApi
 		@order = ?";
         excute_prodecure_status_code($params_in, $sqlcommand);
     }
-    function getGRNDetaitNotShiped($GRNO)
+    function getGRNDetaitNotShiped($GRNNO)
     {
         $sqlcommand = "select PurchaseID,Purchase.GRNNO,ItemType,ItemCode,Purchase.PPP,Quantity,Total,ISNULL(Remainder,0) as Remainder,ISNULL(Extra,0) as Extra
             from Purchase INNER JOIN Item on Item.ItemID = Purchase.ItemID Inner JOIN GRN on GRN.GRNNO = Purchase.GRNNO
             WHERE Purchase.GRNNO = ? AND GRN.Delivered = 0
             FOR JSON PATH,INCLUDE_NULL_VALUES";
-        $array = array($GRNO);
+        $array = array($GRNNO);
         excute_prepared_statements($array, $sqlcommand);
     }
-    function getGRNDetail($GRNO)
+    function getGRNDetail($GRNNO)
     {
         $sqlcommand = "select PurchaseID,GRNNO,ItemType,ItemCode,Purchase.PPP,Quantity,Total,Remainder,Extra 
             from Purchase INNER JOIN Item on Item.ItemID = Purchase.ItemID
             WHERE GRNNO = ?
             FOR JSON PATH,INCLUDE_NULL_VALUES";
-        $array = array($GRNO);
+        $array = array($GRNNO);
         excute_prepared_statements($array, $sqlcommand);
     }
-    function getONEGRN($GRNO)
+    function getONEGRN($GRNNO)
     {
         $sqlcommand = "select GRN.GRNNO,Delivered,convert(varchar, PurchsedDate, 20) as PurchsedDate,
             convert(varchar, DeliverdDate, 20) as DeliverdDate,SupplierName,TransactionType,DriverName,
@@ -136,7 +136,7 @@ class BasicApi
             LEFT JOIN Driver on GRN.DriverID = Driver.DriverID
             WHERE GRN.GRNNO = ?
             FOR JSON PATH,INCLUDE_NULL_VALUES,WITHOUT_ARRAY_WRAPPER";
-        $array = array($GRNO);
+        $array = array($GRNNO);
         excute_prepared_statements($array, $sqlcommand);
     }
     function getREF($REFNO)
