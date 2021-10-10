@@ -32,7 +32,7 @@ RUN phpenmod -v 8.0 sqlsrv pdo_sqlsrv
 # Step 4. Install Apache and configure driver loading (Ubuntu)
 RUN su
 RUN apt-get install libapache2-mod-php8.0 apache2
-RUN apt install php-mbstring
+RUN apt-get install php-mbstring -y
 RUN a2dismod mpm_event
 RUN a2enmod mpm_prefork
 RUN a2enmod php8.0
@@ -63,11 +63,12 @@ CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
 # install nano
 RUN apt-get install nano git -y
 # clone project repo
-RUN git clone https://github.com/abelkm99/ims_final
-RUN mv ims_final ims
-WORKDIR /var/www/html/ims
+RUN git clone https://github.com/abelkm99/IMS.git
+RUN mv IMS quasar_api
+WORKDIR /var/www/html/quasar_api
 RUN composer install 
-RUN cp apache2.conf /etc/apache2/
+RUN cp ./docker_resource/apache2.conf /etc/apache2/
+RUN cp ./docker_resource/.htaccess ../  
 RUN a2enmod rewrite
 RUN service apache2 restart
 
