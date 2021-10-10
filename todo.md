@@ -1,9 +1,6 @@
     suggestion
 ------------------
-<<<<<<< HEAD
 [ ] figure out backup methods
-=======
->>>>>>> 749bbd2c26410f2116ab8648792ffcb1862d3c95
 [x] do all primary keys and constraints 
 [ ] paginations
 [ ] change loading expences and unloading expences togeather  for only one GRN
