@@ -421,6 +421,8 @@ Ending Inventory (EI). The value of any unsold, on-hand inventory at the end of 
 docker run --name quasar2 -t -d -p 80:80 -v C:\xampp\htdocs\quasar_api:/var/www/html/quasar_api abelkm/ims
 
 docker exec -it quasar /bin/bash
+# to debug 500 problems
+    tail -n 20 /var/log/apache2/error.log
 
 
 
