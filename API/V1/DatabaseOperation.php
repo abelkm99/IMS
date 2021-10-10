@@ -3,16 +3,23 @@
 function get_connection()
 {
 
-    // $database = "Assya-Treading";
-    $database = "IMSQuasar";
-    // $username = "assya";
-    // $password = "123";
-    // $serverName = "LAPTOP-LIUFT80F";
+    $serverName = null;
+    $database = null;
+    $username = null;
+    $password = null;
+    if ($_ENV['connection_type'] == 'localhost') {
+        $serverName = $_ENV['local_servername'];
+        $database = $_ENV['local_database_name'];
+        $username = $_ENV['local_username'];
+        $password = $_ENV['local_password'];
+    }
+    if ($_ENV['connection_type'] == 'azure') {
+        $serverName = $_ENV['servername'];
+        $database = $_ENV['database_name'];
+        $username = $_ENV['username'];
+        $password = $_ENV['password'];
+    }
 
-    // $database = "Assya-Treading";
-    $username = "abel";
-    $password = "ABC123!@#";
-    $serverName = "assya.database.windows.net";
 
     $connectionInfo = array("Database" => $database, "UID" => $username, "PWD" => $password);
     $conn = sqlsrv_connect($serverName, $connectionInfo);

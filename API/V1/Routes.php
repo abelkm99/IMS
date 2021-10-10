@@ -1,6 +1,8 @@
 <?php
+require "packages.php";
 
 header('Content-type: application/json');
+
 class Section
 {
     public const PROTECTED = array('Admin', 'Employee');
@@ -36,7 +38,6 @@ function cors()
 
 cors();
 
-require "packages.php";
 
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
 
