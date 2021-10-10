@@ -80,7 +80,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         $r->addGroup('/supplier', function (FastRoute\RouteCollector $r) {
             $r->post('/listSuppliers_pagination', ['Supplier/getAllSupplierPagination', Section::PROTECTED]);
             $r->get('/listSuppliers', ['Supplier/ListAllSuppliers', Section::PROTECTED]);
-            $r->get('/listSupplier/{Suppliername}', ['supplier/getSupplierInformation', Section::PROTECTED]);
+            $r->get('/listSupplier/{SupplierId:\d+}', ['supplier/getSupplierInformation', Section::PROTECTED]);
             $r->post('/addSupplier', ['supplier/addSupplier', Section::PROTECTED]);
             $r->put('/updateSupplier', ['supplier/updateSupplier', Section::PROTECTED]);
             $r->get('/list_supplier_bankaccount/{SupplierID:\d+}', ['supplier/getSupplierBankAccount', Section::PROTECTED]);
@@ -113,7 +113,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         $r->addGroup('/customer', function (FastRoute\RouteCollector $r) {
             $r->post('/list_customers_pagination', ['Customer/getCustomer_pagination', Section::PROTECTED]);
             $r->get('/list_customers', ['Customer/ListAllCustomers', Section::PROTECTED]);
-            $r->get('/list_customer/{CustomerName}', ['Customer/getCustomerInformation', Section::PROTECTED]);
+            $r->get('/list_customer/{CustomerID:\d+}', ['Customer/getCustomerInformation', Section::PROTECTED]);
             $r->post('/add_customer', ['Customer/addCustomer', Section::PROTECTED]);
             $r->put('/update_customer', ['Customer/updateCustomer', Section::PROTECTED]);
             $r->get('/list_customer_bankaccount/{CustomerId:\d+}', ['Customer/getCustomerBankAccount', Section::PROTECTED]);
