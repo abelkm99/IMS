@@ -70,9 +70,9 @@ class Supplier
             @SupplierID = ?";
         excute_prodecure_status_code($array, $sqlcommand);
     }
-    function getSupplierBankAccount($SupplierId)
+    function getSupplierBankAccount($SupplierID)
     {
-        $param_in = array($SupplierId);
+        $param_in = array($SupplierID);
         $sqlcommand = "select * from SupplierBankAccounts where SupplierID = ? for json auto";
         excute_prepared_statements($param_in, $sqlcommand);
     }

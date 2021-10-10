@@ -10,7 +10,7 @@ class Order
                             for json auto";
         excute_select_operation($sqlcommand);
     }
-    function getOrder($OrderId)
+    function getOrder($orderId)
     {
         $sqlcommand = "Select OrderID,convert(varchar,OrderDate, 20) as OrderDate,CustomerName,SupplierName,Supplier.SupplierID,Customer.CustomerID,
         (select sum(Total) from Orderitems WHERE OrderID = [Order].OrderID) as [Total Orders] 
@@ -19,15 +19,15 @@ class Order
 		LEFT JOIN Supplier on Supplier.SupplierID = [Order].[SupplierID]
 		WHERE [OrderID] = ?
         ORDER BY [OrderDate] DESC FOR JSON PATH,WITHOUT_ARRAY_WRAPPER";
-        $params_in = array($OrderId);
+        $params_in = array($orderId);
         excute_prepared_statements($params_in, $sqlcommand);
     }
-    function getOrderedItems($OrderID){
+    function getOrderedItems($orderId){
         $sqlcommand = "select OrderditemID,OrderID,Item.ItemID as ItemID,Item.ItemType,Orderitems.PPP,Quantity,Total from Orderitems
         INNER JOIN Item on Item.ItemID = Orderitems.ItemID
         WHERE OrderID = ?
         FOR JSON PATH,INCLUDE_NULL_VALUES";
-        excute_prepared_statements(array($OrderID),$sqlcommand);
+        excute_prepared_statements(array($orderId),$sqlcommand);
     }
     function makeNewOrder()
     {

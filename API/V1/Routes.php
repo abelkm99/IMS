@@ -113,7 +113,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         $r->addGroup('/customer', function (FastRoute\RouteCollector $r) {
             $r->post('/list_customers_pagination', ['Customer/getCustomer_pagination', Section::PROTECTED]);
             $r->get('/list_customers', ['Customer/ListAllCustomers', Section::PROTECTED]);
-            $r->get('/list_customer/{CustomerName}', ['Customer/getCustomerInformation', Section::PROTECTED]);
+            $r->get('/list_customer/{CustomerID:\d+}', ['Customer/getCustomerInformation', Section::PROTECTED]);
             $r->post('/add_customer', ['Customer/addCustomer', Section::PROTECTED]);
             $r->put('/update_customer', ['Customer/updateCustomer', Section::PROTECTED]);
             $r->get('/list_customer_bankaccount/{CustomerId:\d+}', ['Customer/getCustomerBankAccount', Section::PROTECTED]);
