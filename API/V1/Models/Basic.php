@@ -143,7 +143,7 @@ class BasicApi
     {
         $sqlcommand = "select Reference.REFNO,convert(varchar, Reference.[Date], 20) as SalesDate,
         CustomerName,TransactionType,DriverName,
-        (select SUM(Total) FROM Sales WHERE Sales.REFNO = Reference.REFNO ) as Total from Reference
+        (select SUM(Total) FROM Sales WHERE Sales.REFNO = Reference.REFNO ) as Total,Reference.[Description] from Reference
         LEFT JOIN Customer on Reference.CutomerID = Customer.CustomerID  
         LEFT JOIN TransactionType on Reference.TransactionID = TransactionType.TransactionID
         LEFT JOIN Driver on Reference.DriverID = Driver.DriverID
