@@ -31,7 +31,7 @@ function excute_select_operation($sqlcommand)
     $conn = get_connection();
     if ($conn) {
     } else {
-        $resMessage = array("message" => " database Connection could not be established");
+       $resMessage = sqlsrv_errors($conn);
         http_response_code(500);
         echo json_encode($resMessage);
         return;
@@ -66,7 +66,7 @@ function excute_delete_prodecure($valueId, $sqlcommand)
     $conn = get_connection();
     if ($conn) {
     } else {
-        $resMessage = array("message" => " database Connection could not be established");
+       $resMessage = sqlsrv_errors($conn);
         http_response_code(500);
         echo json_encode($resMessage);
         return;
@@ -102,7 +102,7 @@ function excute_prodecure($inputs, $sqlcommand)
     $conn = get_connection();
     if ($conn) {
     } else {
-        $resMessage = array("message" => " database Connection could not be established");
+       $resMessage = sqlsrv_errors($conn);
         http_response_code(500);
         echo json_encode($resMessage);
     }
@@ -193,7 +193,7 @@ function excute_prodecure_json($params, $sqlcommand)
     $conn = get_connection();
     if ($conn) {
     } else {
-        $resMessage = array("message" => " database Connection could not be established");
+       $resMessage = sqlsrv_errors($conn);
         http_response_code(500);
         echo json_encode($resMessage);
     }
@@ -236,7 +236,7 @@ function excute_prodecure2($inputs, $sqlcommand)
     $conn = get_connection();
     if ($conn) {
     } else {
-        $resMessage = array("message" => " database Connection could not be established");
+       $resMessage = sqlsrv_errors($conn);
         http_response_code(500);
         echo json_encode($resMessage);
     }
@@ -297,7 +297,7 @@ function excute_prodecure_status_code($inputs, $sqlcommand)
     $conn = get_connection();
     if ($conn) {
     } else {
-        $resMessage = array("message" => " database Connection could not be established");
+       $resMessage = sqlsrv_errors($conn);
         http_response_code(500);
         echo json_encode($resMessage);
     }

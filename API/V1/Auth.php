@@ -19,6 +19,15 @@ class Auth
     function Login()
     {
         $conn = get_connection();
+  
+        if ($conn) {
+        } else {
+           $resMessage = sqlsrv_errors($conn);
+            http_response_code(500);
+            echo json_encode($resMessage);
+            return;
+        }
+
 
 
         // get username or password
