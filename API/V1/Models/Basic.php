@@ -129,7 +129,7 @@ class BasicApi
     function getONEGRN($GRNNO)
     {
         $sqlcommand = "select GRN.GRNNO,Delivered,convert(varchar, PurchsedDate, 20) as PurchsedDate,
-            convert(varchar, DeliverdDate, 20) as DeliverdDate,SupplierName,TransactionType,DriverName,
+            convert(varchar, DeliverdDate, 20) as DeliverdDate,SupplierName,TransactionType,DriverName,[GRN].[Description],
             (select SUM(Total) FROM Purchase WHERE Purchase.GRNNO = GRN.GRNNO ) as Total from GRN
             LEFT JOIN Supplier on GRN.SupplierID = Supplier.SupplierID  
             LEFT JOIN TransactionType on GRN.TransactionID = TransactionType.TransactionID
@@ -199,7 +199,7 @@ class BasicApi
     }
     function getOneTransferedInfo($TEID)
     {
-        $sqlcommand = "select TEID,CONVERT(varchar,[Date],20) as [Date],Cost,DriverName,Driver.DriverID from [Transfer-Expence] 
+        $sqlcommand = "select TEID,CONVERT(varchar,[Date],20) as [Date],Cost,DriverName,Driver.DriverID,[Transfer-Expence].[Description] from [Transfer-Expence] 
             LEFT JOIN Driver on Driver.DriverID = [Transfer-Expence].DriverID
             WHERE TEID = ?
             ORDER BY [Date] DESC FOR JSON PATH,INCLUDE_NULL_VALUES,WITHOUT_ARRAY_WRAPPER";
