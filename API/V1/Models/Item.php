@@ -2,17 +2,36 @@
 
 class Item
 {
-    function getAllItemsNoPagination(){
+    function getAllItemsNoPagination()
+    {
         $sqlcommand = "SELECT * FROM Item FOR JSON PATH";
         excute_select_operation($sqlcommand);
     }
     function getAllItems()
     {
         $params_in = array(
-            "PageNumber" => 1
+            "PageNumber" => 1,
+            "PPR" => 0,
+            "ItemCode" => 0,
+            "ItemType" => 0,
+            "CategoryName" => 0,
+            "MinShop" => 0,
+            "MaxShop" => 0,
+            "MinWarehouse" => 0,
+            "MaxWarehouse" => 0,
+            "order" => 1
         );
         $sqlcommand = "EXEC	[dbo].[spGetALLItems]
-		@PageNumber = ?";
+		@PageNumber = ?,
+        @PPR = ?,
+		@ItemCode = ?,
+		@ItemType = ?,
+		@CategoryName = ?,
+		@MinShop = ?,
+		@MaxShop = ?,
+		@MinWarehouse = ?,
+		@MaxWarehouse = ?,
+        @order = ?";
         excute_prodecure_status_code($params_in, $sqlcommand);
     }
     function addNewItem()
