@@ -69,14 +69,14 @@ class Masatefiya
     {
         $array = array(
             "PageNumber" => 1,
-            "REFNO" => 0,
+            "GRNNO" => 0,
             "D1" => 0,
             "D2" => 0,
             "order" => 0
         );
         $sqlcommand = "EXEC	[dbo].[spGetMasatefiyaExpence]
 		@PageNumber = ?,
-		@REFNO = ?,
+		@GRNNO = ?,
 		@D1 = ?,
 		@D2 = ?,
 		@order = ?";
@@ -86,13 +86,13 @@ class Masatefiya
     {
 
         $array = array(
-            "REFNO" => 1,
+            "GRNNO" => 1,
             "Date" => 1,
             "Cost" => 1,
             "Description" => 0
         );
         $sqlcommand = "EXEC	[dbo].[spAddMasatefiya]
-		@REFNO = ?,
+		@GRNNO = ?,
 		@Date = ?,
 		@Cost = ?,
 		@Description = ?";
@@ -113,14 +113,14 @@ class Masatefiya
         $array = array(
             "Date" => 0,
             "Cost" => 0,
-            "REFNO" => 0,
+            "GRNNO" => 0,
             "MID" => 1,
             "Description" => 0
         );
         $sqlcommand = "EXEC	[dbo].[spUpdateMasatefiyaExpence]
 		@Date = ?,
 		@Cost = ?,
-		@REFNO = ?,
+		@GRNNO = ?,
 		@MID = ?,
 		@Description = ?";
         excute_prodecure_status_code($array, $sqlcommand);

@@ -15,6 +15,8 @@ class Auth
             print_r(json_encode(sqlsrv_errors()));
             return;
         }
+        sqlsrv_close($conn);
+
     }
     function Login()
     {
@@ -94,6 +96,7 @@ class Auth
         $response = array("Role" => "Unknown", "message" => "invalid username or password");
         print_r(json_encode($response));
         sqlsrv_free_stmt($stmt);
+        sqlsrv_close($conn);
 
         // print_r(decode_access_token( $row['access_token'])['data']->Role);
 
