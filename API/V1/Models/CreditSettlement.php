@@ -20,7 +20,7 @@ class GRNCreditSettlemnt
 		@SupplierName = ?,
 		@DriverName = ?,
 		@order = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function ListOneCreditSettlemts($GRNNO)
     {
@@ -57,7 +57,7 @@ class GRNCreditSettlemnt
 		@Payment = ?,
 		@Date = ?,
 		@Description = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function deleteCreditSettlment()
     {
@@ -68,7 +68,7 @@ class GRNCreditSettlemnt
         $sqlcommand = "EXEC	[dbo].[spDeleteGRNCS]
                 @GRNNO = ?,
                 @CSID = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function updateCreditSettlment()
     {
@@ -85,7 +85,7 @@ class GRNCreditSettlemnt
 		@CSID = ?,
 		@Date = ?,
 		@Description = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
 }
 class REFCreditSettlemnt
@@ -109,7 +109,7 @@ class REFCreditSettlemnt
 		@CustomerName = ?,
 		@DriverName = ?,
 		@order = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function ListOneCreditSettlemts($REFNO)
     {
@@ -146,7 +146,7 @@ class REFCreditSettlemnt
 		@Payment = ?,
 		@Date = ?,
 		@Description = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function deleteCreditSettlment()
     {
@@ -157,7 +157,7 @@ class REFCreditSettlemnt
         $sqlcommand = "EXEC	[dbo].[spDeleteREFCS]
 		@REFNO = ?,
 		@CSID = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function updateCreditSettlment()
     {
@@ -174,6 +174,6 @@ class REFCreditSettlemnt
 		@CSID = ?,
 		@Date = ?,
 		@Description = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
 }

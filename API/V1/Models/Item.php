@@ -32,7 +32,7 @@ class Item
 		@MinWarehouse = ?,
 		@MaxWarehouse = ?,
         @order = ?";
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
     function addNewItem()
     {
@@ -47,7 +47,7 @@ class Item
 		@ItemCode = ?,
 		@ItemType = ?,
 		@PPP = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function updateItemPrice()
     {
@@ -58,7 +58,7 @@ class Item
         $sqlcommand = "EXEC	[dbo].[spUpdateItemPrice]
             @PPP = ?,
             @ItemId = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function updateItem()
     {
@@ -73,7 +73,7 @@ class Item
             @ItemCode = ?,
             @ItemType = ?,
             @ItemId = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function ItemInventory($ItemId)
     {
@@ -89,6 +89,6 @@ class Item
         $array = array(
             "ItemID" => 1
         );
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
 }

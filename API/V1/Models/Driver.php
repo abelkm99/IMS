@@ -13,7 +13,7 @@ class Driver
             @PageNumber = ?,
             @DriverName = ?,
             @order = ?";
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
     function ListAllDrivers()
     {
@@ -34,7 +34,7 @@ class Driver
             @DriverPhoneNumber = ?,
             @DriverPlate = ?";
 
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function getDriverInformation($DriverName)
     {
@@ -58,7 +58,7 @@ class Driver
             @DriverPhoneNumber = ?,
             @DriverPlate = ?,
             @DriverID = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function deleteDriver()
     {
@@ -67,6 +67,6 @@ class Driver
         );
         $sqlcommand = "EXEC	[dbo].[spDeleteDriver]
             @DriverID = ?";
-        excute_prodecure_status_code($input_array, $sqlcommand);
+        excute_status_code_procedure($input_array, $sqlcommand);
     }
 }

@@ -18,7 +18,7 @@
                 "monthInterval"=>0,
                 "yearInterval"=>0,
             );
-            excute_prodecure2($params_in,$sqlcommand);
+            excute_procedure_output($params_in,$sqlcommand);
         }
         function get_overal_report_tiny(){
             $sqlcommand = "EXEC	[dbo].[spReport_tiny]
@@ -32,7 +32,7 @@
                 "option"=>1
             );
             
-            excute_prodecure2($params_in,$sqlcommand);
+            excute_procedure_output($params_in,$sqlcommand);
 
         }
         function get_overal_report(){
@@ -47,7 +47,7 @@
                 "option"=>1
             );
             
-            excute_prodecure_status_code($params_in,$sqlcommand);
+            excute_status_code_procedure($params_in,$sqlcommand);
             // $conn = get_connection();
             // if ($conn) {
             // } else {

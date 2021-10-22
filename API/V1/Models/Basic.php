@@ -38,7 +38,7 @@ class BasicApi
 		@TransactionType = ?,
 		@DriverName = ?,
 		@order = ?";
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
     function getAllGRNSNOTDelivered()
     {
@@ -49,7 +49,7 @@ class BasicApi
         $sqlcommand = "EXEC	[dbo].[spGetALLGRNNotDelivered]
 		@PageNumber = ?,
 		@order = ?";
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
     function getAllReferences()
     {
@@ -72,7 +72,7 @@ class BasicApi
 		@TransactionType = ?,
 		@DriverName = ?,
 		@order = ?";
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
     function getAllPurchaseOrders()
     {
@@ -89,7 +89,7 @@ class BasicApi
 		@D2 = ?,
 		@SupplierName = ?,
 		@order = ?";
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
     function getAllSalesOrders()
     {
@@ -106,7 +106,7 @@ class BasicApi
 		@D2 = ?,
 		@CustomerName = ?,
 		@order = ?";
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
     function getGRNDetaitNotShiped($GRNNO)
     {
@@ -178,7 +178,7 @@ class BasicApi
 		@D2 = ?,
 		@ItemType = ?,
 		@order = ?";
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
     function getAllTransferedInfo()
     {
@@ -195,7 +195,7 @@ class BasicApi
 		@D2 = ?,
 		@DriverName = ?,
 		@order = ?";
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
     function getOneTransferedInfo($TEID)
     {
@@ -251,7 +251,7 @@ class Profile
 		@AdminCurrentPassword = ?,
 		@AdminNewPassword = ?";
 
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
     function UpdateEmployeeProfile()
     {
@@ -266,6 +266,6 @@ class Profile
 		@EmployeeUsename = ?,
 		@EmployeeCurrentPassword = ?,
 		@EmployeeNewPassword = ?";
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
 }

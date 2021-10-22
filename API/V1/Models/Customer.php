@@ -13,7 +13,7 @@ class Customer
             @PageNumber = ?,
             @CustomerName = ?,
             @order = ?";
-        excute_prodecure_status_code($param_in, $sqlcommand);
+        excute_status_code_procedure($param_in, $sqlcommand);
     }
     function ListAllCustomers()
     {
@@ -42,7 +42,7 @@ class Customer
                             @BankAccount = ?,
                             @BankName = ?";
 
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     // function get only one supplier
     function getCustomerInformation($CustomerID)
@@ -66,7 +66,7 @@ class Customer
             @CustomerTinNumber = ?,
             @CustomerPhoneNumber = ?,
             @CustomerID = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function getCustomerBankAccount($CustomerId)
     {
@@ -85,7 +85,7 @@ class Customer
             @CustomerID = ?,
             @BankAccount = ?,
             @BankName = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function updateCustomerBankAccount()
     {
@@ -98,7 +98,7 @@ class Customer
             @BankAccountID = ?,
             @BankAccount = ?,
             @BankName = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function deleteCustomerBankAccount()
     {
@@ -107,7 +107,7 @@ class Customer
         );
         $sqlcommand = "EXEC	[dbo].[spDeleteCustomerBankAccount]
             @BankAccountID = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function deleteCustomer()
     {
@@ -116,6 +116,6 @@ class Customer
         );
         $sqlcommand = "EXEC [dbo].[spDeleteCustomer]
             @CustomerID = ?";
-        excute_prodecure_status_code($array_input, $sqlcommand);
+        excute_status_code_procedure($array_input, $sqlcommand);
     }
 }

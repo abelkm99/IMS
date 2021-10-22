@@ -13,7 +13,7 @@ class Supplier
             @PageNumber = ?,
             @SupplierName = ?,
             @order = ?";
-        excute_prodecure_status_code($param_in, $sqlcommand);
+        excute_status_code_procedure($param_in, $sqlcommand);
     }
     function ListAllSuppliers()
     {
@@ -42,7 +42,7 @@ class Supplier
                             @SupplierPhoneNumber = ?,
                             @BankAccountNumber = ?,
                             @BankName = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     // function get only one supplier
     function getSupplierInformation($SupplierId)
@@ -68,7 +68,7 @@ class Supplier
             @SupplierTinNumber = ?,
             @SupplierPhoneNumber = ?,
             @SupplierID = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function getSupplierBankAccount($SupplierID)
     {
@@ -87,7 +87,7 @@ class Supplier
             @SupplierID = ?,
             @BankAccount = ?,
             @BankName = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function updateSupplierBankAccount()
     {
@@ -100,7 +100,7 @@ class Supplier
             @BankAccountID = ?,
             @BankAccountNumber = ?,
             @BankName = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function delteSupplierBankAccount()
     {
@@ -109,7 +109,7 @@ class Supplier
         );
         $sqlcommand = "EXEC	[dbo].[spDeleteSupplierBankAccount]
             @BankAccountID = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function deleteSupplier()
     {
@@ -118,6 +118,6 @@ class Supplier
         );
         $sqlcommand = "EXEC	[dbo].[spDeleteSupplier]
             @SupplierID = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
 }

@@ -8,7 +8,7 @@ class Employee
         );
         $sqlcommand = "EXEC	[dbo].[spGETALLEmployees]
             @PageNumber = ?";
-        excute_prodecure_status_code($params_in,$sqlcommand);
+        excute_status_code_procedure($params_in,$sqlcommand);
     }
     function ListAllEmployees()
     {
@@ -36,7 +36,7 @@ class Employee
             @EmployeePhoneNumber = ?,
             @EmployeeAddress = ?,
             @EmployeeUserName = ?";
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
     function updateEmployee()
     {
@@ -52,7 +52,7 @@ class Employee
             @EmployeeAddress = ?,
             @EmployeeId = ?";
 
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
     function updateEmployeeAuthentication()
     {
@@ -69,27 +69,27 @@ class Employee
             @OldEmployeeUserName = ?,
             @OldEmployeePassword = ?,
             @EmployeeId = ?";
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
     function activateEmployee()
     {
         $params_in = array("EmployeeId" => 1);
         $sqlcommand = "EXEC	[dbo].[spActivateEmployee]
             @EmployeeId = ?";
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
     function deactivateEmployee()
     {
         $params_in = array("EmployeeId" => 1);
         $sqlcommand = "EXEC [dbo].[spDeActivateEmployee]
             @EmployeeId = ?";
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
     function deleteEmployee()
     {
         $params_in = array("EmployeeId" => 1);
         $sqlcommand = "EXEC [dbo].[spDeleteEmployee]
             @EmployeeID = ?";
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
 }

@@ -43,6 +43,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
 
     $r->addGroup('/quasar_api/api/v1', function (FastRoute\RouteCollector $r) {
 
+
+
         $r->post('/login', 'Auth/Login');
         $r->get('/check_database_connection', 'Auth/DatabaseTest');
 
@@ -64,10 +66,20 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         $r->get('/transfered_items_list/{TEID:\d+}', ['BasicApi/getAllTransferedDetail', Section::PROTECTED]);
         $r->get('/get_all_inventory', ['BasicApi/getAllItemInventory', Section::PROTECTED]);
         $r->get('/item_transfer_history/{ItemID:\d+}', ['BasicApi/getItemTransferHistory', Section::PROTECTED]);
-        
-        
+
+
         $r->post('/admin/update_profile', ['Profile/UpdateAdminProfile', Section::PROTECTED]);
         $r->post('/employee/update_profile', ['Profile/UpdateEmployeeProfile', Section::PROTECTED]);
+
+        $r->addGroup('/backup', function (FastRoute\RouteCollector $r) {
+            $r->post('/get_backup', ['Backup/getBackups', Section::PROTECTED]);
+            $r->post('/new_backup', ['Backup/BackupData', Section::PROTECTED]);
+            $r->post('/exit_backup', ['Backup/BackupExit', Section::PROTECTED]);
+            $r->post('/restore_backup', ['Backup/RestoreBackup', Section::PROTECTED]);
+            $r->delete('/delete_backup', ['Backup/DeleteBackup', Section::PROTECTED]);
+        });
+
+
 
 
 
@@ -154,7 +166,6 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
             $r->delete('/delte_grn', ['Purchase/deleteGRN', Section::PROTECTED]);
             $r->delete('/delte_ref', ['Purchase/deleteREF', Section::PROTECTED]);
             $r->post('/purchase_from_order', ['Purchase/PurchaseFromOrder', Section::PROTECTED]);
-            $r->put('/update_transefred_item', ['Purchase/updateMovedData', Section::PROTECTED]);
             $r->delete('/delete_transfered_item', ['Purchase/deleteTransferedItem', Section::PROTECTED]);
             $r->delete('/delete_teid', ['Purchase/deleteTEID', Section::PROTECTED]);
             $r->put('/update_transferd_count', ['Purchase/updateTransferCount', Section::PROTECTED]);

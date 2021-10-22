@@ -1,4 +1,5 @@
 <?php
+    require "Models/Backup.php";
     require "Models/Supplier.php";
     require "Models/Customer.php";
     require "Models/Category.php";

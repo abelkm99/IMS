@@ -1,6 +1,7 @@
 <?php
+sqlsrv_configure("WarningsReturnAsErrors", 0);
 
-function get_connection()
+function get_connection($master = false)
 {
 
     $serverName = null;
@@ -19,9 +20,12 @@ function get_connection()
         $username = $_ENV['username'];
         $password = $_ENV['password'];
     }
-
-
-    $connectionInfo = array("Database" => $database, "UID" => $username, "PWD" => $password);
+    $connectionInfo = null;
+    if ($master) {
+        $connectionInfo = array("Database" => 'master');
+    } else {
+        $connectionInfo = array("Database" => $database, "UID" => $username, "PWD" => $password);
+    }
     $conn = sqlsrv_connect($serverName, $connectionInfo);
     return $conn;
 }
@@ -31,7 +35,7 @@ function excute_select_operation($sqlcommand)
     $conn = get_connection();
     if ($conn) {
     } else {
-       $resMessage = sqlsrv_errors($conn);
+        $resMessage = sqlsrv_errors($conn);
         http_response_code(500);
         echo json_encode($resMessage);
         return;
@@ -66,7 +70,7 @@ function excute_delete_prodecure($valueId, $sqlcommand)
     $conn = get_connection();
     if ($conn) {
     } else {
-       $resMessage = sqlsrv_errors($conn);
+        $resMessage = sqlsrv_errors($conn);
         http_response_code(500);
         echo json_encode($resMessage);
         return;
@@ -97,63 +101,53 @@ function excute_delete_prodecure($valueId, $sqlcommand)
     }
     sqlsrv_close($conn);
 }
-function excute_prodecure($inputs, $sqlcommand)
+function excute_prodecure($sqlcommand)
 {
-    $conn = get_connection();
+    $conn = get_connection(true);
     if ($conn) {
     } else {
-       $resMessage = sqlsrv_errors($conn);
+        $resMessage = sqlsrv_errors($conn);
         http_response_code(500);
         echo json_encode($resMessage);
     }
-
-    $str_json = file_get_contents('php://input');
-    $json = json_decode($str_json);
-
-
-    if ($json === null) {
-        $resMessage = array("message" => "invalid json input data");
+    // add the result and message
+    // $stmt = sqlsrv_query($conn, "select * from BackupTimestamp for json auto");
+    $stmt = sqlsrv_query($conn, $sqlcommand);
+    if ($stmt === false) {
+        $resMessage = sqlsrv_errors($stmt);
         http_response_code(400);
         echo json_encode($resMessage);
-    } else {
-        if (key_value_Validator($inputs, $json)) {
-
-            $params = array();
-            $input_array = array();
-            $result = 0;
-            $message = "";
-            foreach ($inputs as $key => $value) {
-                $input_array[$key] = checkNull($json->$key);
-            }
-            foreach ($input_array as $key => $value) {
-                array_push($params, array(&$input_array[$key], SQLSRV_PARAM_IN));
-            }
-            // add the result and message
-            array_push($params, array(&$result, SQLSRV_PARAM_OUT));
-            array_push($params, array(&$message, SQLSRV_PARAM_OUT));
-
-            $stmt = sqlsrv_query($conn, $sqlcommand, $params);
-            if ($stmt === false) {
-                $resMessage = sqlsrv_errors();
-                http_response_code(500);
-                echo json_encode($resMessage);
-            } else {
-                if ($result) {
-                    $resMessage = array("result" => $result, "message" => $message);
-                    http_response_code(200);
-                    echo json_encode($resMessage);
-                } else {
-                    $resMessage = array("result" => $result, "message" => $message);
-                    http_response_code(400);
-                    echo json_encode($resMessage);
-                }
-            }
-        } else {
-            $resMessage = array("message" => "invalid input on validation");
-            http_response_code(400);
-            echo json_encode($resMessage);
-        }
+        return;
     }
+
+
+    $result = array();
+
+    // Get return value
+    do {
+        while ($row = sqlsrv_fetch_array($stmt)) {
+            // Loop through each result set and add to result array
+            $result[] = $row;
+        }
+    } while (sqlsrv_next_result($stmt));
+
+    if (count($result) > 0) {
+
+        $jsonString = concatranteJson($result);
+        $decoded_response = json_decode($jsonString);
+        if (array_key_exists("status_code", get_object_vars($decoded_response))) {
+            http_response_code($decoded_response->status_code);
+        } else {
+            http_response_code(200);
+        }
+        print_r($jsonString);
+    } else {
+        $resMessage = array("message" => "no result found");
+        http_response_code(404);
+        echo json_encode($resMessage);
+    }
+
+
     sqlsrv_close($conn);
 }
 function excute_prepared_statements($inputs, $sqlcommand)
@@ -188,12 +182,12 @@ function excute_prepared_statements($inputs, $sqlcommand)
     sqlsrv_close($conn);
 }
 
-function excute_prodecure_json($params, $sqlcommand)
+function excute_json_procedure($params, $sqlcommand)
 {
     $conn = get_connection();
     if ($conn) {
     } else {
-       $resMessage = sqlsrv_errors($conn);
+        $resMessage = sqlsrv_errors($conn);
         http_response_code(500);
         echo json_encode($resMessage);
     }
@@ -231,12 +225,12 @@ function excute_prodecure_json($params, $sqlcommand)
 }
 
 
-function excute_prodecure2($inputs, $sqlcommand)
+function excute_procedure_output($inputs, $sqlcommand)
 {
     $conn = get_connection();
     if ($conn) {
     } else {
-       $resMessage = sqlsrv_errors($conn);
+        $resMessage = sqlsrv_errors($conn);
         http_response_code(500);
         echo json_encode($resMessage);
     }
@@ -292,12 +286,18 @@ function excute_prodecure2($inputs, $sqlcommand)
     }
     sqlsrv_close($conn);
 }
-function excute_prodecure_status_code($inputs, $sqlcommand)
+function excute_status_code_procedure($inputs, $sqlcommand, $master = false)
 {
-    $conn = get_connection();
+
+    $conn = null;
+    if ($master) {
+        $conn = get_connection(true);
+    } else {
+        $conn = get_connection();
+    }
     if ($conn) {
     } else {
-       $resMessage = sqlsrv_errors($conn);
+        $resMessage = sqlsrv_errors($conn);
         http_response_code(500);
         echo json_encode($resMessage);
     }
@@ -325,6 +325,12 @@ function excute_prodecure_status_code($inputs, $sqlcommand)
             }
             // add the result and message
             $stmt = sqlsrv_query($conn, $sqlcommand, $params);
+            if ($stmt === false) {
+                $resMessage = sqlsrv_errors($stmt);
+                http_response_code(400);
+                echo json_encode($resMessage);
+                return;
+            }
 
             $result = array();
 

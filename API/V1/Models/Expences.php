@@ -16,7 +16,7 @@ class Salary
 		@D1 = ?,
 		@D2 = ?,
 		@order = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function addSalaryExpence()
     {
@@ -31,7 +31,7 @@ class Salary
 		@Cost = ?,
 		@EmployeeID = ?,
 		@Description = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function deleteSalaryExpence()
     {
@@ -41,7 +41,7 @@ class Salary
         );
         $sqlcommand = "EXEC	[dbo].[spDeleteSalaryExpence]
             @SalaryID = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function updateSalaryExpence()
     {
@@ -59,7 +59,7 @@ class Salary
             "SalaryID" => 1,
             "Description" => 1
         );
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
 }
 
@@ -80,7 +80,7 @@ class Masatefiya
 		@D1 = ?,
 		@D2 = ?,
 		@order = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function addMasatefiyaExpence()
     {
@@ -97,7 +97,7 @@ class Masatefiya
 		@Cost = ?,
 		@Description = ?";
 
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function deleteMasatefiyaExpence()
     {
@@ -106,7 +106,7 @@ class Masatefiya
         );
         $sqlcommand = "EXEC	[dbo].[spDeleteMasatefiyaExpence]
                                 @MID = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function updateMasatefiyaExpence()
     {
@@ -123,7 +123,7 @@ class Masatefiya
 		@GRNNO = ?,
 		@MID = ?,
 		@Description = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
 }
 
@@ -146,7 +146,6 @@ class LoadUnLoadExpences
             @result = ?,
             @message = ?";
 
-        excute_prodecure($array, $sqlcommand);
     }
 
     function updateUnloadingExpence()
@@ -164,7 +163,7 @@ class LoadUnLoadExpences
 		@GRNNO = ?,
 		@UnLoadID = ?,
 		@Description = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function deleteUnloadingExpence()
     {
@@ -173,7 +172,7 @@ class LoadUnLoadExpences
         );
         $sqlcommand = "EXEC	[dbo].[spDeleteUnloadingExpence]
                                 @UNLoadId = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function deleteloadingExpence($loadId)
     {
@@ -194,7 +193,7 @@ class LoadUnLoadExpences
 		@Date = ?,
 		@Cost = ?,
 		@Description = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
 
     function addloadingExpence()
@@ -210,7 +209,6 @@ class LoadUnLoadExpences
                             @Cost = ?,
                             @result = ?,
                             @message = ?";
-        excute_prodecure($array, $sqlcommand);
     }
 
     function getUnloadingExpences()
@@ -228,7 +226,7 @@ class LoadUnLoadExpences
 		@D1 = ?,
 		@D2 = ?,
 		@order = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function getloadingExpences()
     {
@@ -246,7 +244,7 @@ class OET
         );
         $sqlcommand = "EXEC	[dbo].[spGetOET]
 		@PageNumber = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function getOET()
     {
@@ -263,7 +261,7 @@ class OET
         $sqlcommand = "EXEC	[dbo].[spAddOtherExpences]
             @OEType = ?,
             @OEDescription = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function deleteOET()
     {
@@ -272,7 +270,7 @@ class OET
         );
         $sqlcommand = "EXEC	[dbo].[spDeleteOtherExpenceTypes]
             @OEID = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function updateOET()
     {
@@ -285,7 +283,7 @@ class OET
             @OEType = ?,
             @OEDescription = ?,
             @OEID = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
 }
 class PET
@@ -297,7 +295,7 @@ class PET
         );
         $sqlcommand = "EXEC	[dbo].[spGetPET]
 		@PageNumber = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function getPET()
     {
@@ -316,7 +314,7 @@ class PET
             @PEType = ?,
             @PEDescription = ?";
 
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function deletePET()
     {
@@ -325,7 +323,7 @@ class PET
         );
         $sqlcommand = "EXEC    [dbo].[spDeletePersonalExpenceTypes]
             @PEID = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function updatePET()
     {
@@ -338,7 +336,7 @@ class PET
             @PEType = ?,
             @PEDescription = ?,
             @PEID = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
 }
 class BT
@@ -351,7 +349,7 @@ class BT
         $sqlcommand = "EXEC	[dbo].[spGetBET]
 		@PageNumber = ?";
 
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function getBT()
     {
@@ -369,7 +367,7 @@ class BT
             @BILLType = ?,
             @BILLDescription = ?";
 
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function deleteBT()
     {
@@ -378,7 +376,7 @@ class BT
         );
         $sqlcommand = "EXEC	[dbo].[spDeleteBillExpenceTypes]
             @BID = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function updateBT()
     {
@@ -391,7 +389,7 @@ class BT
             @BILLType = ?,
             @BillDescription = ?,
             @BID = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
 }
 class OEL
@@ -411,7 +409,7 @@ class OEL
 		@D1 = ?,
 		@D2 = ?,
 		@order = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function addOEL()
     {
@@ -427,7 +425,7 @@ class OEL
 		@Cost = ?,
 		@Description = ?";
 
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function deleteOEL()
     {
@@ -436,7 +434,7 @@ class OEL
         );
         $sqlcommand = "EXEC	[dbo].[spDeleteOtherExpenceList]
             @OExpencesID = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function updateOEL()
     {
@@ -451,7 +449,7 @@ class OEL
 		@Cost = ?,
 		@OExpencesID = ?,
 		@Description = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
 }
 class PEL
@@ -471,7 +469,7 @@ class PEL
 		@D1 = ?,
 		@D2 = ?,
 		@order = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function addPEL()
     {
@@ -486,7 +484,7 @@ class PEL
 		@Date = ?,
 		@Cost = ?,
 		@Description = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function deletePEL()
     {
@@ -495,7 +493,7 @@ class PEL
         );
         $sqlcommand = "EXEC	[dbo].[spDeletePersonalExpenceList]
             @PExpencesID = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function updatePEL()
     {
@@ -510,7 +508,7 @@ class PEL
 		@Cost = ?,
 		@PExpencesID = ?,
 		@Description = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
 }
 class BL
@@ -530,7 +528,7 @@ class BL
 		@D1 = ?,
 		@D2 = ?,
 		@order = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function addBL()
     {
@@ -545,7 +543,7 @@ class BL
 		@Date = ?,
 		@Cost = ?,
 		@Description = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function deleteBL()
     {
@@ -554,7 +552,7 @@ class BL
         );
         $sqlcommand = "EXEC	[dbo].[spDeleteBillExpenceList]
             @BILLEXPENCEID = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function updateBL()
     {
@@ -569,7 +567,7 @@ class BL
 		@Cost = ?,
 		@BILLEXPENCEID = ?,
 		@Description = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
 }
 
@@ -586,7 +584,7 @@ class Bank
 		@PageNumber = ?,
 		@BankName = ?,
 		@order = ?";
-        excute_prodecure_status_code($input_array, $sqlcommand);
+        excute_status_code_procedure($input_array, $sqlcommand);
     }
     function getOneBank($PBID)
     {
@@ -602,7 +600,7 @@ class Bank
         $sqlcommand = "EXEC	[dbo].[spAddPersonalBankAccount]
             @AccountNumber = ?,
             @BankName = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function updateBankAccount()
     {
@@ -615,7 +613,7 @@ class Bank
             @PBID = ?,
             @AccountNumber = ?,
             @BankName = ?";
-        excute_prodecure_status_code($input_array, $sqlcommand);
+        excute_status_code_procedure($input_array, $sqlcommand);
     }
     function deleteBankAccount()
     {
@@ -626,7 +624,7 @@ class Bank
 
         $sqlcommand = "EXEC	[dbo].[spDeletePersonalBankAccount]
             @PBID = ?";
-        excute_prodecure_status_code($input_array, $sqlcommand);
+        excute_status_code_procedure($input_array, $sqlcommand);
     }
     function addTransaction()
     {
@@ -645,7 +643,7 @@ class Bank
             @Desciption = ?,
             @Date = ?";
 
-        excute_prodecure_status_code($input_array, $sqlcommand);
+        excute_status_code_procedure($input_array, $sqlcommand);
     }
     function deleteTransaction()
     {
@@ -654,7 +652,7 @@ class Bank
         );
         $sqlcommand = "EXEC	[dbo].[spDeleteBankTransaction]
             @BTID = ?";
-        excute_prodecure_status_code($input_array, $sqlcommand);
+        excute_status_code_procedure($input_array, $sqlcommand);
     }
     function getTransaction()
     {
@@ -673,7 +671,7 @@ class Bank
 		@D1 = ?,
 		@D2 = ?,
 		@order = ?";
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
 }
 class Rent
@@ -693,7 +691,7 @@ class Rent
 		@D1 = ?,
 		@D2 = ?,
 		@order = ?";
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
     function addRent()
     {
@@ -706,7 +704,7 @@ class Rent
             @Date = ?,
             @RentType = ?,
             @payment = ?";
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
     function updateRent()
     {
@@ -721,7 +719,7 @@ class Rent
             @RentType = ?,
             @Date = ?,
             @Payment = ?";
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
     function deleteRent()
     {
@@ -730,6 +728,6 @@ class Rent
         );
         $sqlcommand = "EXEC	[dbo].[spDeleteRent]
             @RentID = ?";
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
 }

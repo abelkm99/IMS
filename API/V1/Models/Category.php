@@ -13,7 +13,7 @@ class Category
         );
         $sqlcommand = "EXEC	[dbo].[spGetALLCategories]
 		@PageNumber = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function addCategory()
     {
@@ -23,7 +23,7 @@ class Category
         );
         $sqlcommand = "EXEC	[dbo].[spAddCategory]
             @CategoryName = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function updateCategory()
     {
@@ -34,7 +34,7 @@ class Category
         $sqlcommand = "EXEC	[dbo].[spUpdateCategory]
             @CategoryName = ?,
             @CategoryId = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function deleteCategory()
     {
@@ -43,6 +43,6 @@ class Category
         );
         $sqlcommand = "EXEC	[dbo].[spDeleteItemCategory]
             @CategoryId = ?";
-        excute_prodecure_status_code($array_input, $sqlcommand);
+        excute_status_code_procedure($array_input, $sqlcommand);
     }
 }

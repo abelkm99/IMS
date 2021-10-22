@@ -44,7 +44,7 @@ class Order
             @CutomerID = ?,
             @OrderDate = ?,
             @OrderInformation = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function deleteOrder()
     {
@@ -54,7 +54,7 @@ class Order
         $sqlcommand = "EXEC	[dbo].[spDeleteOrder]
 		@OrderId = ?";
 
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function updateOrder()
     {
@@ -69,7 +69,7 @@ class Order
 		@SupplierId = ?,
 		@OrderDate = ?,
 		@OrderID = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
     function updateOrderList()
     {
@@ -82,7 +82,7 @@ class Order
 		@PPP = ?,
 		@Quantity = ?,
 		@OrderditemID = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
 
     function DelteOrderItem()
@@ -94,6 +94,6 @@ class Order
         $sqlcommand = "EXEC	[dbo].[spDeleteOrderItems]
 		@OrderditemID = ?,
 		@OrderID = ?";
-        excute_prodecure_status_code($array, $sqlcommand);
+        excute_status_code_procedure($array, $sqlcommand);
     }
 }

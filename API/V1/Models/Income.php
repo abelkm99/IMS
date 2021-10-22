@@ -14,7 +14,7 @@ class Income
             @D1 = ?,
             @D2 = ?,
             @order = ?";
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
     function addNewIncome()
     {
@@ -27,7 +27,7 @@ class Income
             @Description = ?,
             @Amount = ?,
             @Date = ?";
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
     function deleteIncome()
     {
@@ -36,7 +36,7 @@ class Income
         $params_in = array(
             "IncomeID" => 1
         );
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
     function updateIncome()
     {
@@ -51,6 +51,6 @@ class Income
             @Description = ?,
             @Amount = ?,
             @Date = ?";
-        excute_prodecure_status_code($params_in, $sqlcommand);
+        excute_status_code_procedure($params_in, $sqlcommand);
     }
 }
