@@ -48,6 +48,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         $r->post('/login', 'Auth/Login');
         $r->get('/check_database_connection', 'Auth/DatabaseTest');
 
+        $r->get('/get_item_balance/{ItemID:\d+}/{Date}', ['BasicApi/getItemBalance', Section::PROTECTED]);
         $r->get('/get_transaction_type', ['BasicApi/getTransactionType', Section::PROTECTED]);
         $r->post('/get_item_stock', ['BasicApi/getItemStock', Section::PROTECTED]);
         $r->get('/get_grn_detail/{GRNNO:\d+}', ['BasicApi/getGRNDetail', Section::PROTECTED]);

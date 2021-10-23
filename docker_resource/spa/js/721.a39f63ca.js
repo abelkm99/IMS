@@ -1,1 +1,0 @@
-"use strict";(self["webpackChunkims"]=self["webpackChunkims"]||[]).push([[721],{721:(n,e,s)=>{s.r(e),s.d(e,{default:()=>o});var t=s(3673);function a(n,e,s,a,c,r){const u=(0,t.up)("q-page");return(0,t.wg)(),(0,t.j4)(u,{padding:""})}const c={};var r=s(4379),u=s(7518),p=s.n(u);c.render=a;const o=c;p()(c,"components",{QPage:r.Z})}}]);

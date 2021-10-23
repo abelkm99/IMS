@@ -17,11 +17,11 @@ values(0,ERROR_MESSAGE(),400)
 rollback transaction DeleteSupplierBankAccount
 select * from @response for json auto,without_array_wrapper
 
--E -S localhost -b ^
--Q "use master go"
+-E -S localhost -b -Q "EXEC [dbo].[sp_NewBackup]"
 
 ""
 "EXEC [dbo].[sp_restoreBackup] @ID = 4"
 "EXEC [dbo].[sp_backUpOnExit]"
+"EXEC [dbo].[sp_NewBackup]"
 
 "RESTORE DATABASE [IMSQuasar] FROM  DISK = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Backup\IMSQuasar2021-10-21 15-33-11.bak' WITH  FILE = 1,  NOUNLOAD,  STATS = 5"

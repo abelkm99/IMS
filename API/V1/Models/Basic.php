@@ -1,6 +1,12 @@
 <?php
 class BasicApi
 {
+    function getItemBalance($ItemID, $Date)
+    {
+        $array = array($Date, $ItemID,$Date,$ItemID);
+        $sqlcommand = "SELECT [dbo].[getWareHouseAtTimeStamp](?,?) as Warehouse,[dbo].[getShopTimestamp](?,?) as Shop for json path,include_null_values";
+        excute_prepared_statements($array, $sqlcommand);
+    }
     function getAllItemInventory()
     {
         $sqlcommand2 = "exec spItemInventory";

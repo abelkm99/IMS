@@ -165,6 +165,12 @@ function excute_prepared_statements($inputs, $sqlcommand)
     }
 
     $stmt = sqlsrv_query($conn, $sqlcommand, $params);
+    if ($stmt === false) {
+        $resMessage = sqlsrv_errors($stmt);
+        http_response_code(400);
+        echo json_encode($resMessage);
+        return;
+    }
 
     $res = array();
     while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
